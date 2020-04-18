@@ -1,0 +1,11 @@
+# IDE folders
+.vs/
+src/.vs/
+src/.idea/
+src/*/.idea/
+.DS_Store
+
+# Build files
+artifacts/
+src/*/bin/
+src/*/obj/
