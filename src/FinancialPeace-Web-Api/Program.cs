@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Budget.Web.Api
+namespace FinancialPeace.Web.Api
 {
     public class Program
     {

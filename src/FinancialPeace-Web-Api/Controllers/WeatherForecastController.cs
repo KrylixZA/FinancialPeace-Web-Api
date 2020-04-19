@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Budget.Web.Api.Controllers
+namespace FinancialPeace.Web.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

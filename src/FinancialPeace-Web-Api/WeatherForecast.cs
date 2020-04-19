@@ -1,6 +1,6 @@
 using System;
 
-namespace Budget.Web.Api
+namespace FinancialPeace.Web.Api
 {
     public class WeatherForecast
     {

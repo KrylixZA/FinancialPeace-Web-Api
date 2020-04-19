@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Budget.Web.Api
+namespace FinancialPeace.Web.Api
 {
     public class Startup
     {
