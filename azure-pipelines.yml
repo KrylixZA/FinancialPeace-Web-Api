@@ -1,0 +1,46 @@
+trigger:
+  branches:
+    include:
+    - '*'
+  paths:
+    include:
+    - '*'
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: 'Build'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Build'
+    inputs:
+      targetType: 'filePath'
+      filePath: 'build-bootstrapper.ps1'
+      arguments: '-Actions "build" -BuildId $(Build.BuildID) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetAccessToken $(System.AccessToken)'
+      failOnStdErr: true
+
+  - task: PowerShell@2
+    displayName: 'Run unit tests'
+    inputs:
+      targetType: 'filePath'
+      filePath: 'build-bootstrapper.ps1'
+      arguments: '-Actions "unit-test" -BuildId $(Build.BuildId) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetAccessToken $(System.AccessToken)'
+      failOnStdErr: true
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage results'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(Build.SourcesDirectory)/artifacts/unit-tests/*.xml'
+
+  - task: PowerShell@2
+    displayName: 'Publish packages to nuget feed'
+    inputs:
+      targetType: 'filePath'
+      filePath: 'publish-nuget-packages.ps1'
+      arguments: '-NugetAccessToken $(System.AccessToken)'
+      failOnStdErr: true

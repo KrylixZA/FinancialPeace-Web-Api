@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>FinancialPeace.Web.Api</RootNamespace>
+        <IsPackable>true</IsPackable>
+        <PackageId>FinancialPeace.Web.Api</PackageId>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Title>Fincial Peace Web API</Title>
+        <Description>The Web API to serve the Financial Peace project</Description>
+        <PackageProjectUrl>https://dev.azure.com/headleysj/FinancialPeace</PackageProjectUrl>
+        <RepositoryUrl>https://headleysj@dev.azure.com/headleysj/FinancialPeace/_git/FinancialPeace-Web-Api</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>Financial Peace Web API</PackageTags>
+        <LangVersion>8</LangVersion>
+        <Nullable>warnings</Nullable>
+    </PropertyGroup>
+
+
+</Project>

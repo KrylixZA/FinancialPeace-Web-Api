@@ -1,20 +1,15 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+The Financial Peace Web API exposes restful functions to serve the functions necessary for managing your way to fincancial peace!
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# Build
+To build this code you can either build the solution through Visual Studio or you could simply run the the `build-bootstrapper.ps1` script passing in the argument `-Actions "build"` as follows:
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+`.\build-bootstrapper.ps1 -Actions "build"`
+
+# Test
+To test this, you can simply launch the project from Visual Studio and run the postman requests from the `tests/postman-tests` directory. 
+
+The swagger docs can be found when launching the API and browsing to `http://localhost:<random_port>/swagger/ui`
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+To contribute to this project, please following the [contributing guide](CONTRIBUTING.md)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>FinancialPeace.Web.Api</id>
+        <version>1.0.0.0</version>
+        <title>Fincial Peace Web API</title>
+        <authors>Financial Peace</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>The Web API to serve the Financial Peace project</description>
+        <repositoryUrl>https://headleysj@dev.azure.com/headleysj/FinancialPeace/_git/FinancialPeace-Web-Api</repositoryUrl>
+        <tags>Financial Peace Web API</tags>
+    </metadata>
+    <files>
+        <file src="..\src\FinancialPeace.Web.Api\bin\Release\**\*.*" />
+    </files>
+</package>
