@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FinancialPeace.Web.Api</name>
+    </assembly>
+    <members>
+        <member name="T:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController">
+            <summary>
+            Exposes functionality to view and manage a user's budget.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController">
+            <summary>
+            Exposes functionality to manage currencies.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.Debts.DebtsController">
+            <summary>
+            Exposes functionality to manage a user's debts.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController">
+            <summary>
+            Exposes functionality to manage expenses categories.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.Savings.SavingsController">
+            <summary>
+            Exposes functionality to manage a user's savings.
+            </summary>
+        </member>
+    </members>
+</doc>

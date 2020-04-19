@@ -16,5 +16,17 @@
         <Nullable>warnings</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>App_Data\Documentation\XmlDocumentation\FinancialPeace.Web.Api.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>App_Data\Documentation\XmlDocumentation\FinancialPeace.Web.Api.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.2" />
+    </ItemGroup>
+
 
 </Project>

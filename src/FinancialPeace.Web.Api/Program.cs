@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+#pragma warning disable 1591
 
 namespace FinancialPeace.Web.Api
 {
