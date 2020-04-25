@@ -1,4 +1,7 @@
 param (
+    $NugetFeedName,
+    $NugetFeedSource,
+    $NugetFeedUser,
     $NugetAccessToken
 )
 
@@ -13,16 +16,15 @@ $nugetPath = Join-Path $toolsDir 'nuget.exe';
 Set-Alias -Name "nuget" -Value $nugetPath -Scope Script;
 
 # Authenticate with organization nuget feed
-$orgNugetSource = "https://pkgs.dev.azure.com/headleysj/_packaging/headleysj/nuget/v3/index.json";
 if (-not([string]::IsNullOrWhiteSpace($NugetAccessToken))) {
-    if (-not $(Get-PackageSource -Name 'headleysj' -ProviderName NuGet -ErrorAction Ignore))
+    if (-not $(Get-PackageSource -Name $NugetFeedName -ProviderName NuGet -ErrorAction Ignore))
     {
-        $addOrgNugetCmd = "nuget sources add -Name headleysj -Source $orgNugetSource -Username AzureNugetUser -Password $NugetAccessToken";
-        Write-Host "Registering with $orgNugetSource";
+        $addOrgNugetCmd = "nuget sources add -Name $NugetFeedName -Source $NugetFeedSource -Username $NugetFeedUser -Password $NugetAccessToken";
+        Write-Host "Registering with $NugetFeedSource";
         Invoke-Expression -Command $addOrgNugetCmd;
     }
 }
 
-$publishCmd = "nuget push -Source $orgNugetSource -ApiKey AzureArtifacts $outputDir\**\*.nupkg";
+$publishCmd = "nuget push -Source $NugetFeedSource -ApiKey AzureArtifacts $outputDir\**\*.nupkg";
 Write-Host $publishCmd;
 Invoke-Expression -Command $publishCmd;

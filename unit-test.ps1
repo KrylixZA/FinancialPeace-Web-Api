@@ -9,7 +9,8 @@ $srcDir = Join-Path $workingDir "src";
 $outputDir = Join-Path $workingDir "artifacts";
 $testsOutputDir = Join-Path $outputDir "unit-tests/";
 
-# To understand more about Coverlet, read here: https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md
+# To understand more about Coverlet, read here: 
+# https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md
 
 # Run unit tests
 $coverletExclusion = "";

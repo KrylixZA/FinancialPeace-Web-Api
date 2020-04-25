@@ -8,7 +8,7 @@ $workingDir = $PSScriptRoot;
 $buildDir = Join-Path $workingDir "build";
 $srcDir = Join-Path $workingDir "src";
 $outputDir = Join-Path $workingDir "artifacts";
-$apiOutputDir = Join-Path $outputDir "api";
+$distOutputDir = Join-Path $outputDir "dist";
 
 # Cleanup build directories
 $cleanupDirectories = @();
@@ -26,8 +26,10 @@ foreach ($cleanupDir in $cleanupDirectories) {
 $buildCmd = "dotnet build `"$srcDir`" --configuration $BuildConfiguration -p:Version=$BuildVersion";
 Invoke-Expression -Command $buildCmd;
 
-$nuspecFile = Join-Path $buildDir "FinancialPeace.Web.Api.nuspec";
+# Package the APIs
+$nuspecFiles = (Get-ChildItem -Path $buildDir -Include ("*.nuspec") -Recurse).FullName;
 $packProperties = "/p:NuspecProperties=`"version=$BuildVersion`"";
-$packCmd = "dotnet pack `"$srcDir`" -p:NuspecFile=`"$nuspecFile`" --output `"$apiOutputDir`" --configuration $BuildConfiguration /p:PackageVersion=$BuildVersion $packProperties --no-build";
-Write-Host $packCmd;
-Invoke-Expression -Command $packCmd;
+foreach($nuspecFile in $nuspecFiles) {
+    $packCmd = "dotnet pack `"$srcDir`" -p:NuspecFile=`"$nuspecFile`" --output `"$distOutputDir`" --configuration $BuildConfiguration /p:PackageVersion=$BuildVersion $packProperties --no-build";
+    Invoke-Expression -Command $packCmd;
+}
