@@ -9,24 +9,753 @@
             Exposes functionality to view and manage a user's budget.
             </summary>
         </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.GetBudgetForUser(System.Guid)">
+            <summary>
+            Gets the user's budget with all the listed expenses.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <response code="200">A collection of expenses linked to a user.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.CreateExpenseForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest)">
+            <summary>
+            Attempts to create an expense for a user. If the user has no budget, it will create a budget for the user and then associate the expense with the budget.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The expense details.</param>
+            <response code="200">The expense was successfully created for the user.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.DeleteExpenseForUser(System.Guid,System.Guid)">
+            <summary>
+            Attempts to delete an expense for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseId">The expense unique identifier.</param>
+            <response code="200">The expense was successfully deleted for the user.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.UpdateExpenseForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
+            <summary>
+            Attempts to update the details of an expense for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseId">The expense unique identifier.</param>
+            <param name="request">The updated expense details.</param>
+            <response code="200">The expense was successfully deleted for the user.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
         <member name="T:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController">
             <summary>
             Exposes functionality to manage currencies.
             </summary>
         </member>
-        <member name="T:FinancialPeace.Web.Api.Controllers.Debts.DebtsController">
+        <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.GetCurrencies">
             <summary>
-            Exposes functionality to manage a user's debts.
+            Gets all the registered currencies from the database.
             </summary>
+            <response code="200">An enumeration of registered currencies.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+            <summary>
+            Persists a new currency to the database. If a currency already exists, it will still return 202 - Accepted.
+            </summary>
+            <param name="request">A request to create a new currency.</param>
+            <response code="202">The currency was successfully created.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController">
+            <summary>
+            Exposes functionality to manage a user's debt accounts.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.GetDebtAccountsForUser(System.Guid)">
+            <summary>
+            Gets the debt account linked to a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <response code="200">A collection of debt accounts linked to a user.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+            <summary>
+            Persists a new debt account to the database for the given user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The debt account details.</param>
+            <response code="202">The debt account was successfully created for the user.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.AddAmountToDebtAccount(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+            <summary>
+            Increases the amount owed on a debt account for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the request.</param>
+            <response code="200">The debt account was successfully updated.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+            <summary>
+            Reduces the amount of money owed on a debt account for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the request.</param>
+            <response code="200">The debt account was successfully updated.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+            <summary>
+            Attempts to delete a user's debt account from their portfolio.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <response code="200">The debt account was successfully deleted.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+            <summary>
+            Updates the debt account details for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the request.</param>
+            <response code="200">The debt account was successfully updated.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
         </member>
         <member name="T:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController">
             <summary>
             Exposes functionality to manage expenses categories.
             </summary>
         </member>
-        <member name="T:FinancialPeace.Web.Api.Controllers.Savings.SavingsController">
+        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.GetExpenseCategories">
             <summary>
-            Exposes functionality to manage a user's savings.
+            Gets all listed expense categories.
+            </summary>
+            <response code="200">A collection of available expense categories.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.GetExpenseCategoriesForUser(System.Guid)">
+            <summary>
+            Gets all expense categories that are mapped to the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <response code="200">A collection of available expense categories.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+            <summary>
+            Persists a new expense category to the database if it does not already exist and links that newly created expense category to the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The expense category details.</param>
+            <response code="202">The expense category was successfully created.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes the mapping between the user and the expense category from the database.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseCategoryId">The expense category's unique identifier.</param>
+            <response code="200">The mapping was successfully deleted.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController">
+            <summary>
+            Exposes functionality to manage a user's savings accounts.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.GetSavingsAccountsForUser(System.Guid)">
+            <summary>
+            Gets the savings account linked to a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <response code="200">A collection of savings accounts linked to a user.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+            <summary>
+            Persists a new savings account to the database for the given user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The savings account details.</param>
+            <response code="202">The savings account was successfully created for the user.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+            <summary>
+            Increases the current balance of a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the request.</param>
+            <response code="200">The savings account was successfully updated.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+            <summary>
+            Reduces the current balance of a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the request.</param>
+            <response code="200">The savings account was successfully updated.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+            <summary>
+            Attempts to delete a user's savings account from their portfolio.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <response code="200">The savings account was successfully deleted.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+            <summary>
+            Updates the savings account details for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the request.</param>
+            <response code="200">The savings account was successfully updated.</response>
+            <response code="400">The request was badly formed.</response>
+            <response code="401">The token provided does not provide access to this resource.</response>
+            <response code="403">The request was forbidden from proceeding.</response>
+            <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Controllers.TestTokensController">
+            <summary>
+            A test API to resolve a JWT token.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.TestTokensController.#ctor(Shared.WebApi.Core.Security.IJwtService)">
+            <summary>
+            Initializes a new instance of the TestTokensController.
+            </summary>
+            <param name="jwtService">The JWT service.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.TestTokensController.GetRandomToken">
+            <summary>
+            Generates a random JWT token.
+            </summary>
+            <returns>A random JWT token.</returns>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Errors.ErrorCodes">
+            <summary>
+            An enumeration of error codes.
+            </summary>
+        </member>
+        <member name="F:FinancialPeace.Web.Api.Errors.ErrorCodes.GeneralError">
+            <summary>
+            A general, unspecific error occurred.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Errors.ErrorMessageSelector">
+            <summary>
+            An implementation of the error message selector.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Errors.ErrorMessageSelector.GetErrorMessage(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Currency">
+            <summary>
+            A model representation of a currency and it's relevant exchange rate.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Currency.CurrencyId">
+            <summary>
+            The unique identifier associated to the currency.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Currency.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Currency.Name">
+            <summary>
+            The name of the currency, such as US Dollar or South African Rand.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Currency.Country">
+            <summary>
+            The country associated to the currency. This can be null, for currencies such as the Euro.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Currency.RandExchangeRate">
+            <summary>
+            The currency's exchange rate relative to the US Dollar, such as 19.05.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.DebtAccount">
+            <summary>
+            Represents an instance of a debt account for a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.DebtAccountId">
+            <summary>
+            The debt account unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.InitialAmountOwed">
+            <summary>
+            The initial amount owed upon creation within this system.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.CurrentAmountOwed">
+            <summary>
+            The current amount owed.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.TargetPayoffDate">
+            <summary>
+            The target payoff date.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.ActualPayoffDate">
+            <summary>
+            The actual payoff date, if already paid off.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.DebtAccount.Name">
+            <summary>
+            The display friendly name of the debt account.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Expense">
+            <summary>
+            Represents an instance of an expense for a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Expense.BudgetId">
+            <summary>
+            The unique identifier of the budget to which the expense belongs.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Expense.UserId">
+            <summary>
+            The user's unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Expense.ExpenseId">
+            <summary>
+            The expense unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Expense.DisplayName">
+            <summary>
+            The expense display name.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Expense.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Expense.Value">
+            <summary>
+            The value of the expense.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.ExpenseCategory">
+            <summary>
+            Represents an instance of an expense category.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.ExpenseCategory.ExpenseCategoryId">
+            <summary>
+            The unique identifier associated to the expense category.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.ExpenseCategory.ExpenseCategoryName">
+            <summary>
+            The name of the expense category.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest">
+            <summary>
+            Represents a request to create an expense for a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest.ExpenseCategoryName">
+            <summary>
+            The name of the expense category. This expense category must exist in the list of expense categories.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest.Value">
+            <summary>
+            The value associated to the expense.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest">
+            <summary>
+            Represents a request to update an expense details for a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest.DisplayName">
+            <summary>
+            The expense display name.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest.Value">
+            <summary>
+            The value of the expense.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest">
+            <summary>
+            Represents a request to create a new currency.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest.CurrencyId">
+            <summary>
+            The unique identifier associated to the currency.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest">
+            <summary>
+            Represents a request to add an amount to a savings account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest.Amount">
+            <summary>
+            The amount of money that will be added to the debt account in the account's currency.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest">
+            <summary>
+            Represents a request to create a debt account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest.AmountOwed">
+            <summary>
+            The amount owed on the debt at the time of creation within this system.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest.TargetPayoffDate">
+            <summary>
+            The target payoff date of the debt - either the standard loan payoff date or a date closer than that of your choice.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest.Name">
+            <summary>
+            The display friendly name of the debt account.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest">
+            <summary>
+            Represents a request to reduce the amount owed on a debt account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest.Amount">
+            <summary>
+            The amount of money that will be subtracted from the debt account in the account's currency.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest">
+            <summary>
+            Represents a request to update a debt account details.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest.CurrentAmountOwed">
+            <summary>
+            The current amount owed on the debt account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest.TargetPayoffDate">
+            <summary>
+            The targeted date to pay off the debt.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest.ActualPayoffDate">
+            <summary>
+            The actual date the debt was paid off.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest.Name">
+            <summary>
+            The debt account display friendly name.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest">
+            <summary>
+            Represents a request to create a new expense category
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest.ExpenseCategoryId">
+            <summary>
+            The unique identifier associated to the expense category.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest">
+            <summary>
+            Represents a request to add an amount to a savings account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest.Amount">
+            <summary>
+            The amount of money that will be added to the savings account in the account's currency.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest">
+            <summary>
+            Represents a request to create a savings account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest.SavingsValue">
+            <summary>
+            The value of the savings account at time of creation within this system.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest.SavingsTarget">
+            <summary>
+            The savings target for the account, if any.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest.Name">
+            <summary>
+            The display friendly name of the savings account.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest">
+            <summary>
+            Represents a request to remove subtract an amount to a savings account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest.Amount">
+            <summary>
+            The amount of money that will be subtracted from the savings account in the account's currency.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest">
+            <summary>
+            Represents a request to update a savings account details.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest.CurrentSavingsAmount">
+            <summary>
+            The current savings account balance.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest.TargetSavingsAmount">
+            <summary>
+            The target savings account balance.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest.Name">
+            <summary>
+            The savings account display friendly name.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Responses.Budgets.GetBudgetForUserResponse">
+            <summary>
+            Represents a collection of expenses for a user, forming a budget.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.Budgets.GetBudgetForUserResponse.UserId">
+            <summary>
+            The user's unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.Budgets.GetBudgetForUserResponse.Expenses">
+            <summary>
+            The user's expenses.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Responses.Currencies.GetCurrencyResponse">
+            <summary>
+            Represents a collection of available currencies.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.Currencies.GetCurrencyResponse.Currencies">
+            <summary>
+            An enumeration of currencies. This could be empty if there are no currencies recorded in the database.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Responses.DebtAccounts.GetDebtAccountsForUserResponse">
+            <summary>
+            Represents a collection of debt accounts owned by a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.DebtAccounts.GetDebtAccountsForUserResponse.UserId">
+            <summary>
+            The user's unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.DebtAccounts.GetDebtAccountsForUserResponse.DebtAccounts">
+            <summary>
+            An enumeration of debt accounts linked to the user.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Responses.ExpenseCategories.GetExpenseCategoriesForUserResponse">
+            <summary>
+            Represents a collection of expense categories mapped to a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.ExpenseCategories.GetExpenseCategoriesForUserResponse.UserId">
+            <summary>
+            The user's unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.ExpenseCategories.GetExpenseCategoriesForUserResponse.ExpenseCategories">
+            <summary>
+            A collection of expense categories linked to the user.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Responses.ExpenseCategories.GetExpenseCategoriesResponse">
+            <summary>
+            Represents a collection of available expense categories.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.ExpenseCategories.GetExpenseCategoriesResponse.ExpenseCategories">
+            <summary>
+            An enumeration of expense categories.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.Responses.SavingsAccounts.GetSavingsAccountForUserResponse">
+            <summary>
+            Represents a collection of savings accounts owned by a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.SavingsAccounts.GetSavingsAccountForUserResponse.UserId">
+            <summary>
+            The user's unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.Responses.SavingsAccounts.GetSavingsAccountForUserResponse.SavingsAccounts">
+            <summary>
+            An enumeration of savings accounts linked to the user.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Models.SavingsAccount">
+            <summary>
+            Represents an instance of a savings account for a user.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.SavingsAccount.SavingsAccountId">
+            <summary>
+            The savings account unique identifier.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.SavingsAccount.CountryCurrencyCode">
+            <summary>
+            The country's currency code, such as "ZAR" or "USD".
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.SavingsAccount.InitialSavingsValue">
+            <summary>
+            The savings account initial value.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.SavingsAccount.CurrentSavingsValue">
+            <summary>
+            The savings account current value.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.SavingsAccount.SavingsTarget">
+            <summary>
+            The target value of the savings account.
+            </summary>
+        </member>
+        <member name="P:FinancialPeace.Web.Api.Models.SavingsAccount.Name">
+            <summary>
+            A display friendly name for the savings account, such "Emergency Savings".
             </summary>
         </member>
     </members>

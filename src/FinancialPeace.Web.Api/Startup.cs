@@ -1,45 +1,57 @@
 using System;
 using System.IO;
 using System.Reflection;
+using FinancialPeace.Web.Api.Errors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Shared.WebApi.Core.Builders;
+using Shared.WebApi.Core.Errors;
+using Shared.WebApi.Core.Extensions;
+using Shared.WebApi.Core.Security;
+
 #pragma warning disable 1591
 
 namespace FinancialPeace.Web.Api
 {
     public class Startup
     {
+        private const string ApiTitle = "Financial Peace";
+        private const int ApiVersion = 1;
+        private const string ApiDescription = "A RESTful API that exposes functionality to manage your way to financial peace.";
+        
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Setup the API
             services.AddControllers();
+            services.AddTokenAuthentication(Configuration);
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Financial Peace", 
-                    Version = "v1",
-                    Description = "A RESTful API that exposes functionality to manage your way to financial peace."
-                });
-                
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
+            // Setup the Swagger docs.
+            var apiXmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var apiXmlPath = Path.Combine(AppContext.BaseDirectory, apiXmlFile);
+
+            new SwaggerServicesBuilder()
+                .WithApiTitle(ApiTitle)
+                .WithApiVersion(ApiVersion)
+                .WithApiDescription(ApiDescription)
+                .WithXmlComments(apiXmlPath)
+                .WithCoreXmlDocs(true)
+                .WithJwtAuthentication(true)
+                .BuildSwaggerServices(services);
+            
+            // Register implementations
+            services.TryAddTransient<IErrorMessageSelector, ErrorMessageSelector>();
+            services.TryAddTransient<IJwtService, JwtService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,19 +62,11 @@ namespace FinancialPeace.Web.Api
                 app.UseDeveloperExceptionPage();
             }
             
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-            
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Financial Peace API");
-                c.RoutePrefix = string.Empty;
-            });
-
+            app.UseSwaggerDocs(ApiVersion, ApiTitle);
+            app.UseGlobalExceptionHandler();
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();  
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

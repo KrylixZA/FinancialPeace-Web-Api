@@ -42,8 +42,10 @@ jobs:
 
   - task: PowerShell@2
     displayName: 'Publish packages to nuget feed'
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     inputs:
       targetType: 'filePath'
       filePath: 'nuget-publish.ps1'
       arguments: '-NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
       failOnStdErr: true
+    
