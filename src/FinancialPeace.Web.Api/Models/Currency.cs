@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models
@@ -7,6 +8,7 @@ namespace FinancialPeace.Web.Api.Models
     /// <summary>
     /// A model representation of a currency and it's relevant exchange rate.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class Currency
     {
         /// <summary>
@@ -21,21 +23,21 @@ namespace FinancialPeace.Web.Api.Models
         /// </summary>
         [Required]
         [JsonProperty("countryCurrencyCode", Required = Required.Always)]
-        public string CountryCurrencyCode { get; set; }
-        
+        public string CountryCurrencyCode { get; set; } = null!;
+
         /// <summary>
         /// The name of the currency, such as US Dollar or South African Rand.
         /// </summary>
         [Required]
         [JsonProperty("name", Required = Required.Always)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// The country associated to the currency. This can be null, for currencies such as the Euro.
         /// </summary>
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
-        public string Country { get; set; }
-        
+        public string Country { get; set; } = null!;
+
         /// <summary>
         /// The currency's exchange rate relative to the US Dollar, such as 19.05.
         /// </summary>

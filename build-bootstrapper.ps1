@@ -43,3 +43,8 @@ if ($Actions -contains "build") {
 if ($Actions -contains "unit-test") {
     .\unit-test.ps1 -BuildVersion $nugetPkgVersion -BuildConfiguration $BuildConfiguration;
 }
+
+# Set build display number
+if ($Actions -contains "set-build-display-number") {
+    Write-Host "##vso[build.updateBuildNumber]$nugetPkgVersion";
+}

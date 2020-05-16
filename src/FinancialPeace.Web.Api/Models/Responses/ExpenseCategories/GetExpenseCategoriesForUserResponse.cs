@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models.Responses.ExpenseCategories
@@ -8,6 +9,7 @@ namespace FinancialPeace.Web.Api.Models.Responses.ExpenseCategories
     /// <summary>
     /// Represents a collection of expense categories mapped to a user.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class GetExpenseCategoriesForUserResponse
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace FinancialPeace.Web.Api.Models.Responses.ExpenseCategories
         /// <summary>
         /// A collection of expense categories linked to the user.
         /// </summary>
-        [JsonProperty("expenseCategories")]
-        public IEnumerable<ExpenseCategory> ExpenseCategories { get; set; }
+        [JsonProperty("expenseCategories", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public IEnumerable<ExpenseCategory>? ExpenseCategories { get; set; }
     }
 }

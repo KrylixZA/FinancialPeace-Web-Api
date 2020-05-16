@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models.Requests.DebtAccounts
@@ -6,6 +7,7 @@ namespace FinancialPeace.Web.Api.Models.Requests.DebtAccounts
     /// <summary>
     /// Represents a request to update a debt account details.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class UpdateDebtAccountRequest
     {
         /// <summary>

@@ -9,6 +9,12 @@
             Exposes functionality to view and manage a user's budget.
             </summary>
         </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.#ctor(FinancialPeace.Web.Api.Managers.IBudgetsManager)">
+            <summary>
+            Initializes a new instance of the Budgets Controller class.
+            </summary>
+            <param name="budgetsManager"></param>
+        </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.GetBudgetForUser(System.Guid)">
             <summary>
             Gets the user's budget with all the listed expenses.
@@ -318,6 +324,79 @@
         <member name="M:FinancialPeace.Web.Api.Errors.ErrorMessageSelector.GetErrorMessage(System.Int32)">
             <inheritdoc />
         </member>
+        <member name="T:FinancialPeace.Web.Api.Helpers.MySqlGuidTypeHandler">
+            <summary>
+            Provides a helper to handle MySQL unique identifiers.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Helpers.MySqlGuidTypeHandler.SetValue(System.Data.IDbDataParameter,System.Guid)">
+            <summary>
+            Set's the value of the guid.
+            </summary>
+            <param name="parameter">The parameter.</param>
+            <param name="guid">The globally unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Helpers.MySqlGuidTypeHandler.Parse(System.Object)">
+            <summary>
+            Parses the string to a C# Guid.
+            </summary>
+            <param name="value">The string value.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.BudgetsManager">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.#ctor(FinancialPeace.Web.Api.Repositories.IBudgetsRepository)">
+            <summary>
+            Initializes a new instance of the Budgets Manager class.
+            </summary>
+            <param name="budgetsRepository">The budgets repository.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.GetBudgetForUserAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.CreateExpenseForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.DeleteExpenseForUserAsync(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.UpdateExpenseForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
+            <inheritdoc />
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.IBudgetsManager">
+            <summary>
+            An interface for a manager layer that will interpret results from the DB layer and transform them to a useful model for the controller.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IBudgetsManager.GetBudgetForUserAsync(System.Guid)">
+            <summary>
+            Gets the budget for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of expenses for the user.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IBudgetsManager.CreateExpenseForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest)">
+            <summary>
+            Attempts to create an expense for a user, creating a budget for the user if none exists.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The details of the expense.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IBudgetsManager.DeleteExpenseForUserAsync(System.Guid,System.Guid)">
+            <summary>
+            Attempts to delete an expense for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseId">The expense unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IBudgetsManager.UpdateExpenseForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
+            <summary>
+            Attempts to update an expense for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseId">The expense unique identifier.</param>
+            <param name="request">The updated details of the request.</param>
+        </member>
         <member name="T:FinancialPeace.Web.Api.Models.Currency">
             <summary>
             A model representation of a currency and it's relevant exchange rate.
@@ -463,9 +542,9 @@
             Represents a request to update an expense details for a user.
             </summary>
         </member>
-        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest.DisplayName">
+        <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest.ExpenseCategoryName">
             <summary>
-            The expense display name.
+            The expense category name.
             </summary>
         </member>
         <member name="P:FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest.CountryCurrencyCode">
@@ -757,6 +836,168 @@
             <summary>
             A display friendly name for the savings account, such "Emergency Savings".
             </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.BudgetsRepository">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+            <summary>
+            Initializes a new instance of the Budgets Repository class.
+            </summary>
+            <param name="connectionProvider">The connection provider.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.GetBudgetForUserAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.CreateExpenseForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.DeleteExpenseForUserAsync(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.UpdateExpenseForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
+            <inheritdoc />
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider">
+            <summary>
+            Provides an interface to resolve a connection 
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider.Open">
+            <summary>
+            Opens a connection to the Freedom database.
+            </summary>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper">
+            <summary>
+            Provides a wrapper for the SQL connection to allow for unit testing when using unit testing.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Creates a transaction based on the open connection.
+            </summary>
+            <param name="isolationLevel">The isolation level. By default this is set to ReadCommitted.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper.ExecuteNonQueryAsync(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <summary>
+            Executes a non-query asynchronously.
+            </summary>
+            <param name="query">The query to be run.</param>
+            <param name="parameters">The parameters to pass into the query.</param>
+            <param name="transaction">The transaction.</param>
+            <param name="commandTimeout">The command timeout in seconds.</param>
+            <param name="commandType">The command type.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper.QueryFirstAsync``1(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <summary>
+            Queries the database and returns the first result from the result set. Throws a null reference exception of nothing is returned from the database.
+            </summary>
+            <typeparam name="T">The type of data to be returned from the database.</typeparam>
+            <param name="query">The query to be run.</param>
+            <param name="parameters">The parameters to pass into the query.</param>
+            <param name="transaction">The transaction.</param>
+            <param name="commandTimeout">The command timeout in seconds.</param>
+            <param name="commandType">The command type.</param>
+            <returns>An instance of an object of type T.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper.QueryFirstOrDefaultAsync``1(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <summary>
+            Queries the database and returns the first result from the result set. Returns null if nothing is returned from the database.
+            </summary>
+            <typeparam name="T">The type of data to be returned from the database.</typeparam>
+            <param name="query">The query to be run.</param>
+            <param name="parameters">The parameters to pass into the query.</param>
+            <param name="transaction">The transaction.</param>
+            <param name="commandTimeout">The command timeout in seconds.</param>
+            <param name="commandType">The command type.</param>
+            <returns>An instance of an object of type T, or null.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper.QueryAsync``1(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <summary>
+            Queries data out of database.
+            </summary>
+            <typeparam name="T">The type of data to be returned from the database.</typeparam>
+            <param name="query">The query to be run.</param>
+            <param name="parameters">The parameters to pass into the query.</param>
+            <param name="transaction">The transaction.</param>
+            <param name="commandTimeout">The command timeout in seconds.</param>
+            <param name="commandType">The command type.</param>
+            <returns>An enumeration of objects of type T.</returns>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper)">
+            <summary>
+            Initializes a new instance of the SqlConnectionProvider class.
+            </summary>
+            <param name="sqlConnectionWrapper">The SQL connection wrapper.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider.Open">
+            <inheritdoc />
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.#ctor(System.Data.IDbConnection)">
+            <summary>
+            Initializes a new private instance of itself.
+            </summary>
+            <param name="dbConnection">The database connection.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.BeginTransaction(System.Data.IsolationLevel)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.ExecuteNonQueryAsync(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.QueryFirstAsync``1(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.QueryFirstOrDefaultAsync``1(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.QueryAsync``1(System.String,Dapper.DynamicParameters,System.Data.IDbTransaction,System.Nullable{System.Int32},System.Nullable{System.Data.CommandType})">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.IBudgetsRepository">
+            <summary>
+            Provides a contract for accessing the budgets portion of the Freedom database.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IBudgetsRepository.GetBudgetForUserAsync(System.Guid)">
+            <summary>
+            Gets the budget for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of expenses for the user.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IBudgetsRepository.CreateExpenseForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.CreateExpenseRequest)">
+            <summary>
+            Attempts to create an expense for a user, creating a budget for the user if none exists.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The details of the expense.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IBudgetsRepository.DeleteExpenseForUserAsync(System.Guid,System.Guid)">
+            <summary>
+            Attempts to delete an expense for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseId">The expense unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IBudgetsRepository.UpdateExpenseForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
+            <summary>
+            Attempts to update an expense for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseId">The expense unique identifier.</param>
+            <param name="request">The updated details of the request.</param>
         </member>
     </members>
 </doc>

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
+using FinancialPeace.Web.Api.Managers;
 using FinancialPeace.Web.Api.Models.Requests.Budgets;
 using FinancialPeace.Web.Api.Models.Responses.Budgets;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,17 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
     [Route("budgets")]
     public class BudgetsController : ControllerBase
     {
+        private readonly IBudgetsManager _budgetsManager;
+
+        /// <summary>
+        /// Initializes a new instance of the Budgets Controller class.
+        /// </summary>
+        /// <param name="budgetsManager"></param>
+        public BudgetsController(IBudgetsManager budgetsManager)
+        {
+            _budgetsManager = budgetsManager ?? throw new ArgumentNullException(nameof(budgetsManager));
+        }
+        
         /// <summary>
         /// Gets the user's budget with all the listed expenses.
         /// </summary>
@@ -32,7 +44,8 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetBudgetForUser([Required] [FromRoute] Guid userId)
         {
-            return Ok();
+            var response = await _budgetsManager.GetBudgetForUserAsync(userId);
+            return Ok(response);
         }
 
         /// <summary>
@@ -46,7 +59,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
         /// <response code="403">The request was forbidden from proceeding.</response>
         /// <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
         [HttpPost("user/{userId}")]
-        [ProducesResponseType(typeof(GetBudgetForUserResponse), (int) HttpStatusCode.Accepted)]
+        [ProducesResponseType((int) HttpStatusCode.Accepted)]
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int) HttpStatusCode.Forbidden)]
@@ -55,6 +68,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] CreateExpenseRequest request)
         {
+            await _budgetsManager.CreateExpenseForUserAsync(userId, request);
             return Accepted();
         }
 
@@ -76,6 +90,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid userId,
             [Required] [FromRoute] Guid expenseId)
         {
+            await _budgetsManager.DeleteExpenseForUserAsync(userId, expenseId);
             return Ok();
         }
 
@@ -101,6 +116,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid expenseId,
             [Required] [FromBody] UpdateExpenseRequest request)
         {
+            await _budgetsManager.UpdateExpenseForUserAsync(userId, expenseId, request);
             return Ok();
         }
     }

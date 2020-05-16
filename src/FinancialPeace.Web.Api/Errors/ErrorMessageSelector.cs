@@ -17,7 +17,6 @@ namespace FinancialPeace.Web.Api.Errors
                 default:
                 case (int)ErrorCodes.GeneralError:
                     return GeneralErrorMessage;
-                
             }
         }
     }

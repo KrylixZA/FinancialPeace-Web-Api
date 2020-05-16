@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models.Requests.DebtAccounts
@@ -6,6 +7,7 @@ namespace FinancialPeace.Web.Api.Models.Requests.DebtAccounts
     /// <summary>
     /// Represents a request to reduce the amount owed on a debt account.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class SubtractAmountFromDebtAccountRequest
     {
         /// <summary>

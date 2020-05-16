@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models.Requests.Budgets
@@ -5,13 +6,14 @@ namespace FinancialPeace.Web.Api.Models.Requests.Budgets
     /// <summary>
     /// Represents a request to update an expense details for a user.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class UpdateExpenseRequest
     {
         /// <summary>
-        /// The expense display name.
+        /// The expense category name.
         /// </summary>
-        [JsonProperty("displayName")]
-        public string? DisplayName { get; set; }
+        [JsonProperty("expenseCategoryName")]
+        public string? ExpenseCategoryName { get; set; }
         
         /// <summary>
         /// The country's currency code, such as "ZAR" or "USD".

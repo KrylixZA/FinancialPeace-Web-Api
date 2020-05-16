@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models
@@ -7,6 +8,7 @@ namespace FinancialPeace.Web.Api.Models
     /// <summary>
     /// Represents an instance of a savings account for a user.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class SavingsAccount
     {
         /// <summary>
@@ -21,7 +23,7 @@ namespace FinancialPeace.Web.Api.Models
         /// </summary>
         [Required]
         [JsonProperty("countryCurrencyCode", Required = Required.Always)]
-        public string CountryCurrencyCode { get; set; }
+        public string CountryCurrencyCode { get; set; } = null!;
 
         /// <summary>
         /// The savings account initial value.
@@ -48,6 +50,6 @@ namespace FinancialPeace.Web.Api.Models
         /// </summary>
         [Required]
         [JsonProperty("name", Required = Required.Always)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

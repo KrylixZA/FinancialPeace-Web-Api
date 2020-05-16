@@ -15,4 +15,8 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\FinancialPeace.Web.Api\FinancialPeace.Web.Api.csproj" />
+    </ItemGroup>
+
 </Project>

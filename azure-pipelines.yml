@@ -1,3 +1,5 @@
+name: $(Rev:r)
+
 trigger:
   branches:
     include:
@@ -23,7 +25,7 @@ jobs:
     inputs:
       targetType: 'filePath'
       filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "build" -BuildId $(Build.BuildID) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
+      arguments: '-Actions "build" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
       failOnStdErr: true
 
   - task: PowerShell@2
@@ -31,7 +33,7 @@ jobs:
     inputs:
       targetType: 'filePath'
       filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "unit-test" -BuildId $(Build.BuildId) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
+      arguments: '-Actions "unit-test" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
       failOnStdErr: true
 
   - task: PublishCodeCoverageResults@1
@@ -49,3 +51,9 @@ jobs:
       arguments: '-NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
       failOnStdErr: true
     
+  - task: PowerShell@2
+    displayName: 'Update build display number'
+    inputs:
+      targetType: 'filepath'
+      filePath: 'build-bootstrapper.ps1'
+      arguments: '-Actions "set-build-display-number" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName)'

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FinancialPeace.Web.Api.Models.Responses.SavingsAccounts
@@ -8,6 +9,7 @@ namespace FinancialPeace.Web.Api.Models.Responses.SavingsAccounts
     /// <summary>
     /// Represents a collection of savings accounts owned by a user.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class GetSavingsAccountForUserResponse
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace FinancialPeace.Web.Api.Models.Responses.SavingsAccounts
         /// <summary>
         /// An enumeration of savings accounts linked to the user.
         /// </summary>
-        [JsonProperty("savingsAccounts")]
-        public IEnumerable<SavingsAccount> SavingsAccounts { get; set; }
+        [JsonProperty("savingsAccounts", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public IEnumerable<SavingsAccount>? SavingsAccounts { get; set; }
     }
 }
