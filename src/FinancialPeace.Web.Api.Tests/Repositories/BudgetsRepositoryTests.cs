@@ -31,7 +31,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
                 SqlConnectionProvider = Substitute.For<ISqlConnectionProvider>(),
                 SqlConnectionWrapper = Substitute.For<ISqlConnectionWrapper>()
             };
-
             stubs.SqlConnectionProvider.Open().Returns(stubs.SqlConnectionWrapper);
 
             return stubs;

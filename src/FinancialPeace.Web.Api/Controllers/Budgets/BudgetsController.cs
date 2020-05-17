@@ -44,7 +44,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetBudgetForUser([Required] [FromRoute] Guid userId)
         {
-            var response = await _budgetsManager.GetBudgetForUserAsync(userId);
+            var response = await _budgetsManager.GetBudgetForUserAsync(userId).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -68,7 +68,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] CreateExpenseRequest request)
         {
-            await _budgetsManager.CreateExpenseForUserAsync(userId, request);
+            await _budgetsManager.CreateExpenseForUserAsync(userId, request).ConfigureAwait(false);
             return Accepted();
         }
 
@@ -90,7 +90,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid userId,
             [Required] [FromRoute] Guid expenseId)
         {
-            await _budgetsManager.DeleteExpenseForUserAsync(userId, expenseId);
+            await _budgetsManager.DeleteExpenseForUserAsync(userId, expenseId).ConfigureAwait(false);
             return Ok();
         }
 
@@ -116,7 +116,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid expenseId,
             [Required] [FromBody] UpdateExpenseRequest request)
         {
-            await _budgetsManager.UpdateExpenseForUserAsync(userId, expenseId, request);
+            await _budgetsManager.UpdateExpenseForUserAsync(userId, expenseId, request).ConfigureAwait(false);
             return Ok();
         }
     }

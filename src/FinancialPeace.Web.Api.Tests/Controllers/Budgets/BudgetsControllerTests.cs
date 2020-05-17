@@ -67,7 +67,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
         }
 
         [Test]
-        public async Task GetBudgetForUser_GivenUserId_ShouldReturnExpectedUserBudget()
+        public async Task GetBudgetForUser_GivenUserId_ShouldReturnExpectedOkObjectResult()
         {
             // Arrange
             var userId = Guid.NewGuid();
@@ -106,7 +106,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
         }
 
         [Test]
-        public async Task CreateExpenseForUser_GivenUserIdAndRequest_ShouldReturnAccepted()
+        public async Task CreateExpenseForUser_GivenUserIdAndRequest_ShouldReturnAcceptedResult()
         {
             // Arrange
             var stubs = GetStubs();
@@ -127,7 +127,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
         }
 
         [Test]
-        public async Task DeleteExpenseForUser_GivenUserIdAndExpenseId_ShouldReturnOk()
+        public async Task DeleteExpenseForUser_GivenUserIdAndExpenseId_ShouldReturnOkResult()
         {
             // Arrange
             var stubs = GetStubs();
@@ -141,7 +141,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
         }
 
         [Test]
-        public async Task UpdateExpenseForUser_GivenUserIdAndExpenseId_ShouldReturnOk()
+        public async Task UpdateExpenseForUser_GivenUserIdAndExpenseId_ShouldReturnOkResult()
         {
             // Arrange
             var stubs = GetStubs();

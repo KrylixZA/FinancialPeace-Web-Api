@@ -117,7 +117,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         }
 
         [Test]
-        public void DeleteExpenseForUserAsync_GivenUserIdAndExpenseId_ShouldCompleteTransactionWithoutError()
+        public void DeleteExpenseForUserAsync_GivenUserIdAndExpenseId_ShouldCompleteWithoutError()
         {
             // Arrange
             var stubs = GetStubs();
@@ -130,7 +130,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         }
 
         [Test]
-        public void UpdateExpenseForUserAsync_GivenUserIdAndExpenseIdAndUpdateRequest_ShouldCompleteTransactionWithoutError()
+        public void UpdateExpenseForUserAsync_GivenUserIdAndExpenseIdAndUpdateRequest_ShouldCompleteWithoutError()
         {
             // Arrange
             var stubs = GetStubs();

@@ -23,7 +23,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// <inheritdoc />
         public async Task<GetBudgetForUserResponse> GetBudgetForUserAsync(Guid userId)
         {
-            var userExpenses = await _budgetsRepository.GetBudgetForUserAsync(userId);
+            var userExpenses = await _budgetsRepository.GetBudgetForUserAsync(userId).ConfigureAwait(false);
             return new GetBudgetForUserResponse
             {
                 Expenses = userExpenses,

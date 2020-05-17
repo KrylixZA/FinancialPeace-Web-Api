@@ -169,6 +169,12 @@
             Exposes functionality to manage expenses categories.
             </summary>
         </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.#ctor(FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager)">
+            <summary>
+            Creates a new instance of the Expense Categories Controller class.
+            </summary>
+            <param name="expenseCategoriesManager">The expense categories manager.</param>
+        </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.GetExpenseCategories">
             <summary>
             Gets all listed expense categories.
@@ -190,7 +196,7 @@
         </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
             <summary>
-            Persists a new expense category to the database if it does not already exist and links that newly created expense category to the user.
+            Persists a new expense category to the database if it does not already exist and links that newly created expense category to the user. This newly created expense category will be available for all users.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The expense category details.</param>
@@ -363,6 +369,27 @@
         <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.UpdateExpenseForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
             <inheritdoc />
         </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.#ctor(FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository)">
+            <summary>
+            Creates a new instance of the Expense Categories Manager class.
+            </summary>
+            <param name="expenseCategoriesRepository">The expense categories repository.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.GetExpenseCategories">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.GetExpenseCategoriesForUser(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
         <member name="T:FinancialPeace.Web.Api.Managers.IBudgetsManager">
             <summary>
             An interface for a manager layer that will interpret results from the DB layer and transform them to a useful model for the controller.
@@ -396,6 +423,38 @@
             <param name="userId">The user's unique identifier.</param>
             <param name="expenseId">The expense unique identifier.</param>
             <param name="request">The updated details of the request.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager">
+            <summary>
+            An interface for a manager layer that intercedes between the expense categories repository and the controller.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.GetExpenseCategories">
+            <summary>
+            Gets all listed expense categories.
+            </summary>
+            <returns>An enumeration of expense categories.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.GetExpenseCategoriesForUser(System.Guid)">
+            <summary>
+            Gets all listed expense categories linked to a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of expense categories linked to a user.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+            <summary>
+            Creates a link between a user and an expense category. If the expense category does not exist, it will be created first. The created expense category will be available for all users.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The expense category details.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes a mapping between a user and an expense category.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseCategoryId">The expense category's unique identifier.</param>
         </member>
         <member name="T:FinancialPeace.Web.Api.Models.Currency">
             <summary>
@@ -965,6 +1024,27 @@
         <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.Dispose">
             <inheritdoc />
         </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+            <summary>
+            Initializes a new instance of the Expense Category Repository class.
+            </summary>
+            <param name="connectionProvider">The connection provider.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.GetExpenseCategories">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.GetExpenseCategoriesForUser(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.IBudgetsRepository">
             <summary>
             Provides a contract for accessing the budgets portion of the Freedom database.
@@ -998,6 +1078,38 @@
             <param name="userId">The user's unique identifier.</param>
             <param name="expenseId">The expense unique identifier.</param>
             <param name="request">The updated details of the request.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository">
+            <summary>
+            Provides a contract for interacting with the expense categories parts of the database.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.GetExpenseCategories">
+            <summary>
+            Gets all the available expense categories from the database.
+            </summary>
+            <returns>An enumeration of expense categories.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.GetExpenseCategoriesForUser(System.Guid)">
+            <summary>
+            Gets all the expense categories linked to the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of expense categories linked to the user.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+            <summary>
+            Links a user to an expense category. If the expense category does not exist, it will be created first and become available to all users.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The expense category details.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes the mapping between an expense category and a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="expenseCategoryId">The expense category's unique identifier.</param>
         </member>
     </members>
 </doc>
