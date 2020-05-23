@@ -66,6 +66,12 @@
             Exposes functionality to manage currencies.
             </summary>
         </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.#ctor(FinancialPeace.Web.Api.Managers.ICurrenciesManager)">
+            <summary>
+            Creates a new instance of the Currencies Controller class.
+            </summary>
+            <param name="currenciesManager">The currencies manager.</param>
+        </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.GetCurrencies">
             <summary>
             Gets all the registered currencies from the database.
@@ -369,6 +375,21 @@
         <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.UpdateExpenseForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.Budgets.UpdateExpenseRequest)">
             <inheritdoc />
         </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.CurrenciesManager">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.#ctor(FinancialPeace.Web.Api.Repositories.ICurrenciesRepository)">
+            <summary>
+            Creates a new instance of the Currencies Manager class.
+            </summary>
+            <param name="currenciesRepository">The currencies repository.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.GetCurrencies">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+            <inheritdoc />
+        </member>
         <member name="T:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager">
             <inheritdoc />
         </member>
@@ -423,6 +444,23 @@
             <param name="userId">The user's unique identifier.</param>
             <param name="expenseId">The expense unique identifier.</param>
             <param name="request">The updated details of the request.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.ICurrenciesManager">
+            <summary>
+            Provides a contract for a manager between the repository and controller layer.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ICurrenciesManager.GetCurrencies">
+            <summary>
+            Gets the currently listed currencies from the database.
+            </summary>
+            <returns>A collection of currencies.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ICurrenciesManager.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+            <summary>
+            Attempts to persist a new currency to the database.
+            </summary>
+            <param name="request">The details of the new currency.</param>
         </member>
         <member name="T:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager">
             <summary>
@@ -1024,6 +1062,21 @@
         <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.Dispose">
             <inheritdoc />
         </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.CurrenciesRepository">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+            <summary>
+            Creates a new instance of the Currencies Repository class.
+            </summary>
+            <param name="sqlConnectionProvider">The SQL connection provider.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.GetCurrencies">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+            <inheritdoc />
+        </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository">
             <inheritdoc />
         </member>
@@ -1078,6 +1131,23 @@
             <param name="userId">The user's unique identifier.</param>
             <param name="expenseId">The expense unique identifier.</param>
             <param name="request">The updated details of the request.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository">
+            <summary>
+            Defines a contract for interacting with currencies in the database.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository.GetCurrencies">
+            <summary>
+            Gets all currently listed currencies from the database.
+            </summary>
+            <returns>An enumeration of currencies.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+            <summary>
+            Attempts to persist a new currency to the database.
+            </summary>
+            <param name="request">The details of the currency to be added.</param>
         </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository">
             <summary>

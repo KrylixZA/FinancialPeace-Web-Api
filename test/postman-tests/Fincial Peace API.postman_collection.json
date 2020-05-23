@@ -150,6 +150,75 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Currencies",
+			"item": [
+				{
+					"name": "Get Currences",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/currencies",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Currency",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"country\": \"Namibia\",\n\t\"name\": \"Namibian Dollar\",\n\t\"countryCurrencyCode\": \"NAD\",\n\t\"randExchangeRate\": 1.18\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/currencies",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Expense Categories",
 			"item": [
 				{

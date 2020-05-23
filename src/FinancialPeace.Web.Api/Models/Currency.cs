@@ -36,7 +36,7 @@ namespace FinancialPeace.Web.Api.Models
         /// The country associated to the currency. This can be null, for currencies such as the Euro.
         /// </summary>
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
-        public string Country { get; set; } = null!;
+        public string? Country { get; set; }
 
         /// <summary>
         /// The currency's exchange rate relative to the US Dollar, such as 19.05.

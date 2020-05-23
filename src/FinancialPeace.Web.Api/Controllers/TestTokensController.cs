@@ -1,6 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Shared.WebApi.Core.Security;
 
 namespace FinancialPeace.Web.Api.Controllers
@@ -30,7 +30,7 @@ namespace FinancialPeace.Web.Api.Controllers
         [AllowAnonymous]
         public IActionResult GetRandomToken()  
         {  
-            var token = _jwtService.GenerateSecurityToken("fake@email.com");  
+            var token = _jwtService.GenerateSecurityToken("fake@email.com", DateTime.Now);  
             return Ok(token);
         }
     }

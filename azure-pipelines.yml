@@ -1,4 +1,4 @@
-name: $(Rev:r)
+name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(Rev:r)
 
 trigger:
   branches:
@@ -12,48 +12,88 @@ pool:
   vmImage: 'windows-2019'
 
 variables:
-  buildConfiguration: 'Release'
-  nugetFeedName: 'headleysj'
-  nugetFeedSource: 'https://pkgs.dev.azure.com/headleysj/_packaging/headleysj/nuget/v3/index.json'
-  nugetFeedUser: 'AzureNugetUser'
+  BuildConfiguration: 'Release'
 
 jobs:
 - job: 'Build'
   steps:
-  - task: PowerShell@2
-    displayName: 'Build'
-    inputs:
-      targetType: 'filePath'
-      filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "build" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
-      failOnStdErr: true
+  - checkout: self
+    fetchDepth: 1
+    clean: true
 
   - task: PowerShell@2
-    displayName: 'Run unit tests'
+    displayName: 'Set build number'
     inputs:
-      targetType: 'filePath'
-      filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "unit-test" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
-      failOnStdErr: true
+      targetType: 'inline'
+      script: |
+        $branchName = "$(Build.SourceBranchName)";
+        $buildVersion = "$(Build.BuildNumber)";
+        $nugetPkgVersion = $buildVersion;
+        If (-not([string]::IsNullOrWhiteSpace($branchName)) -and ($branchName -ne "master")) {
+            $nugetPkgVersion = "$nugetPkgVersion-$branchName";
+        }
+        Write-Host "Package version: $nugetPkgVersion";
+        Write-Host "##vso[build.updateBuildNumber]$nugetPkgVersion";
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore'
+    inputs:
+      command: 'restore'
+      projects: './src'
+      feedsToUse: 'select'
+      vstsFeed: '404449e0-6d24-4a4e-bc3e-4634d3f54a5a'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      command: 'build'
+      projects: './src'
+      arguments: '--no-restore --configuration $(BuildConfiguration) -p:Version=$(Build.BuildNumber)'
+
+  - task: NuGetCommand@2
+    displayName: 'nuget pack'
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/*.nuspec'
+      configuration: '$(buildConfiguration)'
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: 'Build.BuildNumber'
+      buildProperties: 'version="$(Build.BuildNumber)"'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet test'
+    inputs:
+      command: 'test'
+      projects: './src'
+      arguments: '--no-restore --configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2cjson" /p:CoverletOutput="$(Build.SourcesDirectory)/artifacts/unit-tests/" /p:MergeWith="$(Build.SourcesDirectory)/artifacts/unit-tests/coverage.json"'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet nuget push'
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '404449e0-6d24-4a4e-bc3e-4634d3f54a5a'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish build artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
 
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage results'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: '$(Build.SourcesDirectory)/artifacts/unit-tests/*.xml'
+      summaryFileLocation: '$(Build.SourcesDirectory)/artifacts/unit-tests/coverage.cobertura.xml'
 
-  - task: PowerShell@2
-    displayName: 'Publish packages to nuget feed'
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
     inputs:
-      targetType: 'filePath'
-      filePath: 'nuget-publish.ps1'
-      arguments: '-NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
-      failOnStdErr: true
-    
-  - task: PowerShell@2
-    displayName: 'Update build display number'
-    inputs:
-      targetType: 'filepath'
-      filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "set-build-display-number" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName)'
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '**/**.trx'
+      searchFolder: '$(Agent.TempDirectory)'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      buildConfiguration: '$(BuildConfiguration)'

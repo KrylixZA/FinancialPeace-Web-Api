@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
+using FinancialPeace.Web.Api.Managers;
 using FinancialPeace.Web.Api.Models.Requests.Currencies;
 using FinancialPeace.Web.Api.Models.Responses.Currencies;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,17 @@ namespace FinancialPeace.Web.Api.Controllers.Currencies
     [Route("currencies")]
     public class CurrenciesController : ControllerBase
     {
+        private readonly ICurrenciesManager _currenciesManager;
+
+        /// <summary>
+        /// Creates a new instance of the Currencies Controller class.
+        /// </summary>
+        /// <param name="currenciesManager">The currencies manager.</param>
+        public CurrenciesController(ICurrenciesManager currenciesManager)
+        {
+            _currenciesManager = currenciesManager ?? throw new ArgumentNullException(nameof(currenciesManager));
+        }
+        
         /// <summary>
         /// Gets all the registered currencies from the database.
         /// </summary>
@@ -31,7 +43,8 @@ namespace FinancialPeace.Web.Api.Controllers.Currencies
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetCurrencies()
         {
-            return Ok();
+            var response = await _currenciesManager.GetCurrencies();
+            return Ok(response);
         }
 
         /// <summary>
@@ -51,6 +64,7 @@ namespace FinancialPeace.Web.Api.Controllers.Currencies
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> AddCurrency([Required] [FromBody] AddCurrencyRequest request)
         {
+            await _currenciesManager.AddCurrency(request);
             return Accepted();
         }
     }

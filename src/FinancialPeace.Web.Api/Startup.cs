@@ -67,9 +67,11 @@ namespace FinancialPeace.Web.Api
             services.TryAddTransient<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:FreedomDb"]));
             services.TryAddTransient<ISqlConnectionProvider, SqlConnectionProvider>();
             services.TryAddTransient<IBudgetsRepository, BudgetsRepository>();
+            services.TryAddTransient<ICurrenciesRepository, CurrenciesRepository>();
             services.TryAddTransient<IExpenseCategoriesRepository, ExpenseCategoriesRepository>();
             services.TryAddTransient<IBudgetsManager, BudgetsManager>();
             services.TryAddTransient<IExpenseCategoriesManager, ExpenseCategoriesManager>();
+            services.TryAddTransient<ICurrenciesManager, CurrenciesManager>();
             
             // Register singletons
             services.TryAddSingleton<ISqlConnectionWrapper, SqlConnectionWrapper>();
