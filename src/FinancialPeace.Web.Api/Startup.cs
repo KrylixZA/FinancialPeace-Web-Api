@@ -68,10 +68,12 @@ namespace FinancialPeace.Web.Api
             services.TryAddTransient<ISqlConnectionProvider, SqlConnectionProvider>();
             services.TryAddTransient<IBudgetsRepository, BudgetsRepository>();
             services.TryAddTransient<ICurrenciesRepository, CurrenciesRepository>();
+            services.TryAddTransient<ISavingsAccountRepository, SavingsAccountRepository>();
             services.TryAddTransient<IExpenseCategoriesRepository, ExpenseCategoriesRepository>();
             services.TryAddTransient<IBudgetsManager, BudgetsManager>();
             services.TryAddTransient<IExpenseCategoriesManager, ExpenseCategoriesManager>();
             services.TryAddTransient<ICurrenciesManager, CurrenciesManager>();
+            services.TryAddTransient<ISavingsAccountManager, SavingsAccountManager>();
             
             // Register singletons
             services.TryAddSingleton<ISqlConnectionWrapper, SqlConnectionWrapper>();

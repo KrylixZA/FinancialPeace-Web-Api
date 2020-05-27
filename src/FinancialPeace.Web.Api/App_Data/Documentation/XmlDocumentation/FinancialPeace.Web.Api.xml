@@ -228,6 +228,12 @@
             Exposes functionality to manage a user's savings accounts.
             </summary>
         </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.#ctor(FinancialPeace.Web.Api.Managers.ISavingsAccountManager)">
+            <summary>
+            Initializes a new instance of the Savings Account Controller class.
+            </summary>
+            <param name="savingsAccountManager">The savings account manager.</param>
+        </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.GetSavingsAccountsForUser(System.Guid)">
             <summary>
             Gets the savings account linked to a user.
@@ -250,7 +256,7 @@
             <response code="403">The request was forbidden from proceeding.</response>
             <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
             <summary>
             Increases the current balance of a user's savings account.
             </summary>
@@ -263,7 +269,7 @@
             <response code="403">The request was forbidden from proceeding.</response>
             <response code="500">Something went wrong with processing the request, likely due to environmental issues.</response>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
             <summary>
             Reduces the current balance of a user's savings account.
             </summary>
@@ -493,6 +499,83 @@
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="expenseCategoryId">The expense category's unique identifier.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.ISavingsAccountManager">
+            <summary>
+            Provides a contract for managing a user's savings account.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.GetSavingsAccountForUser(System.Guid)">
+            <summary>
+            Gets the list of savings accounts linked to the user from the database.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of savings account.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+            <summary>
+            Creates a new savings account for the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The details of the savings account.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+            <summary>
+            Adds an amount to the user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the amount to add.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+            <summary>
+            Subtracts an amount from a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the amount to subtract.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes a savings account for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+            <summary>
+            Updates a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the update.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.SavingsAccountManager">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.#ctor(FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository)">
+            <summary>
+            Initializes a new instance of the Savings Account Manager class.
+            </summary>
+            <param name="savingsAccountRepository">The savings account repository.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.GetSavingsAccountForUser(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+            <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Models.Currency">
             <summary>
@@ -1180,6 +1263,83 @@
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="expenseCategoryId">The expense category's unique identifier.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository">
+            <summary>
+            Provides a contract for interacting with the database and a variety of savings accounts.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.GetSavingsAccountForUser(System.Guid)">
+            <summary>
+            Gets the list of savings accounts linked to the user from the database.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of savings account.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+            <summary>
+            Creates a new savings account for the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The details of the savings account.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+            <summary>
+            Adds an amount to the user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the amount to add.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+            <summary>
+            Subtracts an amount from a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the amount to subtract.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes a savings account for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+            <summary>
+            Updates a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="savingsAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the update.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+            <summary>
+            Initializes a new instance of the Savings Account Repository class.
+            </summary>
+            <param name="sqlConnectionProvider"></param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.GetSavingsAccountForUser(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

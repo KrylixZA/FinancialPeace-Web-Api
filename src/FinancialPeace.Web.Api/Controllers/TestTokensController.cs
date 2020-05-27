@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.WebApi.Core.Security;
@@ -9,6 +10,7 @@ namespace FinancialPeace.Web.Api.Controllers
     /// A test API to resolve a JWT token.
     /// </summary>
     [Route("tokens")]
+    [ExcludeFromCodeCoverage]
     public class TestTokensController : ControllerBase
     {
         private readonly IJwtService _jwtService;

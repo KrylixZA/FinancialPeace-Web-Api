@@ -43,7 +43,7 @@ namespace FinancialPeace.Web.Api.Repositories
             parameters.Add("$name", request.Name);
             parameters.Add("$countryCurrencyCode", request.CountryCurrencyCode);
             parameters.Add("$randExchangeRate", request.RandExchangeRate);
-            await conn.ExecuteNonQueryAsync(CreateCurrencyProc, parameters, commandType: CommandType.StoredProcedure);
+            await conn.ExecuteNonQueryAsync(CreateCurrencyProc, parameters, trans, commandType: CommandType.StoredProcedure);
             trans.Commit();
         }
     }

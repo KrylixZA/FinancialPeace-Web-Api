@@ -24,14 +24,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/budgets/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/budgets/user/{{userId}}",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"budgets",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8"
+								"{{userId}}"
 							]
 						}
 					},
@@ -62,14 +62,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/budgets/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/budgets/user/{{userId}}",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"budgets",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8"
+								"{{userId}}"
 							]
 						}
 					},
@@ -91,14 +91,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/budgets/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8/expense/b4d81410-977f-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/budgets/user/{{userId}}/expense/b4d81410-977f-11ea-904a-7c04d0bb43a8",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"budgets",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+								"{{userId}}",
 								"expense",
 								"b4d81410-977f-11ea-904a-7c04d0bb43a8"
 							]
@@ -131,14 +131,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/budgets/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8/expense/b4d81410-977f-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/budgets/user/{{userId}}/expense/b4d81410-977f-11ea-904a-7c04d0bb43a8",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"budgets",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+								"{{userId}}",
 								"expense",
 								"b4d81410-977f-11ea-904a-7c04d0bb43a8"
 							]
@@ -264,14 +264,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/expenseCategories/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/expenseCategories/user/{{userId}}",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"expenseCategories",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8"
+								"{{userId}}"
 							]
 						}
 					},
@@ -302,14 +302,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/expenseCategories/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/expenseCategories/user/{{userId}}",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"expenseCategories",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8"
+								"{{userId}}"
 							]
 						}
 					},
@@ -331,16 +331,242 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{FinancialPeaceApi}}/expenseCategories/user/3e8708a2-92c5-11ea-904a-7c04d0bb43a8/expense/940d65aa-913f-11ea-904a-7c04d0bb43a8",
+							"raw": "{{FinancialPeaceApi}}/expenseCategories/user/{{userId}}/expense/940d65aa-913f-11ea-904a-7c04d0bb43a8",
 							"host": [
 								"{{FinancialPeaceApi}}"
 							],
 							"path": [
 								"expenseCategories",
 								"user",
-								"3e8708a2-92c5-11ea-904a-7c04d0bb43a8",
+								"{{userId}}",
 								"expense",
 								"940d65aa-913f-11ea-904a-7c04d0bb43a8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Savings Accounts",
+			"item": [
+				{
+					"name": "Get Savings Accounts for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/savingsAccounts/user/{{userId}}",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"savingsAccounts",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Savings Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"countryCurrencyCode\": \"ZAR\",\n\t\"savingsValue\": 50107,\n\t\"savingsTarget\": 150000,\n\t\"name\": \"Emergency Savings\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/savingsAccounts/user/{{userId}}",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"savingsAccounts",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Amount to Savings Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/savingsAccounts/user/{{userId}}/savingsAccount/94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8/addAmount",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"savingsAccounts",
+								"user",
+								"{{userId}}",
+								"savingsAccount",
+								"94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8",
+								"addAmount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subtract Amount from Savings Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/savingsAccounts/user/{{userId}}/savingsAccount/94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8/subtractAmount",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"savingsAccounts",
+								"user",
+								"{{userId}}",
+								"savingsAccount",
+								"94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8",
+								"subtractAmount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Savings Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/savingsAccounts/user/{{userId}}/savingsAccount/94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"savingsAccounts",
+								"user",
+								"{{userId}}",
+								"savingsAccount",
+								"94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Savings Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"countryCurrencyCode\": \"ZAR\",\n\t\"currentSavingsAmount\": 50000,\n\t\"targetSavingsAmount\": 100000,\n\t\"name\": \"Emergency savings\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/savingsAccounts/user/{{userId}}/savingsAccount/94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"savingsAccounts",
+								"user",
+								"{{userId}}",
+								"savingsAccount",
+								"94b0dc1e-a042-11ea-9d4f-7c04d0bb43a8"
 							]
 						}
 					},
