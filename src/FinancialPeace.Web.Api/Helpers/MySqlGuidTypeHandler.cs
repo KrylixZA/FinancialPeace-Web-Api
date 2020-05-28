@@ -15,10 +15,10 @@ namespace FinancialPeace.Web.Api.Helpers
         /// Set's the value of the guid.
         /// </summary>
         /// <param name="parameter">The parameter.</param>
-        /// <param name="guid">The globally unique identifier.</param>
-        public override void SetValue(IDbDataParameter parameter, Guid guid)
+        /// <param name="value">The globally unique identifier.</param>
+        public override void SetValue(IDbDataParameter parameter, Guid value)
         {
-            parameter.Value = guid.ToString();
+            parameter.Value = value.ToString();
         }
 
         /// <summary>

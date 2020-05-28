@@ -7,7 +7,7 @@ using Dapper;
 namespace FinancialPeace.Web.Api.Repositories.Connection
 {
     /// <inheritdoc />
-    public class SqlConnectionWrapper : ISqlConnectionWrapper
+    public sealed class SqlConnectionWrapper : ISqlConnectionWrapper
     {
         private readonly IDbConnection _dbConnection = null!;
         private readonly object _padlock = new object();
