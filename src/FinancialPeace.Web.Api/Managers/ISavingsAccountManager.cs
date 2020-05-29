@@ -6,7 +6,7 @@ using FinancialPeace.Web.Api.Models.Responses.SavingsAccounts;
 namespace FinancialPeace.Web.Api.Managers
 {
     /// <summary>
-    /// Provides a contract for managing a user's savings account.
+    /// Provides a contract for managing a user's savings accounts.
     /// </summary>
     public interface ISavingsAccountManager
     {

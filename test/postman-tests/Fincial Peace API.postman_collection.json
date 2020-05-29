@@ -576,6 +576,232 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Debt Accounts",
+			"item": [
+				{
+					"name": "Get Debt Accounts for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/debtAccounts/user/{{userId}}",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"debtAccounts",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Debt Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"countryCurrencyCode\": \"ZAR\",\n\t\"amountOwed\": 250461,\n\t\"targetPayoffDate\": \"2025-10-29\",\n\t\"name\": \"Car loan\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/debtAccounts/user/{{userId}}",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"debtAccounts",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Amount to Debt Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/debtAccounts/user/{{userId}}/debtAccount/81fe1442-a187-11ea-9d4f-7c04d0bb43a8/addAmount",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"debtAccounts",
+								"user",
+								"{{userId}}",
+								"debtAccount",
+								"81fe1442-a187-11ea-9d4f-7c04d0bb43a8",
+								"addAmount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subtract Amount from Debt Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/debtAccounts/user/{{userId}}/debtAccount/81fe1442-a187-11ea-9d4f-7c04d0bb43a8/subtractAmount",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"debtAccounts",
+								"user",
+								"{{userId}}",
+								"debtAccount",
+								"81fe1442-a187-11ea-9d4f-7c04d0bb43a8",
+								"subtractAmount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Debt Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/debtAccounts/user/{{userId}}/debtAccount/81fe1442-a187-11ea-9d4f-7c04d0bb43a8",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"debtAccounts",
+								"user",
+								"{{userId}}",
+								"debtAccount",
+								"81fe1442-a187-11ea-9d4f-7c04d0bb43a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Debt Account for User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"countryCurrencyCode\": \"ZAR\",\n\t\"currentAmountOwed\": 250461.28,\n\t\"targetPayoffDate\": \"2024-10-29\",\n\t\"actualPayoffDate\": \"2022-10-29\",\n\t\"name\": \"Ford Fiesta WesBank Vehicle Loan\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FinancialPeaceApi}}/debtAccounts/user/{{userId}}/debtAccount/81fe1442-a187-11ea-9d4f-7c04d0bb43a8",
+							"host": [
+								"{{FinancialPeaceApi}}"
+							],
+							"path": [
+								"debtAccounts",
+								"user",
+								"{{userId}}",
+								"debtAccount",
+								"81fe1442-a187-11ea-9d4f-7c04d0bb43a8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Get Test Token",
 			"event": [
 				{

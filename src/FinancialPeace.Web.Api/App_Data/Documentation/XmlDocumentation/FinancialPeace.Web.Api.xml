@@ -97,6 +97,12 @@
             Exposes functionality to manage a user's debt accounts.
             </summary>
         </member>
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.#ctor(FinancialPeace.Web.Api.Managers.IDebtAccountsManager)">
+            <summary>
+            Creates a new instance of the Debt Accounts Controller.
+            </summary>
+            <param name="debtAccountsManager">The debt accounts manager.</param>
+        </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.GetDebtAccountsForUser(System.Guid)">
             <summary>
             Gets the debt account linked to a user.
@@ -124,7 +130,7 @@
             Increases the amount owed on a debt account for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
-            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
             <param name="request">The details of the request.</param>
             <response code="200">The debt account was successfully updated.</response>
             <response code="400">The request was badly formed.</response>
@@ -137,7 +143,7 @@
             Reduces the amount of money owed on a debt account for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
-            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
             <param name="request">The details of the request.</param>
             <response code="200">The debt account was successfully updated.</response>
             <response code="400">The request was badly formed.</response>
@@ -150,7 +156,7 @@
             Attempts to delete a user's debt account from their portfolio.
             </summary>
             <param name="userId">The user's unique identifier.</param>
-            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
             <response code="200">The debt account was successfully deleted.</response>
             <response code="400">The request was badly formed.</response>
             <response code="401">The token provided does not provide access to this resource.</response>
@@ -162,7 +168,7 @@
             Updates the debt account details for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
-            <param name="savingsAccountId">The debt account unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
             <param name="request">The details of the request.</param>
             <response code="200">The debt account was successfully updated.</response>
             <response code="400">The request was badly formed.</response>
@@ -352,7 +358,7 @@
             Set's the value of the guid.
             </summary>
             <param name="parameter">The parameter.</param>
-            <param name="guid">The globally unique identifier.</param>
+            <param name="value">The globally unique identifier.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Helpers.MySqlGuidTypeHandler.Parse(System.Object)">
             <summary>
@@ -394,6 +400,33 @@
             <inheritdoc />
         </member>
         <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+            <inheritdoc />
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.DebtAccountsManager">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.#ctor(FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository)">
+            <summary>
+            Creates a new instance of the Debt Account Manager class.
+            </summary>
+            <param name="debtAccountsRepository">The debt accounts repository.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.GetDebtAccountForUser(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager">
@@ -468,6 +501,56 @@
             </summary>
             <param name="request">The details of the new currency.</param>
         </member>
+        <member name="T:FinancialPeace.Web.Api.Managers.IDebtAccountsManager">
+            <summary>
+            Provides a contract for managing a user's debt accounts.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.GetDebtAccountForUser(System.Guid)">
+            <summary>
+            Gets the list of debt accounts linked to the user from the database.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of debt accounts.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+            <summary>
+            Creates a new debt account for the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The details of the debt account.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+            <summary>
+            Adds an amount to the user's debt account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The savings account unique identifier.</param>
+            <param name="request">The details of the amount to add.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+            <summary>
+            Subtracts an amount from a user's debt account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the amount to subtract.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes a debt account for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+            <summary>
+            Updates a user's debt account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the update.</param>
+        </member>
         <member name="T:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager">
             <summary>
             An interface for a manager layer that intercedes between the expense categories repository and the controller.
@@ -502,7 +585,7 @@
         </member>
         <member name="T:FinancialPeace.Web.Api.Managers.ISavingsAccountManager">
             <summary>
-            Provides a contract for managing a user's savings account.
+            Provides a contract for managing a user's savings accounts.
             </summary>
         </member>
         <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.GetSavingsAccountForUser(System.Guid)">
@@ -1160,6 +1243,33 @@
         <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
             <inheritdoc />
         </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+            <summary>
+            Creates a new instance of the Debt Account Repository class.
+            </summary>
+            <param name="sqlConnectionProvider">The SQL connection provider.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.GetDebtAccountsForUser(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+            <inheritdoc />
+        </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository">
             <inheritdoc />
         </member>
@@ -1231,6 +1341,56 @@
             Attempts to persist a new currency to the database.
             </summary>
             <param name="request">The details of the currency to be added.</param>
+        </member>
+        <member name="T:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository">
+            <summary>
+            Provides a contract for interacting with a user's debt accounts in the database.
+            </summary>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.GetDebtAccountsForUser(System.Guid)">
+            <summary>
+            Gets the list of debt accounts linked to the user from the database.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <returns>An enumeration of debt account.</returns>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+            <summary>
+            Creates a new savings account for the user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="request">The details of the debt account.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+            <summary>
+            Adds an amount to the user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the amount to add.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+            <summary>
+            Subtracts an amount from a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the amount to subtract.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+            <summary>
+            Deletes a savings account for a user.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+        </member>
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+            <summary>
+            Updates a user's savings account.
+            </summary>
+            <param name="userId">The user's unique identifier.</param>
+            <param name="debtAccountId">The debt account unique identifier.</param>
+            <param name="request">The details of the update.</param>
         </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository">
             <summary>

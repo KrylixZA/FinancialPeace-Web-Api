@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
+using FinancialPeace.Web.Api.Managers;
 using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Models.Responses.DebtAccounts;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,17 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
     [Route("debtAccounts")]
     public class DebtAccountsController : ControllerBase
     {
+        private readonly IDebtAccountsManager _debtAccountsManager;
+
+        /// <summary>
+        /// Creates a new instance of the Debt Accounts Controller.
+        /// </summary>
+        /// <param name="debtAccountsManager">The debt accounts manager.</param>
+        public DebtAccountsController(IDebtAccountsManager debtAccountsManager)
+        {
+            _debtAccountsManager = debtAccountsManager ?? throw new ArgumentNullException(nameof(debtAccountsManager));
+        }
+
         /// <summary>
         /// Gets the debt account linked to a user.
         /// </summary>
@@ -32,7 +44,8 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetDebtAccountsForUser([Required] [FromRoute] Guid userId)
         {
-            return Ok();
+            var response = await _debtAccountsManager.GetDebtAccountForUser(userId);
+            return Ok(response);
         }
 
         /// <summary>
@@ -55,6 +68,7 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] AddDebtAccountRequest request)
         {
+            await _debtAccountsManager.AddDebtAccountForUser(userId, request);
             return Accepted();
         }
 
@@ -62,7 +76,7 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         /// Increases the amount owed on a debt account for a user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
-        /// <param name="savingsAccountId">The debt account unique identifier.</param>
+        /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <param name="request">The details of the request.</param>
         /// <response code="200">The debt account was successfully updated.</response>
         /// <response code="400">The request was badly formed.</response>
@@ -77,9 +91,10 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> AddAmountToDebtAccount(
             [Required] [FromRoute] Guid userId,
-            [Required] [FromRoute] Guid savingsAccountId,
+            [Required] [FromRoute] Guid debtAccountId,
             [Required] [FromBody] AddAmountToDebtAccountRequest request)
         {
+            await _debtAccountsManager.AddAmountToDebtAccountForUser(userId, debtAccountId, request);
             return Ok();
         }
 
@@ -87,7 +102,7 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         /// Reduces the amount of money owed on a debt account for a user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
-        /// <param name="savingsAccountId">The debt account unique identifier.</param>
+        /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <param name="request">The details of the request.</param>
         /// <response code="200">The debt account was successfully updated.</response>
         /// <response code="400">The request was badly formed.</response>
@@ -102,9 +117,10 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> SubtractAmountFromDebtAccountForUser(
             [Required] [FromRoute] Guid userId,
-            [Required] [FromRoute] Guid savingsAccountId,
+            [Required] [FromRoute] Guid debtAccountId,
             [Required] [FromBody] SubtractAmountFromDebtAccountRequest request)
         {
+            await _debtAccountsManager.SubtractAmountFromDebtAccountForUser(userId, debtAccountId, request);
             return Ok();
         }
 
@@ -112,7 +128,7 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         /// Attempts to delete a user's debt account from their portfolio.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
-        /// <param name="savingsAccountId">The debt account unique identifier.</param>
+        /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <response code="200">The debt account was successfully deleted.</response>
         /// <response code="400">The request was badly formed.</response>
         /// <response code="401">The token provided does not provide access to this resource.</response>
@@ -125,8 +141,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> DeleteDebtAccountForUser(
             [Required] [FromRoute] Guid userId,
-            [Required] [FromRoute] Guid savingsAccountId)
+            [Required] [FromRoute] Guid debtAccountId)
         {
+            await _debtAccountsManager.DeleteDebtAccountForUser(userId, debtAccountId);
             return Ok();
         }
 
@@ -134,7 +151,7 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         /// Updates the debt account details for a user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
-        /// <param name="savingsAccountId">The debt account unique identifier.</param>
+        /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <param name="request">The details of the request.</param>
         /// <response code="200">The debt account was successfully updated.</response>
         /// <response code="400">The request was badly formed.</response>
@@ -149,9 +166,10 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> UpdateDebtAccountForUser(
             [Required] [FromRoute] Guid userId,
-            [Required] [FromRoute] Guid savingsAccountId,
+            [Required] [FromRoute] Guid debtAccountId,
             [Required] [FromBody] UpdateDebtAccountRequest request)
         {
+            await _debtAccountsManager.UpdateDebtAccountForUser(userId, debtAccountId, request);
             return Ok();
         }
     }
