@@ -14,7 +14,7 @@ This application is also built into a [Docker image](Dockerfile) and hosted on [
 
 You can run the application by:
 1. `docker pull krylixza/financialpeace-web-api`
-2. `docker run -d -p 5000:5000 docker pull krylixza/financialpeace-web-api`
+2. `docker run -d -p 5000:5000 krylixza/financialpeace-web-api`
 3. Browse to http://localhost:5000
 
 # Contribute
