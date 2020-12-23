@@ -72,6 +72,16 @@ jobs:
       projects: './src'
       arguments: '--no-build --no-restore --configuration $(BuildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2cjson%2copencover" /p:CoverletOutput="$(Common.TestResultsDirectory)/" /p:MergeWith="$(Common.TestResultsDirectory)/coverage.json"'
 
+  - task: Docker@2
+    displayName: 'Publish Docker image'
+    inputs:
+      containerRegistry: 'Docker Hub'
+      repository: 'krylixza/financialpeace-web-api'
+      command: 'buildAndPush'
+      Dockerfile: 'Dockerfile'
+      buildContext: '.'
+      tags: '$(Build.BuildNumber)'
+
   - task: NuGetCommand@2
     displayName: 'Package contents'
     inputs:
