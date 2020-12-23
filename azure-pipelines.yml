@@ -47,7 +47,7 @@ jobs:
       SonarCloud: 'SonarCloud'
       organization: 'headleysj'
       scannerMode: 'MSBuild'
-      projectKey: 'Shared-WebApi-Core'
+      projectKey: 'FinancialPeace-Web-Api'
       extraProperties: 'sonar.cs.opencover.reportsPaths=$(Common.TestResultsDirectory)/coverage.opencover.xml'
 
   - task: DotNetCoreCLI@2
