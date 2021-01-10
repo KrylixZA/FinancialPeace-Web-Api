@@ -14,10 +14,13 @@ Push code to GitHub and the [CI pipeline](https://github.com/KrylixZA/FinancialP
 There is already a `tasks.json` file provided which will automatically build the project when you attempt to run.
 
 # Running the application
-You can either run this application through the dotnet runtime, IIS or through Docker.
+You can either run this application through the dotnet runtime, Visual Studio/Visual Studio Code, IIS or through Docker.
 
 ## dotnet runtime
 Ensure your project is built, then simply: `dotnet ./src/FinancialPeace.Web.Api/bin/Debug/netcoreapp3.1/FinancialPeace.Web.Api.dll`
+
+## Visual Studio/Visual Studio Code
+Simply launch through the debugger.
 
 ## IIS
 This can be configured through Visual Studio which will abstract the complexity away for you.
