@@ -48,14 +48,6 @@ jobs:
       with:
         dotnet-version: 3.1.301
 
-    # - name: Authenticate with GitHub Packages
-    #   run: |
-    #     dotnet nuget add source ${{ env.NUGET_URL }} \
-    #       -n github \
-    #       -u ${{ secrets.REGISTRY_USER }} \
-    #       -p ${{ secrets.REGISTRY_TOKEN }} \
-    #       --store-password-in-clear-text
-
     - name: Restore dependencies
       run: dotnet restore $GITHUB_WORKSPACE/src
 
@@ -77,12 +69,12 @@ jobs:
         TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
         LATEST: "true"
 
-    # - name: SonarCloud
-    #   uses: highbyte/sonarscan-dotnet@1.0.2
-    #   with:
-    #     sonarProjectKey: FinancialPeace-Web-Api
-    #     sonarProjectName:  FinancialPeace-Web-Api
-    #     sonarOrganization: krylixza
-    #     dotnetBuildArguments: ./src
-    #     dotnetTestArguments: ./src --logger trx --output "../TestResults/" -p:CollectCoverage=true -p:CoverletOutputFormat="json%2copencover" -p:CoverletOutput="../TestResults/" -p:MergeWith="../TestResults/coverage.json"
-    #     sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
+    - name: SonarCloud
+      uses: highbyte/sonarscan-dotnet@1.0.2
+      with:
+        sonarProjectKey: FinancialPeace-Web-Api
+        sonarProjectName:  FinancialPeace-Web-Api
+        sonarOrganization: krylixza
+        dotnetBuildArguments: ./src
+        dotnetTestArguments: ./src --logger trx --output "../TestResults/" -p:CollectCoverage=true -p:CoverletOutputFormat="json%2copencover" -p:CoverletOutput="../TestResults/" -p:MergeWith="../TestResults/coverage.json"
+        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
