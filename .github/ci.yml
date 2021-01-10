@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - '**'
+  pull_request:
+    branches:
+    - '**'
+
+env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    BRANCH_NAME: ${GITHUB_REF#refs/heads/}
+    MAJOR_VERSION: 1
+    MINOR_VERSION: 0
+    PATCH_VERSION: 0
+    BUILD_VERSION: $MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION.${GITHUB_RUN_NUMBER}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Define build number
+      id: define_build_number
+      run: |
+        buildNumber=$(echo ${{ env.BUILD_VERSION }})
+        branchName=$(echo ${{ env.BRANCH_NAME }} | sed 's:.*/::')
+        buildId=$buildNumber-$branchName
+        if [[ "$branchName" == "master" ]]; then
+          buildId=$buildNumber
+        fi
+        echo $buildNumber
+        echo $branchName
+        echo $buildId
+        echo "##[set-output name=BUILD_NUMBER;]$(echo $buildId)"
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Restore dependencies
+      run: dotnet restore $GITHUB_WORKSPACE/src
+
+    - name: Build
+      run: dotnet build $GITHUB_WORKSPACE/src --no-restore --configuration "Release" /p:Version=${{ steps.define_build_number.outputs.BUILD_NUMBER }}
+
+    - name: Test
+      run: dotnet test $GITHUB_WORKSPACE/src --no-build --no-restore --configuration "Release"
+
+    - name: Docker Build & Push to Docker Hub
+        uses: opspresso/action-docker@master
+        with:
+          args: --docker
+        env:
+          USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKERFILE: "Dockerfile"
+          IMAGE_NAME: "krylixza/financialpeace-web-api"
+          TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
+          LATEST: "true"
+
+    - name: SonarCloud
+      uses: highbyte/sonarscan-dotnet@1.0.2
+      with:
+        sonarProjectKey: FinancialPeace-Web-Api
+        sonarProjectName:  FinancialPeace-Web-Api
+        sonarOrganization: krylixza
+        dotnetBuildArguments: ./src
+        dotnetTestArguments: ./src --logger trx --output "../TestResults/" -p:CollectCoverage=true -p:CoverletOutputFormat="json%2copencover" -p:CoverletOutput="../TestResults/" -p:MergeWith="../TestResults/coverage.json"
+        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
