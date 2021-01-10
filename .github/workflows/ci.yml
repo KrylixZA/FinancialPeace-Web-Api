@@ -17,7 +17,6 @@ env:
     MINOR_VERSION: 0
     PATCH_VERSION: 0
     BUILD_VERSION: $MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION.${GITHUB_RUN_NUMBER}
-    NUGET_URL: https://nuget.pkg.github.com/krylixza/index.json
 
 jobs:
   build:
