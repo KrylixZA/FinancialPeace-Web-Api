@@ -59,16 +59,16 @@ jobs:
       run: dotnet test $GITHUB_WORKSPACE/src --no-build --no-restore --configuration "Release"
 
     - name: Docker Build & Push to Docker Hub
-        uses: opspresso/action-docker@master
-        with:
-          args: --docker
-        env:
-          USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKERFILE: "Dockerfile"
-          IMAGE_NAME: "krylixza/financialpeace-web-api"
-          TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
-          LATEST: "true"
+      uses: opspresso/action-docker@master
+      with:
+        args: --docker
+      env:
+        USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKERFILE: "Dockerfile"
+        IMAGE_NAME: "krylixza/financialpeace-web-api"
+        TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
+        LATEST: "true"
 
     - name: SonarCloud
       uses: highbyte/sonarscan-dotnet@1.0.2
