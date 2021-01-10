@@ -69,12 +69,11 @@ jobs:
         TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
         LATEST: "true"
     
-    - name: Docker Hub Description
-      uses: peter-evans/dockerhub-description@v2
+    - name: Sync Docker Hub Description
+      uses: meeDamian/sync-readme@v1.0.6
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: peterevans/dockerhub-description
+        pass: ${{ secrets.DOCKER_PASSWORD }}
+        description: true
 
     - name: SonarCloud
       uses: highbyte/sonarscan-dotnet@1.0.2
