@@ -42,20 +42,6 @@ jobs:
         echo $buildId
         echo "##[set-output name=BUILD_NUMBER;]$(echo $buildId)"
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-
-    - name: Restore dependencies
-      run: dotnet restore $GITHUB_WORKSPACE/src
-
-    - name: Build
-      run: dotnet build $GITHUB_WORKSPACE/src --no-restore --configuration "Release" /p:Version=${{ steps.define_build_number.outputs.BUILD_NUMBER }}
-
-    - name: Test
-      run: dotnet test $GITHUB_WORKSPACE/src --no-build --no-restore --configuration "Release"
-
     - name: Docker Build & Push to Docker Hub
       uses: opspresso/action-docker@master
       with:
@@ -65,6 +51,7 @@ jobs:
         PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKERFILE: "Dockerfile"
         IMAGE_NAME: "krylixza/financialpeace-web-api"
+        DOCKER_BUILD_ARGS: "--build-arg BUILD_NUMBER=${{ steps.define_build_number.outputs.BUILD_NUMBER }} --build-arg FEED_USER=KrylixZA --build-arg FEED_ACCESSTOKEN=${GITHUB_TOKEN}"
         TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
         LATEST: "true"
 

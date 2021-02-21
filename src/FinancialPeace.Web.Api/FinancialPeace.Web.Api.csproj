@@ -3,17 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>FinancialPeace.Web.Api</RootNamespace>
-    <IsPackable>true</IsPackable>
-    <PackageId>FinancialPeace.Web.Api</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
-    <Title>Fincial Peace Web API</Title>
-    <Description>The Web API to serve the Financial Peace project</Description>
-    <PackageProjectUrl>https://dev.azure.com/headleysj/FinancialPeace</PackageProjectUrl>
-    <RepositoryUrl>https://headleysj@dev.azure.com/headleysj/FinancialPeace/_git/FinancialPeace-Web-Api</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
-    <PackageTags>Financial Peace Web API</PackageTags>
     <LangVersion>8</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -41,10 +32,8 @@
 
   <ItemGroup>
     <Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\Dockerfile">
+      <Link>Dockerfile</Link>
+    </Content>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cp &quot;$(PkgShared_WebApi_Core)/lib/netcoreapp3.1/Shared.WebApi.Core.xml&quot; &quot;$(ProjectDir)bin/$(Configuration)/$(TargetFramework)/&quot;" Condition=" '$(OS)' == 'Unix' " IgnoreExitCode="true" />
-    <Exec Command="xcopy /Y /I /E &quot;$(PkgShared_WebApi_Core)\lib\netcoreapp3.1\Shared.WebApi.Core.xml&quot; &quot;$(ProjectDir)bin\$(Configuration)\$(TargetFramework)\&quot;" Condition=" '$(OS)' == 'Windows_NT' " IgnoreExitCode="true" />
-  </Target>
 </Project>
