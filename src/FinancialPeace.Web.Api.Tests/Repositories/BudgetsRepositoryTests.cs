@@ -55,20 +55,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void BudgetsRepository_GivenNullConnectionProvider_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "connectionProvider";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new BudgetsRepository(null!));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetBudgetForUserAsync_GivenUserId_ShouldReturnExpectedExpenses()
         {
             // Arrange

@@ -17,7 +17,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// <param name="currenciesRepository">The currencies repository.</param>
         public CurrenciesManager(ICurrenciesRepository currenciesRepository)
         {
-            _currenciesRepository = currenciesRepository ?? throw new ArgumentNullException(nameof(currenciesRepository));
+            _currenciesRepository = currenciesRepository;
         }
         
         /// <inheritdoc />

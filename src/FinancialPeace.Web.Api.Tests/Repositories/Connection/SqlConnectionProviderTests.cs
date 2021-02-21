@@ -44,20 +44,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories.Connection
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void SqlConnectionProvider_GivenNullSqlConnectionWrapper_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "sqlConnectionWrapper";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new SqlConnectionProvider(null!));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public void Open_GivenDbConnectionWrapper_ShouldReturnSameDbWrapper()
         {
             // Arrange

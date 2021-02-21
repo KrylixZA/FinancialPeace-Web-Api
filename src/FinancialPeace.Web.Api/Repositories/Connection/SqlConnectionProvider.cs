@@ -13,7 +13,7 @@ namespace FinancialPeace.Web.Api.Repositories.Connection
         /// <param name="sqlConnectionWrapper">The SQL connection wrapper.</param>
         public SqlConnectionProvider(ISqlConnectionWrapper sqlConnectionWrapper)
         {
-            _sqlConnectionWrapper = sqlConnectionWrapper ?? throw new ArgumentNullException(nameof(sqlConnectionWrapper));
+            _sqlConnectionWrapper = sqlConnectionWrapper;
         }
 
         /// <inheritdoc />

@@ -51,21 +51,6 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.SavingsAccount
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void SavingsAccountController_GivenNullSavingsAccountManager_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "savingsAccountManager";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new SavingsAccountController(null));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetSavingsAccountsForUser_GivenUserId_ShouldReturnOkObjectResult()
         {
             // Arrange

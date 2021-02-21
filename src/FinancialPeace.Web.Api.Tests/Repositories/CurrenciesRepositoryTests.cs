@@ -54,21 +54,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void CurrenciesRepository_GivenNullSqlConnectionProvider_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParam = "sqlConnectionProvider";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new CurrenciesRepository(null));
-
-            // Assert
-            Assert.AreEqual(expectedParam, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetCurrencies_OnRequest_ShouldReturnExpectedCurrencies()
         {
             // Arrange

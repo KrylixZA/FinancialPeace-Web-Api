@@ -26,7 +26,7 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         /// <param name="debtAccountsManager">The debt accounts manager.</param>
         public DebtAccountsController(IDebtAccountsManager debtAccountsManager)
         {
-            _debtAccountsManager = debtAccountsManager ?? throw new ArgumentNullException(nameof(debtAccountsManager));
+            _debtAccountsManager = debtAccountsManager;
         }
 
         /// <summary>

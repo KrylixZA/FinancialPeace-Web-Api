@@ -17,7 +17,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// <param name="savingsAccountRepository">The savings account repository.</param>
         public SavingsAccountManager(ISavingsAccountRepository savingsAccountRepository)
         {
-            _savingsAccountRepository = savingsAccountRepository ?? throw new ArgumentNullException(nameof(savingsAccountRepository));
+            _savingsAccountRepository = savingsAccountRepository;
         }
 
         /// <inheritdoc />

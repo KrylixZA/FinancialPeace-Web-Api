@@ -45,56 +45,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories.Connection
             Assert.IsNotNull(connectionWrapper);
         }
 
-        [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void SqlConnectionWrapper_GivenNullDbConnection_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "dbConnection";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new SqlConnectionWrapper(null!));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
-        public void SqlConnectionWrapper_GivenFirstCall_ShouldSetDbConnectionReference()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var connectionWrapper = GetSystemUnderTest(stubs);
-
-            // Assert
-            var dbConnectionField = typeof(SqlConnectionWrapper).GetField(
-                "_dbConnection",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            var actualDbConnection = (IDbConnection) dbConnectionField?.GetValue(connectionWrapper);
-            Assert.AreEqual(stubs.DbConnection, actualDbConnection);
-        }
-        
-        [Test]
-        [SuppressMessage("ReSharper", "RedundantAssignment")]
-        public void SqlConnectionWrapper_GivenSecondCall_ShouldReturnSameDbInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-            _ = GetSystemUnderTest(stubs);
-            
-            // Act
-            var connectionWrapper = GetSystemUnderTest(stubs);
-
-            // Assert
-            var dbConnectionField = typeof(SqlConnectionWrapper).GetField(
-                "_dbConnection",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            var actualDbConnection = (IDbConnection) dbConnectionField?.GetValue(connectionWrapper);
-            Assert.AreEqual(stubs.DbConnection, actualDbConnection);
-        }
-
         [TestCase(IsolationLevel.Chaos)]
         [TestCase(IsolationLevel.Serializable)]
         [TestCase(IsolationLevel.Snapshot)]

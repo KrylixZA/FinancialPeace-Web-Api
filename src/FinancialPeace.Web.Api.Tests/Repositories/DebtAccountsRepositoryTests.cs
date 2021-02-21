@@ -55,20 +55,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void DebtAccountsRepository_GivenNullSqlConnectionProvider_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "sqlConnectionProvider";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new DebtAccountsRepository(null!));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetDebtAccountForUser_GivenUserId_ShouldReturnExpectedList()
         {
             // Arrange

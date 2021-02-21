@@ -17,8 +17,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// <param name="debtAccountsRepository">The debt accounts repository.</param>
         public DebtAccountsManager(IDebtAccountsRepository debtAccountsRepository)
         {
-            _debtAccountsRepository =
-                debtAccountsRepository ?? throw new ArgumentNullException(nameof(debtAccountsRepository));
+            _debtAccountsRepository = debtAccountsRepository;
         }
 
         /// <inheritdoc />
@@ -39,13 +38,15 @@ namespace FinancialPeace.Web.Api.Managers
         }
 
         /// <inheritdoc />
-        public Task AddAmountToDebtAccountForUser(Guid userId, Guid debtAccountId, AddAmountToDebtAccountRequest request)
+        public Task AddAmountToDebtAccountForUser(Guid userId, Guid debtAccountId,
+            AddAmountToDebtAccountRequest request)
         {
             return _debtAccountsRepository.AddAmountToDebtAccountForUser(userId, debtAccountId, request);
         }
 
         /// <inheritdoc />
-        public Task SubtractAmountFromDebtAccountForUser(Guid userId, Guid debtAccountId, SubtractAmountFromDebtAccountRequest request)
+        public Task SubtractAmountFromDebtAccountForUser(Guid userId, Guid debtAccountId,
+            SubtractAmountFromDebtAccountRequest request)
         {
             return _debtAccountsRepository.SubtractAmountFromDebtAccountForUser(userId, debtAccountId, request);
         }

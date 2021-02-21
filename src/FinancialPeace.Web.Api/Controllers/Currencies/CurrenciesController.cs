@@ -26,7 +26,7 @@ namespace FinancialPeace.Web.Api.Controllers.Currencies
         /// <param name="currenciesManager">The currencies manager.</param>
         public CurrenciesController(ICurrenciesManager currenciesManager)
         {
-            _currenciesManager = currenciesManager ?? throw new ArgumentNullException(nameof(currenciesManager));
+            _currenciesManager = currenciesManager;
         }
         
         /// <summary>

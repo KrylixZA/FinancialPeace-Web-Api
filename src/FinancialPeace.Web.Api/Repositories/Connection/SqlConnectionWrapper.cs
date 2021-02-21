@@ -9,7 +9,7 @@ namespace FinancialPeace.Web.Api.Repositories.Connection
     /// <inheritdoc />
     public sealed class SqlConnectionWrapper : ISqlConnectionWrapper
     {
-        private readonly IDbConnection _dbConnection = null!;
+        private readonly IDbConnection _dbConnection;
         private readonly object _padlock = new object();
 
         /// <summary>
@@ -18,20 +18,9 @@ namespace FinancialPeace.Web.Api.Repositories.Connection
         /// <param name="dbConnection">The database connection.</param>
         public SqlConnectionWrapper(IDbConnection dbConnection)
         {
-            if (dbConnection == null)
+            lock (_padlock)
             {
-                throw new ArgumentNullException(nameof(dbConnection));
-            }
-            
-            if (_dbConnection == null)
-            {
-                lock (_padlock)
-                {
-                    if (_dbConnection == null)
-                    {
-                        _dbConnection = dbConnection;
-                    }
-                }
+                _dbConnection = dbConnection;
             }
         }
 

@@ -52,21 +52,6 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        public void BudgetsController_GivenNullBudgetsManager_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "budgetsManager";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new BudgetsController(null));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetBudgetForUser_GivenUserId_ShouldReturnExpectedOkObjectResult()
         {
             // Arrange
