@@ -25,7 +25,7 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <param name="connectionProvider">The connection provider.</param>
         public ExpenseCategoriesRepository(ISqlConnectionProvider connectionProvider)
         {
-            _connectionProvider = connectionProvider ?? throw new ArgumentNullException(nameof(connectionProvider));
+            _connectionProvider = connectionProvider;
         }
 
         /// <inheritdoc />

@@ -23,7 +23,7 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <param name="sqlConnectionProvider">The SQL connection provider.</param>
         public CurrenciesRepository(ISqlConnectionProvider sqlConnectionProvider)
         {
-            _sqlConnectionProvider = sqlConnectionProvider ?? throw new ArgumentNullException(nameof(sqlConnectionProvider));
+            _sqlConnectionProvider = sqlConnectionProvider;
         }
         
         /// <inheritdoc />

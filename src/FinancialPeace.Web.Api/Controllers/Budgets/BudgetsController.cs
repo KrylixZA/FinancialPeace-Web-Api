@@ -26,7 +26,7 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
         /// <param name="budgetsManager"></param>
         public BudgetsController(IBudgetsManager budgetsManager)
         {
-            _budgetsManager = budgetsManager ?? throw new ArgumentNullException(nameof(budgetsManager));
+            _budgetsManager = budgetsManager;
         }
         
         /// <summary>

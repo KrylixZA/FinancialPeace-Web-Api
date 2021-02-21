@@ -26,7 +26,7 @@ namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
         /// <param name="expenseCategoriesManager">The expense categories manager.</param>
         public ExpenseCategoriesController(IExpenseCategoriesManager expenseCategoriesManager)
         {
-            _expenseCategoriesManager = expenseCategoriesManager ?? throw new ArgumentNullException(nameof(expenseCategoriesManager));
+            _expenseCategoriesManager = expenseCategoriesManager;
         }
         
         /// <summary>

@@ -56,21 +56,6 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        public void ExpenseCategoriesRepository_GivenNullConnectionProvider_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "connectionProvider";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new ExpenseCategoriesRepository(null));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetExpenseCategories_OnRequest_ShouldReturnExpectedCategories()
         {
             // Arrange

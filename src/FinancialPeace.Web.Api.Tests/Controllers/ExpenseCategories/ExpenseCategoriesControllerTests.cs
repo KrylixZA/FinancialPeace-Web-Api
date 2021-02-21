@@ -52,21 +52,6 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.ExpenseCategories
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void ExpenseCategoriesController_GivenNullExpenseCategoriesManager_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "expenseCategoriesManager";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new ExpenseCategoriesController(null));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetExpenseCategories_OnRequest_ShouldReturnExpectedOkObjectResult()
         {
             // Arrange

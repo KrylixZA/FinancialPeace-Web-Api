@@ -52,21 +52,6 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Currencies
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void CurrenciesController_GivenNullCurrenciesManager_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "currenciesManager";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new CurrenciesController(null));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetCurrencies_OnRequest_ShouldReturnOkObjectResult()
         {
             // Arrange

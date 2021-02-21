@@ -27,7 +27,7 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <param name="sqlConnectionProvider"></param>
         public SavingsAccountRepository(ISqlConnectionProvider sqlConnectionProvider)
         {
-            _sqlConnectionProvider = sqlConnectionProvider ?? throw new ArgumentNullException(nameof(sqlConnectionProvider));
+            _sqlConnectionProvider = sqlConnectionProvider;
         }
 
         /// <inheritdoc />

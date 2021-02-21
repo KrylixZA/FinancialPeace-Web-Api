@@ -17,7 +17,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// <param name="budgetsRepository">The budgets repository.</param>
         public BudgetsManager(IBudgetsRepository budgetsRepository)
         {
-            _budgetsRepository = budgetsRepository ?? throw new ArgumentNullException(nameof(budgetsRepository));
+            _budgetsRepository = budgetsRepository;
         }
 
         /// <inheritdoc />

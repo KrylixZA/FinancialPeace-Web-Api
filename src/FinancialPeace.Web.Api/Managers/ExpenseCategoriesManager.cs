@@ -17,7 +17,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// <param name="expenseCategoriesRepository">The expense categories repository.</param>
         public ExpenseCategoriesManager(IExpenseCategoriesRepository expenseCategoriesRepository)
         {
-            _expenseCategoriesRepository = expenseCategoriesRepository ?? throw new ArgumentNullException(nameof(expenseCategoriesRepository));
+            _expenseCategoriesRepository = expenseCategoriesRepository;
         }
 
         /// <inheritdoc />

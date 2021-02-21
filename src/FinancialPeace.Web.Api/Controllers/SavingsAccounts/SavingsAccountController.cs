@@ -26,7 +26,7 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
         /// <param name="savingsAccountManager">The savings account manager.</param>
         public SavingsAccountController(ISavingsAccountManager savingsAccountManager)
         {
-            _savingsAccountManager = savingsAccountManager ?? throw new ArgumentNullException(nameof(savingsAccountManager));
+            _savingsAccountManager = savingsAccountManager;
         }
 
         /// <summary>

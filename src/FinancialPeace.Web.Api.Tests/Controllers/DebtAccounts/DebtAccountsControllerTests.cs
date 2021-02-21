@@ -52,20 +52,6 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.DebtAccounts
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public void DebtAccountsController_GivenNullDebtAccountsManager_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            const string expectedParamName = "debtAccountsManager";
-
-            // Act
-            var actual = Assert.Throws<ArgumentNullException>(() => new DebtAccountsController(null!));
-
-            // Assert
-            Assert.AreEqual(expectedParamName, actual.ParamName);
-        }
-
-        [Test]
         public async Task GetDebtAccountsForUser_GivenUserId_ShouldReturnOkObjectResult()
         {
             // Arrange
