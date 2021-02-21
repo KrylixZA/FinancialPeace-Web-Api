@@ -51,7 +51,7 @@ jobs:
         PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKERFILE: "Dockerfile"
         IMAGE_NAME: "krylixza/financialpeace-web-api"
-        DOCKER_BUILD_ARGS: "--build-arg BUILD_NUMBER=${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
+        DOCKER_BUILD_ARGS: "--build-arg BUILD_NUMBER=${{ steps.define_build_number.outputs.BUILD_NUMBER }} --build-arg FEED_USER=GitHub --FEED_ACCESSTOKEN=$GITHUB_TOKEN"
         TAG_NAME: "${{ steps.define_build_number.outputs.BUILD_NUMBER }}"
         LATEST: "true"
 

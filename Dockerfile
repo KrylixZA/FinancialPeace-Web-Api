@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
 ARG BUILD_NUMBER
-#ARG FEED_USER
-#ARG FEED_ACCESSTOKEN
+ARG FEED_USER
+ARG FEED_ACCESSTOKEN
 WORKDIR /src
 COPY /src .
-#COPY nuget.config .
+COPY nuget.config .
 RUN dotnet restore
 RUN dotnet publish --no-restore --configuration Release /p:Version=${BUILD_NUMBER} --output /app
 
