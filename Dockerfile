@@ -2,6 +2,11 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
 ARG BUILD_NUMBER
 ARG FEED_USER
 ARG FEED_ACCESSTOKEN
+
+RUN echo ${BUILD_NUMBER}
+RUN echo ${FEED_USER}
+RUN echo ${FEED_ACCESSTOKEN}
+
 WORKDIR /src
 COPY /src .
 COPY nuget.config .
