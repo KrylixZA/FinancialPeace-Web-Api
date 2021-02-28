@@ -9,6 +9,7 @@ using FinancialPeace.Web.Api.Models.Requests.Budgets;
 using FinancialPeace.Web.Api.Repositories;
 using FinancialPeace.Web.Api.Repositories.Connection;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -22,6 +23,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         {
             public ISqlConnectionProvider SqlConnectionProvider { get; set; }
             public ISqlConnectionWrapper SqlConnectionWrapper { get; set; }
+            public static ILogger<BudgetsRepository> Logger => Substitute.For<ILogger<BudgetsRepository>>();
         }
 
         private static Stubs GetStubs()
@@ -38,20 +40,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
 
         private static BudgetsRepository GetSystemUnderTest(Stubs stubs)
         {
-            return new BudgetsRepository(stubs.SqlConnectionProvider);
-        }
-
-        [Test]
-        public void BudgetsRepository_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var repository = new BudgetsRepository(stubs.SqlConnectionProvider);
-
-            // Assert
-            Assert.IsNotNull(repository);
+            return new BudgetsRepository(stubs.SqlConnectionProvider, Stubs.Logger);
         }
 
         [Test]

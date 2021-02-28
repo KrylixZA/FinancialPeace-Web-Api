@@ -16,14 +16,14 @@ namespace FinancialPeace.Web.Api.Repositories
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
         /// <returns>An enumeration of debt account.</returns>
-        Task<IEnumerable<DebtAccount>> GetDebtAccountsForUser(Guid userId);
+        Task<IEnumerable<DebtAccount>> GetDebtAccountsForUserAsync(Guid userId);
 
         /// <summary>
         /// Creates a new savings account for the user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="request">The details of the debt account.</param>
-        Task AddDebtAccountForUser(Guid userId, AddDebtAccountRequest request);
+        Task AddDebtAccountForUserAsync(Guid userId, AddDebtAccountRequest request);
 
         /// <summary>
         /// Adds an amount to the user's savings account.
@@ -31,7 +31,7 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <param name="request">The details of the amount to add.</param>
-        Task AddAmountToDebtAccountForUser(Guid userId, Guid debtAccountId, AddAmountToDebtAccountRequest request);
+        Task AddAmountToDebtAccountForUserAsync(Guid userId, Guid debtAccountId, AddAmountToDebtAccountRequest request);
         
         /// <summary>
         /// Subtracts an amount from a user's savings account.
@@ -39,14 +39,14 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <param name="request">The details of the amount to subtract.</param>
-        Task SubtractAmountFromDebtAccountForUser(Guid userId, Guid debtAccountId, SubtractAmountFromDebtAccountRequest request);
+        Task SubtractAmountFromDebtAccountForUserAsync(Guid userId, Guid debtAccountId, SubtractAmountFromDebtAccountRequest request);
 
         /// <summary>
         /// Deletes a savings account for a user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="debtAccountId">The debt account unique identifier.</param>
-        Task DeleteDebtAccountForUser(Guid userId, Guid debtAccountId);
+        Task DeleteDebtAccountForUserAsync(Guid userId, Guid debtAccountId);
 
         /// <summary>
         /// Updates a user's savings account.
@@ -54,6 +54,6 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="debtAccountId">The debt account unique identifier.</param>
         /// <param name="request">The details of the update.</param>
-        Task UpdateDebtAccountForUser(Guid userId, Guid debtAccountId, UpdateDebtAccountRequest request);
+        Task UpdateDebtAccountForUserAsync(Guid userId, Guid debtAccountId, UpdateDebtAccountRequest request);
     }
 }

@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.ExpenseCategories;
 using FinancialPeace.Web.Api.Models.Responses.ExpenseCategories;
 using FinancialPeace.Web.Api.Repositories;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         private struct Stubs
         {
             public IExpenseCategoriesRepository ExpenseCategoriesRepository { get; set; }
+            public static ILogger<ExpenseCategoriesManager> Logger => Substitute.For<ILogger<ExpenseCategoriesManager>>();
         }
 
         private static Stubs GetStubs()
@@ -34,20 +36,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
 
         private static ExpenseCategoriesManager GetSystemUnderTest(Stubs stubs)
         {
-            return new ExpenseCategoriesManager(stubs.ExpenseCategoriesRepository);
-        }
-
-        [Test]
-        public void ExpenseCategoriesManager_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var manager = new ExpenseCategoriesManager(stubs.ExpenseCategoriesRepository);
-
-            // Assert
-            Assert.IsNotNull(manager);
+            return new ExpenseCategoriesManager(stubs.ExpenseCategoriesRepository, Stubs.Logger);
         }
 
         [Test]
@@ -78,11 +67,11 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             var stubs = GetStubs();
-            stubs.ExpenseCategoriesRepository.GetExpenseCategories().Returns(expenseCategories);
+            stubs.ExpenseCategoriesRepository.GetExpenseCategoriesAsync().Returns(expenseCategories);
             var manager = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await manager.GetExpenseCategories();
+            var actualResponse = await manager.GetExpenseCategoriesAsync();
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);
@@ -118,11 +107,11 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             var stubs = GetStubs();
-            stubs.ExpenseCategoriesRepository.GetExpenseCategoriesForUser(Arg.Any<Guid>()).Returns(expenseCategoriesForUser);
+            stubs.ExpenseCategoriesRepository.GetExpenseCategoriesForUserAsync(Arg.Any<Guid>()).Returns(expenseCategoriesForUser);
             var manager = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await manager.GetExpenseCategoriesForUser(userId);
+            var actualResponse = await manager.GetExpenseCategoriesForUserAsync(userId);
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);
@@ -141,7 +130,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.AddExpenseCategoryForUser(Guid.NewGuid(), request));
+            Assert.DoesNotThrowAsync(async () => await manager.AddExpenseCategoryForUserAsync(Guid.NewGuid(), request));
         }
         
         [Test]
@@ -152,7 +141,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             var manager = GetSystemUnderTest(stubs);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.DeleteExpenseCategoryForUser(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.DoesNotThrowAsync(async () => await manager.DeleteExpenseCategoryForUserAsync(Guid.NewGuid(), Guid.NewGuid()));
         }
     }
 }

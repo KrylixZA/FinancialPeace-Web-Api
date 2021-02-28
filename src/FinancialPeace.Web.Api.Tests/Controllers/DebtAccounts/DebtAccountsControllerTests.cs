@@ -9,6 +9,7 @@ using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Models.Responses.DebtAccounts;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -21,6 +22,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.DebtAccounts
         private struct Stubs
         {
             public IDebtAccountsManager DebtAccountsManager { get; set; }
+            public static ILogger<DebtAccountsController> Logger => Substitute.For<ILogger<DebtAccountsController>>();
         }
 
         private static Stubs GetStubs()
@@ -35,20 +37,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.DebtAccounts
 
         private static DebtAccountsController GetSystemUnderTest(Stubs stubs)
         {
-            return new DebtAccountsController(stubs.DebtAccountsManager);
-        }
-
-        [Test]
-        public void DebtAccountsController_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var controller = new DebtAccountsController(stubs.DebtAccountsManager);
-
-            // Assert
-            Assert.IsNotNull(controller);
+            return new DebtAccountsController(stubs.DebtAccountsManager, Stubs.Logger);
         }
 
         [Test]
@@ -75,7 +64,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.DebtAccounts
             };
 
             var stubs = GetStubs();
-            stubs.DebtAccountsManager.GetDebtAccountForUser(Arg.Any<Guid>()).Returns(expectedResponse);
+            stubs.DebtAccountsManager.GetDebtAccountForUserAsync(Arg.Any<Guid>()).Returns(expectedResponse);
             var controller = GetSystemUnderTest(stubs);
 
             // Act

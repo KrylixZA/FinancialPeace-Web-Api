@@ -6,6 +6,7 @@ using Dapper;
 using FinancialPeace.Web.Api.Models;
 using FinancialPeace.Web.Api.Models.Requests.Budgets;
 using FinancialPeace.Web.Api.Repositories.Connection;
+using Microsoft.Extensions.Logging;
 
 namespace FinancialPeace.Web.Api.Repositories
 {
@@ -18,31 +19,40 @@ namespace FinancialPeace.Web.Api.Repositories
         private const string UpdateExpenseForUserProc = "Freedom.pr_UpdateExpenseForUser";
 
         private readonly ISqlConnectionProvider _connectionProvider;
+        private readonly ILogger<BudgetsRepository> _logger;
 
         /// <summary>
         /// Initializes a new instance of the Budgets Repository class.
         /// </summary>
         /// <param name="connectionProvider">The connection provider.</param>
-        public BudgetsRepository(ISqlConnectionProvider connectionProvider)
+        /// <param name="logger">The logger.</param>
+        public BudgetsRepository(
+            ISqlConnectionProvider connectionProvider,
+            ILogger<BudgetsRepository> logger)
         {
             _connectionProvider = connectionProvider;
+            _logger = logger;
         }
 
         /// <inheritdoc />
         public async Task<IEnumerable<Expense>> GetBudgetForUserAsync(Guid userId)
         {
+            _logger.LogInformation($"GetBudgetForUserAsync start. UserId: {userId}");
             using var conn = _connectionProvider.Open();
             var parameters = new DynamicParameters();
             parameters.Add("$userId", userId);
-            return await conn.QueryAsync<Expense>(
+            var response = await conn.QueryAsync<Expense>(
                 GetBudgetForUserProc,
                 parameters,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
+            _logger.LogInformation($"GetBudgetForUserAsync end. UserId: {userId}");
+            return response;
         }
 
         /// <inheritdoc />
         public async Task CreateExpenseForUserAsync(Guid userId, CreateExpenseRequest request)
         {
+            _logger.LogInformation($"CreateExpenseForUserAsync start. UserId: {userId}");
             using var conn = _connectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -54,13 +64,15 @@ namespace FinancialPeace.Web.Api.Repositories
                 CreateExpenseForUserProc,
                 parameters,
                 trans,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"CreateExpenseForUserAsync end. UserId: {userId}");
         }
 
         /// <inheritdoc />
         public async Task DeleteExpenseForUserAsync(Guid userId, Guid expenseId)
         {
+            _logger.LogInformation($"DeleteExpenseForUserAsync start. UserId: {userId}. ExpenseId: {expenseId}");
             using var conn = _connectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -70,13 +82,15 @@ namespace FinancialPeace.Web.Api.Repositories
                 DeleteExpenseForUserProc,
                 parameters,
                 trans,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"DeleteExpenseForUserAsync end. UserId: {userId}. ExpenseId: {expenseId}");
         }
 
         /// <inheritdoc />
         public async Task UpdateExpenseForUserAsync(Guid userId, Guid expenseId, UpdateExpenseRequest request)
         {
+            _logger.LogInformation($"UpdateExpenseForUserAsync start. UserId: {userId}. ExpenseId: {expenseId}");
             using var conn = _connectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -89,8 +103,9 @@ namespace FinancialPeace.Web.Api.Repositories
                 UpdateExpenseForUserProc,
                 parameters,
                 trans,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"UpdateExpenseForUserAsync start. UserId: {userId}. ExpenseId: {expenseId}");
         }
     }
 }

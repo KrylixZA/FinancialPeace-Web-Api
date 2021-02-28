@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.Currencies;
 using FinancialPeace.Web.Api.Repositories;
 using FinancialPeace.Web.Api.Repositories.Connection;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -21,6 +22,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         {
             public ISqlConnectionProvider SqlConnectionProvider { get; set; }
             public ISqlConnectionWrapper SqlConnectionWrapper { get; set; }
+            public static ILogger<CurrenciesRepository> Logger => Substitute.For<ILogger<CurrenciesRepository>>();
         }
 
         private static Stubs GetStubs()
@@ -37,20 +39,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
 
         private static CurrenciesRepository GetSystemUnderTest(Stubs stubs)
         {
-            return new CurrenciesRepository(stubs.SqlConnectionProvider);
-        }
-
-        [Test]
-        public void CurrenciesRepository_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var repository = new CurrenciesRepository(stubs.SqlConnectionProvider);
-
-            // Assert
-            Assert.IsNotNull(repository);
+            return new CurrenciesRepository(stubs.SqlConnectionProvider, Stubs.Logger);
         }
 
         [Test]
@@ -77,7 +66,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             var repository = GetSystemUnderTest(stubs);
 
             // Act
-            var actualCurrencies = await repository.GetCurrencies();
+            var actualCurrencies = await repository.GetCurrenciesAsync();
 
             // Assert
             actualCurrencies.Should().BeEquivalentTo(expectedCurrencies);
@@ -99,7 +88,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await repository.AddCurrency(request));
+            Assert.DoesNotThrowAsync(async () => await repository.AddCurrencyAsync(request));
         }
     }
 }

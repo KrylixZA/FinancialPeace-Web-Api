@@ -15,27 +15,27 @@ namespace FinancialPeace.Web.Api.Repositories
         /// Gets all the available expense categories from the database.
         /// </summary>
         /// <returns>An enumeration of expense categories.</returns>
-        Task<IEnumerable<ExpenseCategory>> GetExpenseCategories();
+        Task<IEnumerable<ExpenseCategory>> GetExpenseCategoriesAsync();
 
         /// <summary>
         /// Gets all the expense categories linked to the user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
         /// <returns>An enumeration of expense categories linked to the user.</returns>
-        Task<IEnumerable<ExpenseCategory>> GetExpenseCategoriesForUser(Guid userId);
+        Task<IEnumerable<ExpenseCategory>> GetExpenseCategoriesForUserAsync(Guid userId);
 
         /// <summary>
         /// Links a user to an expense category. If the expense category does not exist, it will be created first and become available to all users.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="request">The expense category details.</param>
-        Task AddExpenseCategoryForUser(Guid userId, AddExpenseCategoryRequest request);
+        Task AddExpenseCategoryForUserAsync(Guid userId, AddExpenseCategoryRequest request);
 
         /// <summary>
         /// Deletes the mapping between an expense category and a user.
         /// </summary>
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="expenseCategoryId">The expense category's unique identifier.</param>
-        Task DeleteExpenseCategoryForUser(Guid userId, Guid expenseCategoryId);
+        Task DeleteExpenseCategoryForUserAsync(Guid userId, Guid expenseCategoryId);
     }
 }

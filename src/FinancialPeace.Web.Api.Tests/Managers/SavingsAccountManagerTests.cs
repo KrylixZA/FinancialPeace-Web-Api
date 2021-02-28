@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.SavingsAccounts;
 using FinancialPeace.Web.Api.Models.Responses.SavingsAccounts;
 using FinancialPeace.Web.Api.Repositories;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         private struct Stubs
         {
             public ISavingsAccountRepository SavingsAccountRepository { get; set; }
+            public static ILogger<SavingsAccountManager> Logger => Substitute.For<ILogger<SavingsAccountManager>>();
         }
 
         private static Stubs GetStubs()
@@ -34,20 +36,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
 
         private static SavingsAccountManager GetSystemUnderTest(Stubs stubs)
         {
-            return new SavingsAccountManager(stubs.SavingsAccountRepository);
-        }
-
-        [Test]
-        public void SavingsAccountManager_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var repository = new SavingsAccountManager(stubs.SavingsAccountRepository);
-
-            // Assert
-            Assert.IsNotNull(repository);
+            return new SavingsAccountManager(stubs.SavingsAccountRepository, Stubs.Logger);
         }
 
         [Test]
@@ -83,13 +72,13 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             var stubs = GetStubs();
-            stubs.SavingsAccountRepository.GetSavingsAccountForUser(
+            stubs.SavingsAccountRepository.GetSavingsAccountForUserAsync(
                     Arg.Any<Guid>())
                 .Returns(savingsAccounts);
             var manager = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await manager.GetSavingsAccountForUser(userId);
+            var actualResponse = await manager.GetSavingsAccountForUserAsync(userId);
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);
@@ -111,7 +100,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.AddSavingsAccountForUser(Guid.NewGuid(), request));
+            Assert.DoesNotThrowAsync(async () => await manager.AddSavingsAccountForUserAsync(Guid.NewGuid(), request));
         }
 
         [Test]
@@ -127,7 +116,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.AddAmountToSavingsAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.AddAmountToSavingsAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));
@@ -146,7 +135,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.SubtractAmountFromSavingsAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.SubtractAmountFromSavingsAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));
@@ -160,7 +149,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             var manager = GetSystemUnderTest(stubs);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.DeleteSavingsAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.DeleteSavingsAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid()));
         }
@@ -181,7 +170,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.UpdateSavingsAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.UpdateSavingsAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));

@@ -7,6 +7,7 @@ using FinancialPeace.Web.Api.Models.Requests.SavingsAccounts;
 using FinancialPeace.Web.Api.Models.Responses.SavingsAccounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Shared.WebApi.Core.Errors;
 
 namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
@@ -19,14 +20,19 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
     public class SavingsAccountController : ControllerBase
     {
         private readonly ISavingsAccountManager _savingsAccountManager;
+        private readonly ILogger<SavingsAccountController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the Savings Account Controller class.
         /// </summary>
         /// <param name="savingsAccountManager">The savings account manager.</param>
-        public SavingsAccountController(ISavingsAccountManager savingsAccountManager)
+        /// <param name="logger">The logger.</param>
+        public SavingsAccountController(
+            ISavingsAccountManager savingsAccountManager, 
+            ILogger<SavingsAccountController> logger)
         {
             _savingsAccountManager = savingsAccountManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -44,7 +50,9 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetSavingsAccountsForUser([Required] [FromRoute] Guid userId)
         {
-            var response = await _savingsAccountManager.GetSavingsAccountForUser(userId);
+            _logger.LogInformation($"GetSavingsAccountsForUser start. UserId: {userId}");
+            var response = await _savingsAccountManager.GetSavingsAccountForUserAsync(userId);
+            _logger.LogInformation($"GetSavingsAccountsForUser end. UserId: {userId}");
             return Ok(response);
         }
 
@@ -68,7 +76,9 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] AddSavingsAccountRequest request)
         {
-            await _savingsAccountManager.AddSavingsAccountForUser(userId, request);
+            _logger.LogInformation($"AddSavingsAccountForUser start. UserId: {userId}");
+            await _savingsAccountManager.AddSavingsAccountForUserAsync(userId, request);
+            _logger.LogInformation($"AddSavingsAccountForUser end. UserId: {userId}");
             return Accepted();
         }
 
@@ -94,7 +104,9 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
             [Required] [FromRoute] Guid savingsAccountId,
             [Required] [FromBody] AddAmountToSavingsAccountRequest request)
         {
-            await _savingsAccountManager.AddAmountToSavingsAccountForUser(userId, savingsAccountId, request);
+            _logger.LogInformation($"AddAmountToSavingsAccountForUser start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
+            await _savingsAccountManager.AddAmountToSavingsAccountForUserAsync(userId, savingsAccountId, request);
+            _logger.LogInformation($"AddAmountToSavingsAccountForUser end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             return Ok();
         }
 
@@ -120,7 +132,9 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
             [Required] [FromRoute] Guid savingsAccountId,
             [Required] [FromBody] SubtractAmountFromSavingsAccountRequest request)
         {
-            await _savingsAccountManager.SubtractAmountFromSavingsAccountForUser(userId, savingsAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromSavingsAccountForUser start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
+            await _savingsAccountManager.SubtractAmountFromSavingsAccountForUserAsync(userId, savingsAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromSavingsAccountForUser end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             return Ok();
         }
 
@@ -143,7 +157,9 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
             [Required] [FromRoute] Guid userId,
             [Required] [FromRoute] Guid savingsAccountId)
         {
-            await _savingsAccountManager.DeleteSavingsAccountForUser(userId, savingsAccountId);
+            _logger.LogInformation($"DeleteSavingsAccountForUser start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
+            await _savingsAccountManager.DeleteSavingsAccountForUserAsync(userId, savingsAccountId);
+            _logger.LogInformation($"DeleteSavingsAccountForUser end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             return Ok();
         }
 
@@ -169,7 +185,9 @@ namespace FinancialPeace.Web.Api.Controllers.SavingsAccounts
             [Required] [FromRoute] Guid savingsAccountId,
             [Required] [FromBody] UpdateSavingsAccountRequest request)
         {
-            await _savingsAccountManager.UpdateSavingsAccountForUser(userId, savingsAccountId, request);
+            _logger.LogInformation($"UpdateSavingsAccountForUser start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
+            await _savingsAccountManager.UpdateSavingsAccountForUserAsync(userId, savingsAccountId, request);
+            _logger.LogInformation($"UpdateSavingsAccountForUser end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             return Ok();
         }
     }

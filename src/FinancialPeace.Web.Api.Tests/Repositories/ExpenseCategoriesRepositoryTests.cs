@@ -9,6 +9,7 @@ using FinancialPeace.Web.Api.Models.Requests.ExpenseCategories;
 using FinancialPeace.Web.Api.Repositories;
 using FinancialPeace.Web.Api.Repositories.Connection;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -22,6 +23,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         {
             public ISqlConnectionProvider SqlConnectionProvider { get; set; }
             public ISqlConnectionWrapper SqlConnectionWrapper { get; set; }
+            public static ILogger<ExpenseCategoriesRepository> Logger => Substitute.For<ILogger<ExpenseCategoriesRepository>>();
         }
 
         private static Stubs GetStubs()
@@ -39,20 +41,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
 
         private static ExpenseCategoriesRepository GetSystemUnderTest(Stubs stubs)
         {
-            return new ExpenseCategoriesRepository(stubs.SqlConnectionProvider);
-        }
-
-        [Test]
-        public void ExpenseCategoriesRepository_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var repository = GetSystemUnderTest(stubs);
-
-            // Assert
-            Assert.IsNotNull(repository);
+            return new ExpenseCategoriesRepository(stubs.SqlConnectionProvider, Stubs.Logger);
         }
 
         [Test]
@@ -86,7 +75,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             var repository = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await repository.GetExpenseCategories();
+            var actualResponse = await repository.GetExpenseCategoriesAsync();
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);
@@ -124,7 +113,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             var repository = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await repository.GetExpenseCategoriesForUser(Guid.NewGuid());
+            var actualResponse = await repository.GetExpenseCategoriesForUserAsync(Guid.NewGuid());
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);
@@ -143,7 +132,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async() => await repository.AddExpenseCategoryForUser(
+            Assert.DoesNotThrowAsync(async() => await repository.AddExpenseCategoryForUserAsync(
                 Guid.NewGuid(), 
                 request));
         }
@@ -156,7 +145,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             var repository = GetSystemUnderTest(stubs);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async() => await repository.DeleteExpenseCategoryForUser(
+            Assert.DoesNotThrowAsync(async() => await repository.DeleteExpenseCategoryForUserAsync(
                 Guid.NewGuid(), 
                 Guid.NewGuid()));
         }

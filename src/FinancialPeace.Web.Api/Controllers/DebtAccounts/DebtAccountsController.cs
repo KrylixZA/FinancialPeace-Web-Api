@@ -7,6 +7,7 @@ using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Models.Responses.DebtAccounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Shared.WebApi.Core.Errors;
 
 namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
@@ -19,14 +20,19 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
     public class DebtAccountsController : ControllerBase
     {
         private readonly IDebtAccountsManager _debtAccountsManager;
+        private readonly ILogger<DebtAccountsController> _logger;
 
         /// <summary>
         /// Creates a new instance of the Debt Accounts Controller.
         /// </summary>
         /// <param name="debtAccountsManager">The debt accounts manager.</param>
-        public DebtAccountsController(IDebtAccountsManager debtAccountsManager)
+        /// <param name="logger">The logger.</param>
+        public DebtAccountsController(
+            IDebtAccountsManager debtAccountsManager,
+            ILogger<DebtAccountsController> logger)
         {
             _debtAccountsManager = debtAccountsManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -44,7 +50,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetDebtAccountsForUser([Required] [FromRoute] Guid userId)
         {
-            var response = await _debtAccountsManager.GetDebtAccountForUser(userId);
+            _logger.LogInformation($"GetDebtAccountsForUser start. UserId: {userId}");
+            var response = await _debtAccountsManager.GetDebtAccountForUserAsync(userId);
+            _logger.LogInformation($"GetDebtAccountsForUser end. UserId: {userId}");
             return Ok(response);
         }
 
@@ -68,7 +76,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] AddDebtAccountRequest request)
         {
-            await _debtAccountsManager.AddDebtAccountForUser(userId, request);
+            _logger.LogInformation($"AddDebtAccountForUser start. UserId: {userId}");
+            await _debtAccountsManager.AddDebtAccountForUserAsync(userId, request);
+            _logger.LogInformation($"AddDebtAccountForUser end. UserId: {userId}");
             return Accepted();
         }
 
@@ -94,7 +104,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
             [Required] [FromRoute] Guid debtAccountId,
             [Required] [FromBody] AddAmountToDebtAccountRequest request)
         {
-            await _debtAccountsManager.AddAmountToDebtAccountForUser(userId, debtAccountId, request);
+            _logger.LogInformation($"AddAmountToDebtAccount start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            await _debtAccountsManager.AddAmountToDebtAccountForUserAsync(userId, debtAccountId, request);
+            _logger.LogInformation($"AddAmountToDebtAccount end. UserId: {userId}. DebtAccountId: {debtAccountId}");
             return Ok();
         }
 
@@ -120,7 +132,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
             [Required] [FromRoute] Guid debtAccountId,
             [Required] [FromBody] SubtractAmountFromDebtAccountRequest request)
         {
-            await _debtAccountsManager.SubtractAmountFromDebtAccountForUser(userId, debtAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromDebtAccountForUser start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            await _debtAccountsManager.SubtractAmountFromDebtAccountForUserAsync(userId, debtAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromDebtAccountForUser end. UserId: {userId}. DebtAccountId: {debtAccountId}");
             return Ok();
         }
 
@@ -143,7 +157,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
             [Required] [FromRoute] Guid userId,
             [Required] [FromRoute] Guid debtAccountId)
         {
-            await _debtAccountsManager.DeleteDebtAccountForUser(userId, debtAccountId);
+            _logger.LogInformation($"DeleteDebtAccountForUser start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            await _debtAccountsManager.DeleteDebtAccountForUserAsync(userId, debtAccountId);
+            _logger.LogInformation($"DeleteDebtAccountForUser end. UserId: {userId}. DebtAccountId: {debtAccountId}");
             return Ok();
         }
 
@@ -169,7 +185,9 @@ namespace FinancialPeace.Web.Api.Controllers.DebtAccounts
             [Required] [FromRoute] Guid debtAccountId,
             [Required] [FromBody] UpdateDebtAccountRequest request)
         {
-            await _debtAccountsManager.UpdateDebtAccountForUser(userId, debtAccountId, request);
+            _logger.LogInformation($"UpdateDebtAccountForUser start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            await _debtAccountsManager.UpdateDebtAccountForUserAsync(userId, debtAccountId, request);
+            _logger.LogInformation($"UpdateDebtAccountForUser end. UserId: {userId}. DebtAccountId: {debtAccountId}");
             return Ok();
         }
     }

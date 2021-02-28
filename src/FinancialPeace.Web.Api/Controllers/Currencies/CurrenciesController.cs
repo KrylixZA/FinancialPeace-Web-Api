@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using FinancialPeace.Web.Api.Models.Requests.Currencies;
 using FinancialPeace.Web.Api.Models.Responses.Currencies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Shared.WebApi.Core.Errors;
 
 namespace FinancialPeace.Web.Api.Controllers.Currencies
@@ -19,14 +19,19 @@ namespace FinancialPeace.Web.Api.Controllers.Currencies
     public class CurrenciesController : ControllerBase
     {
         private readonly ICurrenciesManager _currenciesManager;
+        private readonly ILogger<CurrenciesController> _logger;
 
         /// <summary>
         /// Creates a new instance of the Currencies Controller class.
         /// </summary>
         /// <param name="currenciesManager">The currencies manager.</param>
-        public CurrenciesController(ICurrenciesManager currenciesManager)
+        /// <param name="logger">The logger.</param>
+        public CurrenciesController(
+            ICurrenciesManager currenciesManager,
+            ILogger<CurrenciesController> logger)
         {
             _currenciesManager = currenciesManager;
+            _logger = logger;
         }
         
         /// <summary>
@@ -43,7 +48,9 @@ namespace FinancialPeace.Web.Api.Controllers.Currencies
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetCurrencies()
         {
-            var response = await _currenciesManager.GetCurrencies();
+            _logger.LogInformation("GetCurrencies start");
+            var response = await _currenciesManager.GetCurrenciesAsync();
+            _logger.LogInformation("GetCurrencies end");
             return Ok(response);
         }
 

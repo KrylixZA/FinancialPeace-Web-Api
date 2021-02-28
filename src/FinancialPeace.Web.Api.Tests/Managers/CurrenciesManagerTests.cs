@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.Currencies;
 using FinancialPeace.Web.Api.Models.Responses.Currencies;
 using FinancialPeace.Web.Api.Repositories;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         private struct Stubs
         {
             public ICurrenciesRepository CurrenciesRepository { get; set; }
+            public static ILogger<CurrenciesManager> Logger => Substitute.For<ILogger<CurrenciesManager>>();
         }
 
         private static Stubs GetStubs()
@@ -34,20 +36,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
 
         private static CurrenciesManager GetSystemUnderTest(Stubs stubs)
         {
-            return new CurrenciesManager(stubs.CurrenciesRepository);
-        }
-
-        [Test]
-        public void CurrenciesManager_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var manager = new CurrenciesManager(stubs.CurrenciesRepository);
-
-            // Assert
-            Assert.IsNotNull(manager);
+            return new CurrenciesManager(stubs.CurrenciesRepository, Stubs.Logger);
         }
 
         [Test]
@@ -71,11 +60,11 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             var stubs = GetStubs();
-            stubs.CurrenciesRepository.GetCurrencies().Returns(currencies);
+            stubs.CurrenciesRepository.GetCurrenciesAsync().Returns(currencies);
             var manager = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await manager.GetCurrencies();
+            var actualResponse = await manager.GetCurrenciesAsync();
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);

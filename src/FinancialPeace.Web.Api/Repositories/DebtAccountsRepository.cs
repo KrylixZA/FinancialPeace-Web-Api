@@ -6,6 +6,7 @@ using Dapper;
 using FinancialPeace.Web.Api.Models;
 using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Repositories.Connection;
+using Microsoft.Extensions.Logging;
 
 namespace FinancialPeace.Web.Api.Repositories
 {
@@ -20,31 +21,40 @@ namespace FinancialPeace.Web.Api.Repositories
         private const string UpdateDebtAccountForUserProc = "Freedom.pr_UpdateDebtAccountForUser";
         
         private readonly ISqlConnectionProvider _sqlConnectionProvider;
+        private readonly ILogger<DebtAccountsRepository> _logger;
 
         /// <summary>
         /// Creates a new instance of the Debt Account Repository class.
         /// </summary>
         /// <param name="sqlConnectionProvider">The SQL connection provider.</param>
-        public DebtAccountsRepository(ISqlConnectionProvider sqlConnectionProvider)
+        /// <param name="logger">The logger.</param>
+        public DebtAccountsRepository(
+            ISqlConnectionProvider sqlConnectionProvider,
+            ILogger<DebtAccountsRepository> logger)
         {
             _sqlConnectionProvider = sqlConnectionProvider;
+            _logger = logger;
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<DebtAccount>> GetDebtAccountsForUser(Guid userId)
+        public async Task<IEnumerable<DebtAccount>> GetDebtAccountsForUserAsync(Guid userId)
         {
+            _logger.LogInformation($"GetDebtAccountsForUserAsync start. UserId: {userId}");
             using var conn = _sqlConnectionProvider.Open();
             var parameters = new DynamicParameters();
             parameters.Add("$userId", userId);
-            return await conn.QueryAsync<DebtAccount>(
+            var response = await conn.QueryAsync<DebtAccount>(
                 GetDebtsAccountForUserProc, 
                 parameters,
                 commandType: CommandType.StoredProcedure);
+            _logger.LogInformation($"GetDebtAccountsForUserAsync end. UserId: {userId}");
+            return response;
         }
 
         /// <inheritdoc />
-        public async Task AddDebtAccountForUser(Guid userId, AddDebtAccountRequest request)
+        public async Task AddDebtAccountForUserAsync(Guid userId, AddDebtAccountRequest request)
         {
+            _logger.LogInformation($"AddDebtAccountForUserAsync start. UserId: {userId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -59,11 +69,16 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"AddDebtAccountForUserAsync end. UserId: {userId}");
         }
 
         /// <inheritdoc />
-        public async Task AddAmountToDebtAccountForUser(Guid userId, Guid debtAccountId, AddAmountToDebtAccountRequest request)
+        public async Task AddAmountToDebtAccountForUserAsync(
+            Guid userId, 
+            Guid debtAccountId, 
+            AddAmountToDebtAccountRequest request)
         {
+            _logger.LogInformation($"AddAmountToDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -76,11 +91,16 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"AddAmountToDebtAccountForUserAsync end. UserId: {userId}. DebtAccountId: {debtAccountId}");
         }
 
         /// <inheritdoc />
-        public async Task SubtractAmountFromDebtAccountForUser(Guid userId, Guid debtAccountId, SubtractAmountFromDebtAccountRequest request)
+        public async Task SubtractAmountFromDebtAccountForUserAsync(
+            Guid userId, 
+            Guid debtAccountId, 
+            SubtractAmountFromDebtAccountRequest request)
         {
+            _logger.LogInformation($"SubtractAmountFromDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -93,11 +113,13 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"SubtractAmountFromDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
         }
 
         /// <inheritdoc />
-        public async Task DeleteDebtAccountForUser(Guid userId, Guid debtAccountId)
+        public async Task DeleteDebtAccountForUserAsync(Guid userId, Guid debtAccountId)
         {
+            _logger.LogInformation($"DeleteDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -109,11 +131,16 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"DeleteDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
         }
 
         /// <inheritdoc />
-        public async Task UpdateDebtAccountForUser(Guid userId, Guid debtAccountId, UpdateDebtAccountRequest request)
+        public async Task UpdateDebtAccountForUserAsync(
+            Guid userId, 
+            Guid debtAccountId, 
+            UpdateDebtAccountRequest request)
         {
+            _logger.LogInformation($"UpdateDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -130,6 +157,7 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"UpdateDebtAccountForUserAsync end. UserId: {userId}. DebtAccountId: {debtAccountId}");
         }
     }
 }

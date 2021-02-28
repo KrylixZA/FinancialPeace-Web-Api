@@ -7,6 +7,7 @@ using FinancialPeace.Web.Api.Models.Requests.ExpenseCategories;
 using FinancialPeace.Web.Api.Models.Responses.ExpenseCategories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Shared.WebApi.Core.Errors;
 
 namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
@@ -19,14 +20,19 @@ namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
     public class ExpenseCategoriesController : ControllerBase
     {
         private readonly IExpenseCategoriesManager _expenseCategoriesManager;
+        private readonly ILogger<ExpenseCategoriesController> _logger;
 
         /// <summary>
         /// Creates a new instance of the Expense Categories Controller class.
         /// </summary>
         /// <param name="expenseCategoriesManager">The expense categories manager.</param>
-        public ExpenseCategoriesController(IExpenseCategoriesManager expenseCategoriesManager)
+        /// <param name="logger">The logger.</param>
+        public ExpenseCategoriesController(
+            IExpenseCategoriesManager expenseCategoriesManager,
+            ILogger<ExpenseCategoriesController> logger)
         {
             _expenseCategoriesManager = expenseCategoriesManager;
+            _logger = logger;
         }
         
         /// <summary>
@@ -43,7 +49,9 @@ namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetExpenseCategories()
         {
-            var response = await _expenseCategoriesManager.GetExpenseCategories().ConfigureAwait(false);
+            _logger.LogInformation("GetExpenseCategories start");
+            var response = await _expenseCategoriesManager.GetExpenseCategoriesAsync();
+            _logger.LogInformation("GetExpenseCategories end");
             return Ok(response);
         }
 
@@ -62,7 +70,9 @@ namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetExpenseCategoriesForUser([Required] [FromRoute] Guid userId)
         {
-            var response = await _expenseCategoriesManager.GetExpenseCategoriesForUser(userId).ConfigureAwait(false);
+            _logger.LogInformation($"GetExpenseCategoriesForUser start. UserId: {userId}");
+            var response = await _expenseCategoriesManager.GetExpenseCategoriesForUserAsync(userId);
+            _logger.LogInformation($"GetExpenseCategoriesForUser end. UserId: {userId}");
             return Ok(response);
         }
 
@@ -86,7 +96,9 @@ namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] AddExpenseCategoryRequest request)
         {
-            await _expenseCategoriesManager.AddExpenseCategoryForUser(userId, request).ConfigureAwait(false);
+            _logger.LogInformation($"AddExpenseCategoryForUser start. UserId: {userId}");
+            await _expenseCategoriesManager.AddExpenseCategoryForUserAsync(userId, request);
+            _logger.LogInformation($"AddExpenseCategoryForUser end. UserId: {userId}");
             return Accepted();
         }
 
@@ -108,7 +120,9 @@ namespace FinancialPeace.Web.Api.Controllers.ExpenseCategories
             [Required] [FromRoute] Guid userId,
             [Required] [FromRoute] Guid expenseCategoryId)
         {
-            await _expenseCategoriesManager.DeleteExpenseCategoryForUser(userId, expenseCategoryId).ConfigureAwait(false);
+            _logger.LogInformation($"DeleteExpenseCategoryForUser start. UserId: {userId}. ExpenseCategoryId: {expenseCategoryId}");
+            await _expenseCategoriesManager.DeleteExpenseCategoryForUserAsync(userId, expenseCategoryId);
+            _logger.LogInformation($"DeleteExpenseCategoryForUser start. UserId: {userId}. ExpenseCategoryId: {expenseCategoryId}");
             return Ok();
         }
     }

@@ -9,11 +9,12 @@
             Exposes functionality to view and manage a user's budget.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.#ctor(FinancialPeace.Web.Api.Managers.IBudgetsManager)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.#ctor(FinancialPeace.Web.Api.Managers.IBudgetsManager,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController})">
             <summary>
             Initializes a new instance of the Budgets Controller class.
             </summary>
             <param name="budgetsManager"></param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.Budgets.BudgetsController.GetBudgetForUser(System.Guid)">
             <summary>
@@ -66,11 +67,12 @@
             Exposes functionality to manage currencies.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.#ctor(FinancialPeace.Web.Api.Managers.ICurrenciesManager)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.#ctor(FinancialPeace.Web.Api.Managers.ICurrenciesManager,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController})">
             <summary>
             Creates a new instance of the Currencies Controller class.
             </summary>
             <param name="currenciesManager">The currencies manager.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.Currencies.CurrenciesController.GetCurrencies">
             <summary>
@@ -97,11 +99,12 @@
             Exposes functionality to manage a user's debt accounts.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.#ctor(FinancialPeace.Web.Api.Managers.IDebtAccountsManager)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.#ctor(FinancialPeace.Web.Api.Managers.IDebtAccountsManager,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController})">
             <summary>
             Creates a new instance of the Debt Accounts Controller.
             </summary>
             <param name="debtAccountsManager">The debt accounts manager.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.DebtAccounts.DebtAccountsController.GetDebtAccountsForUser(System.Guid)">
             <summary>
@@ -181,11 +184,12 @@
             Exposes functionality to manage expenses categories.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.#ctor(FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.#ctor(FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController})">
             <summary>
             Creates a new instance of the Expense Categories Controller class.
             </summary>
             <param name="expenseCategoriesManager">The expense categories manager.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.ExpenseCategories.ExpenseCategoriesController.GetExpenseCategories">
             <summary>
@@ -234,11 +238,12 @@
             Exposes functionality to manage a user's savings accounts.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.#ctor(FinancialPeace.Web.Api.Managers.ISavingsAccountManager)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.#ctor(FinancialPeace.Web.Api.Managers.ISavingsAccountManager,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController})">
             <summary>
             Initializes a new instance of the Savings Account Controller class.
             </summary>
             <param name="savingsAccountManager">The savings account manager.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Controllers.SavingsAccounts.SavingsAccountController.GetSavingsAccountsForUser(System.Guid)">
             <summary>
@@ -318,13 +323,14 @@
             A test API to resolve a JWT token.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.TestTokensController.#ctor(Shared.WebApi.Core.Security.IJwtService)">
+        <member name="M:FinancialPeace.Web.Api.Controllers.TestTokensController.#ctor(Shared.WebApi.Core.Security.IJwtService,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Controllers.TestTokensController})">
             <summary>
             Initializes a new instance of the TestTokensController.
             </summary>
             <param name="jwtService">The JWT service.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Controllers.TestTokensController.GetRandomToken">
+        <member name="M:FinancialPeace.Web.Api.Controllers.TestTokensController.GetRandomTokenAsync">
             <summary>
             Generates a random JWT token.
             </summary>
@@ -369,11 +375,12 @@
         <member name="T:FinancialPeace.Web.Api.Managers.BudgetsManager">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.#ctor(FinancialPeace.Web.Api.Repositories.IBudgetsRepository)">
+        <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.#ctor(FinancialPeace.Web.Api.Repositories.IBudgetsRepository,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Managers.BudgetsManager})">
             <summary>
             Initializes a new instance of the Budgets Manager class.
             </summary>
             <param name="budgetsRepository">The budgets repository.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Managers.BudgetsManager.GetBudgetForUserAsync(System.Guid)">
             <inheritdoc />
@@ -390,13 +397,14 @@
         <member name="T:FinancialPeace.Web.Api.Managers.CurrenciesManager">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.#ctor(FinancialPeace.Web.Api.Repositories.ICurrenciesRepository)">
+        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.#ctor(FinancialPeace.Web.Api.Repositories.ICurrenciesRepository,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Managers.CurrenciesManager})">
             <summary>
             Creates a new instance of the Currencies Manager class.
             </summary>
             <param name="currenciesRepository">The currencies repository.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.GetCurrencies">
+        <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.GetCurrenciesAsync">
             <inheritdoc />
         </member>
         <member name="M:FinancialPeace.Web.Api.Managers.CurrenciesManager.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
@@ -405,49 +413,51 @@
         <member name="T:FinancialPeace.Web.Api.Managers.DebtAccountsManager">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.#ctor(FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.#ctor(FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Managers.DebtAccountsManager})">
             <summary>
             Creates a new instance of the Debt Account Manager class.
             </summary>
             <param name="debtAccountsRepository">The debt accounts repository.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.GetDebtAccountForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.GetDebtAccountForUserAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.AddDebtAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.AddAmountToDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.SubtractAmountFromDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.DeleteDebtAccountForUserAsync(System.Guid,System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.DebtAccountsManager.UpdateDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.#ctor(FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.#ctor(FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager})">
             <summary>
             Creates a new instance of the Expense Categories Manager class.
-            </summary>
+            </summary>r
             <param name="expenseCategoriesRepository">The expense categories repository.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.GetExpenseCategories">
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.GetExpenseCategoriesAsync">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.GetExpenseCategoriesForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.GetExpenseCategoriesForUserAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.AddExpenseCategoryForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ExpenseCategoriesManager.DeleteExpenseCategoryForUserAsync(System.Guid,System.Guid)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Managers.IBudgetsManager">
@@ -489,7 +499,7 @@
             Provides a contract for a manager between the repository and controller layer.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ICurrenciesManager.GetCurrencies">
+        <member name="M:FinancialPeace.Web.Api.Managers.ICurrenciesManager.GetCurrenciesAsync">
             <summary>
             Gets the currently listed currencies from the database.
             </summary>
@@ -506,21 +516,21 @@
             Provides a contract for managing a user's debt accounts.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.GetDebtAccountForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.GetDebtAccountForUserAsync(System.Guid)">
             <summary>
             Gets the list of debt accounts linked to the user from the database.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <returns>An enumeration of debt accounts.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.AddDebtAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
             <summary>
             Creates a new debt account for the user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The details of the debt account.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.AddAmountToDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
             <summary>
             Adds an amount to the user's debt account.
             </summary>
@@ -528,7 +538,7 @@
             <param name="debtAccountId">The savings account unique identifier.</param>
             <param name="request">The details of the amount to add.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.SubtractAmountFromDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
             <summary>
             Subtracts an amount from a user's debt account.
             </summary>
@@ -536,14 +546,14 @@
             <param name="debtAccountId">The debt account unique identifier.</param>
             <param name="request">The details of the amount to subtract.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.DeleteDebtAccountForUserAsync(System.Guid,System.Guid)">
             <summary>
             Deletes a debt account for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="debtAccountId">The debt account unique identifier.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IDebtAccountsManager.UpdateDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
             <summary>
             Updates a user's debt account.
             </summary>
@@ -556,27 +566,27 @@
             An interface for a manager layer that intercedes between the expense categories repository and the controller.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.GetExpenseCategories">
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.GetExpenseCategoriesAsync">
             <summary>
             Gets all listed expense categories.
             </summary>
             <returns>An enumeration of expense categories.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.GetExpenseCategoriesForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.GetExpenseCategoriesForUserAsync(System.Guid)">
             <summary>
             Gets all listed expense categories linked to a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <returns>An enumeration of expense categories linked to a user.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.AddExpenseCategoryForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
             <summary>
             Creates a link between a user and an expense category. If the expense category does not exist, it will be created first. The created expense category will be available for all users.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The expense category details.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.IExpenseCategoriesManager.DeleteExpenseCategoryForUserAsync(System.Guid,System.Guid)">
             <summary>
             Deletes a mapping between a user and an expense category.
             </summary>
@@ -588,21 +598,21 @@
             Provides a contract for managing a user's savings accounts.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.GetSavingsAccountForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.GetSavingsAccountForUserAsync(System.Guid)">
             <summary>
             Gets the list of savings accounts linked to the user from the database.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <returns>An enumeration of savings account.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.AddSavingsAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
             <summary>
             Creates a new savings account for the user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The details of the savings account.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.AddAmountToSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
             <summary>
             Adds an amount to the user's savings account.
             </summary>
@@ -610,7 +620,7 @@
             <param name="savingsAccountId">The savings account unique identifier.</param>
             <param name="request">The details of the amount to add.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.SubtractAmountFromSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
             <summary>
             Subtracts an amount from a user's savings account.
             </summary>
@@ -618,14 +628,14 @@
             <param name="savingsAccountId">The savings account unique identifier.</param>
             <param name="request">The details of the amount to subtract.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.DeleteSavingsAccountForUserAsync(System.Guid,System.Guid)">
             <summary>
             Deletes a savings account for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="savingsAccountId">The savings account unique identifier.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.ISavingsAccountManager.UpdateSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
             <summary>
             Updates a user's savings account.
             </summary>
@@ -636,28 +646,29 @@
         <member name="T:FinancialPeace.Web.Api.Managers.SavingsAccountManager">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.#ctor(FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.#ctor(FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Managers.SavingsAccountManager})">
             <summary>
             Initializes a new instance of the Savings Account Manager class.
             </summary>
             <param name="savingsAccountRepository">The savings account repository.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.GetSavingsAccountForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.GetSavingsAccountForUserAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.AddSavingsAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.AddAmountToSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.SubtractAmountFromSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.DeleteSavingsAccountForUserAsync(System.Guid,System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Managers.SavingsAccountManager.UpdateSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Models.Currency">
@@ -1103,11 +1114,12 @@
         <member name="T:FinancialPeace.Web.Api.Repositories.BudgetsRepository">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.BudgetsRepository})">
             <summary>
             Initializes a new instance of the Budgets Repository class.
             </summary>
             <param name="connectionProvider">The connection provider.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Repositories.BudgetsRepository.GetBudgetForUserAsync(System.Guid)">
             <inheritdoc />
@@ -1192,11 +1204,12 @@
         <member name="T:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionWrapper,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider})">
             <summary>
             Initializes a new instance of the SqlConnectionProvider class.
             </summary>
             <param name="sqlConnectionWrapper">The SQL connection wrapper.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionProvider.Open">
             <inheritdoc />
@@ -1204,11 +1217,12 @@
         <member name="T:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.#ctor(System.Data.IDbConnection)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.#ctor(System.Data.IDbConnection,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper})">
             <summary>
             Initializes a new private instance of itself.
             </summary>
             <param name="dbConnection">The database connection.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:FinancialPeace.Web.Api.Repositories.Connection.SqlConnectionWrapper.BeginTransaction(System.Data.IsolationLevel)">
             <inheritdoc />
@@ -1231,64 +1245,67 @@
         <member name="T:FinancialPeace.Web.Api.Repositories.CurrenciesRepository">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.CurrenciesRepository})">
             <summary>
             Creates a new instance of the Currencies Repository class.
             </summary>
             <param name="sqlConnectionProvider">The SQL connection provider.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.GetCurrencies">
+        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.GetCurrenciesAsync">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.CurrenciesRepository.AddCurrencyAsync(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.DebtAccountsRepository})">
             <summary>
             Creates a new instance of the Debt Account Repository class.
             </summary>
             <param name="sqlConnectionProvider">The SQL connection provider.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.GetDebtAccountsForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.GetDebtAccountsForUserAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.AddDebtAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.AddAmountToDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.SubtractAmountFromDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.DeleteDebtAccountForUserAsync(System.Guid,System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.DebtAccountsRepository.UpdateDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository})">
             <summary>
             Initializes a new instance of the Expense Category Repository class.
             </summary>
             <param name="connectionProvider">The connection provider.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.GetExpenseCategories">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.GetExpenseCategoriesAsync">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.GetExpenseCategoriesForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.GetExpenseCategoriesForUserAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.AddExpenseCategoryForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ExpenseCategoriesRepository.DeleteExpenseCategoryForUserAsync(System.Guid,System.Guid)">
             <inheritdoc />
         </member>
         <member name="T:FinancialPeace.Web.Api.Repositories.IBudgetsRepository">
@@ -1330,13 +1347,13 @@
             Defines a contract for interacting with currencies in the database.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository.GetCurrencies">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository.GetCurrenciesAsync">
             <summary>
             Gets all currently listed currencies from the database.
             </summary>
             <returns>An enumeration of currencies.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository.AddCurrency(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ICurrenciesRepository.AddCurrencyAsync(FinancialPeace.Web.Api.Models.Requests.Currencies.AddCurrencyRequest)">
             <summary>
             Attempts to persist a new currency to the database.
             </summary>
@@ -1347,21 +1364,21 @@
             Provides a contract for interacting with a user's debt accounts in the database.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.GetDebtAccountsForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.GetDebtAccountsForUserAsync(System.Guid)">
             <summary>
             Gets the list of debt accounts linked to the user from the database.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <returns>An enumeration of debt account.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.AddDebtAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.AddDebtAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddDebtAccountRequest)">
             <summary>
             Creates a new savings account for the user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The details of the debt account.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.AddAmountToDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.AddAmountToDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.AddAmountToDebtAccountRequest)">
             <summary>
             Adds an amount to the user's savings account.
             </summary>
@@ -1369,7 +1386,7 @@
             <param name="debtAccountId">The debt account unique identifier.</param>
             <param name="request">The details of the amount to add.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.SubtractAmountFromDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.SubtractAmountFromDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.SubtractAmountFromDebtAccountRequest)">
             <summary>
             Subtracts an amount from a user's savings account.
             </summary>
@@ -1377,14 +1394,14 @@
             <param name="debtAccountId">The debt account unique identifier.</param>
             <param name="request">The details of the amount to subtract.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.DeleteDebtAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.DeleteDebtAccountForUserAsync(System.Guid,System.Guid)">
             <summary>
             Deletes a savings account for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="debtAccountId">The debt account unique identifier.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.UpdateDebtAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IDebtAccountsRepository.UpdateDebtAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.DebtAccounts.UpdateDebtAccountRequest)">
             <summary>
             Updates a user's savings account.
             </summary>
@@ -1397,27 +1414,27 @@
             Provides a contract for interacting with the expense categories parts of the database.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.GetExpenseCategories">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.GetExpenseCategoriesAsync">
             <summary>
             Gets all the available expense categories from the database.
             </summary>
             <returns>An enumeration of expense categories.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.GetExpenseCategoriesForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.GetExpenseCategoriesForUserAsync(System.Guid)">
             <summary>
             Gets all the expense categories linked to the user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <returns>An enumeration of expense categories linked to the user.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.AddExpenseCategoryForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.AddExpenseCategoryForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.ExpenseCategories.AddExpenseCategoryRequest)">
             <summary>
             Links a user to an expense category. If the expense category does not exist, it will be created first and become available to all users.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The expense category details.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.DeleteExpenseCategoryForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.IExpenseCategoriesRepository.DeleteExpenseCategoryForUserAsync(System.Guid,System.Guid)">
             <summary>
             Deletes the mapping between an expense category and a user.
             </summary>
@@ -1429,21 +1446,21 @@
             Provides a contract for interacting with the database and a variety of savings accounts.
             </summary>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.GetSavingsAccountForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.GetSavingsAccountForUserAsync(System.Guid)">
             <summary>
             Gets the list of savings accounts linked to the user from the database.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <returns>An enumeration of savings account.</returns>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.AddSavingsAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
             <summary>
             Creates a new savings account for the user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="request">The details of the savings account.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.AddAmountToSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
             <summary>
             Adds an amount to the user's savings account.
             </summary>
@@ -1451,7 +1468,7 @@
             <param name="savingsAccountId">The savings account unique identifier.</param>
             <param name="request">The details of the amount to add.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.SubtractAmountFromSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
             <summary>
             Subtracts an amount from a user's savings account.
             </summary>
@@ -1459,14 +1476,14 @@
             <param name="savingsAccountId">The savings account unique identifier.</param>
             <param name="request">The details of the amount to subtract.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.DeleteSavingsAccountForUserAsync(System.Guid,System.Guid)">
             <summary>
             Deletes a savings account for a user.
             </summary>
             <param name="userId">The user's unique identifier.</param>
             <param name="savingsAccountId">The savings account unique identifier.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.ISavingsAccountRepository.UpdateSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
             <summary>
             Updates a user's savings account.
             </summary>
@@ -1477,28 +1494,29 @@
         <member name="T:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.#ctor(FinancialPeace.Web.Api.Repositories.Connection.ISqlConnectionProvider,Microsoft.Extensions.Logging.ILogger{FinancialPeace.Web.Api.Repositories.SavingsAccountRepository})">
             <summary>
             Initializes a new instance of the Savings Account Repository class.
             </summary>
             <param name="sqlConnectionProvider"></param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.GetSavingsAccountForUser(System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.GetSavingsAccountForUserAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.AddSavingsAccountForUser(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.AddSavingsAccountForUserAsync(System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddSavingsAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.AddAmountToSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.AddAmountToSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.AddAmountToSavingsAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.SubtractAmountFromSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.SubtractAmountFromSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.SubtractAmountFromSavingsAccountRequest)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.DeleteSavingsAccountForUser(System.Guid,System.Guid)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.DeleteSavingsAccountForUserAsync(System.Guid,System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.UpdateSavingsAccountForUser(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
+        <member name="M:FinancialPeace.Web.Api.Repositories.SavingsAccountRepository.UpdateSavingsAccountForUserAsync(System.Guid,System.Guid,FinancialPeace.Web.Api.Models.Requests.SavingsAccounts.UpdateSavingsAccountRequest)">
             <inheritdoc />
         </member>
     </members>
