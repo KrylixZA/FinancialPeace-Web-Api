@@ -17,8 +17,6 @@ services:
       dockerfile: Dockerfile
       args:
         - BUILD_NUMBER=1.0.0.0
-        - FEED_USER=GitHub
-        - FEED_TOKEN=03d1310350c749d6f2f9246d1eb6ec3017d87976
     depends_on: 
       - financialpeace-database
     networks:
