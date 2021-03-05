@@ -1,39 +1,13 @@
 # [Financial Peace Web API](https://github.com/KrylixZA/FinancialPeace-Web-Api) ![CI](https://github.com/KrylixZA/FinancialPeace-Web-Api/workflows/CI/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FinancialPeace-Web-Api&metric=alert_status)](https://sonarcloud.io/dashboard?id=FinancialPeace-Web-Api)
 The Financial Peace Web API exposes restful functions to serve the functions necessary for managing your way to fincancial peace!
 
-# Build
-
-## dotnet cli
-Run the following command: `dotnet build ./src`
-
-## GitHub Actions
-Push code to GitHub and the [CI pipeline](https://github.com/KrylixZA/FinancialPeace-Web-Api/actions) will automatically build your branch and push an image to [Docker Hub](https://hub.docker.com/repository/docker/krylixza/financialpeace-web-api/general)
-
-## Visual Studio Code
-There is already a `tasks.json` file provided which will automatically build the project when you attempt to run.
-
-# Running the application
-You can either run this application through the dotnet runtime, Visual Studio/Visual Studio Code, IIS or through Docker.
-
-## dotnet runtime
-Ensure your project is built, then simply: `dotnet ./src/FinancialPeace.Web.Api/bin/Debug/netcoreapp3.1/FinancialPeace.Web.Api.dll`
-
-## Visual Studio/Visual Studio Code
-Simply launch through the debugger.
-
-## IIS
-This can be configured through Visual Studio which will abstract the complexity away for you.
-
-## Docker
-You can pull and run the Docker image by running the following command: `docker run -d -p 5000:5000 krylixza/financialpeace-web-api:latest`
-
-# Test
-To test this, you can simply launch the project and run the Postman requests from the `test/postman-tests` directory. 
-
-The swagger docs can be found when launching the API and browsing to `http://localhost:5000`
-
 # Docker
 This application is also built into a [Docker image](Dockerfile) and hosted on [Docker Hub](https://hub.docker.com/r/krylixza/financialpeace-web-api).
+
+## Running the application with the database
+In the repository is a [docker-compose.yml](docker-compose.yml) file. Use this file to launch both the Web API and the database. To do this, simply clone the repository, open your CLI and run:
+
+    docker-compose up
 
 # Contribute
 To contribute to this project, please following the [contributing guide](CONTRIBUTING.md).
