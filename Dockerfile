@@ -1,11 +1,7 @@
-FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
-WORKDIR /src
-COPY /src .
-RUN dotnet publish --configuration Release
-
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 as app
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
+ARG PUBLISH_API_DIR="src/FinancialPeace.Web.Api/bin/Release/netcoreapp3.1/publish"
 WORKDIR /app
-COPY --from=build /src/FinancialPeace.Web.Api/bin/Debug/netcoreapp3.1/publish .
+COPY ${PUBLISH_API_DIR} .
 EXPOSE 5000
 ENV ASPNETCORE_URLS=http://+:5000
-ENTRYPOINT ["dotnet", "FinancialPeace.Web.Api.dll"]
+CMD ["dotnet", "FinancialPeace.Web.Api.dll"]
