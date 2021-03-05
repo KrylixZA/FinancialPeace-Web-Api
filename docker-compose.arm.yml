@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  financialpeace-database:
+    image: krylixza/financialpeace-database:latest
+    container_name: financialpeace-database
+    networks:
+      - financialpeace
+
+  financialpeace-web-api:
+    image: krylixza/financialpeace-web-api:latest-arm
+    container_name: financialpeace-web-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUILD_NUMBER=1.0.0.0
+    depends_on: 
+      - financialpeace-database
+    networks:
+      - financialpeace
+    ports: 
+      - 5000:5000
+    restart: unless-stopped
+
+networks:
+  financialpeace:
