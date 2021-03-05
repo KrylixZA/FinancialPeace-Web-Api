@@ -39,18 +39,22 @@ namespace FinancialPeace.Web.Api.Repositories
         /// <inheritdoc />
         public async Task<IEnumerable<SavingsAccount>> GetSavingsAccountForUserAsync(Guid userId)
         {
+            _logger.LogInformation($"GetSavingsAccountForUserAsync start. UserId: {userId}");
             using var conn = _sqlConnectionProvider.Open();
             var parameters = new DynamicParameters();
             parameters.Add("$userId", userId);
-            return await conn.QueryAsync<SavingsAccount>(
+            var response = await conn.QueryAsync<SavingsAccount>(
                 GetSavingsAccountForUserProc,
                 parameters,
                 commandType: CommandType.StoredProcedure);
+            _logger.LogInformation($"GetSavingsAccountForUserAsync end. UserId: {userId}");
+            return response;
         }
 
         /// <inheritdoc />
         public async Task AddSavingsAccountForUserAsync(Guid userId, AddSavingsAccountRequest request)
         {
+            _logger.LogInformation($"AddSavingsAccountForUserAsync start. UserId: {userId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -65,6 +69,7 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"AddSavingsAccountForUserAsync end. UserId: {userId}");
         }
 
         /// <inheritdoc />
@@ -73,6 +78,7 @@ namespace FinancialPeace.Web.Api.Repositories
             Guid savingsAccountId, 
             AddAmountToSavingsAccountRequest request)
         {
+            _logger.LogInformation($"AddAmountToSavingsAccountForUserAsync start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -85,6 +91,7 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"AddAmountToSavingsAccountForUserAsync end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
         }
 
         /// <inheritdoc />
@@ -93,6 +100,7 @@ namespace FinancialPeace.Web.Api.Repositories
             Guid savingsAccountId, 
             SubtractAmountFromSavingsAccountRequest request)
         {
+            _logger.LogInformation($"SubtractAmountFromSavingsAccountForUserAsync start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -105,11 +113,13 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"SubtractAmountFromSavingsAccountForUserAsync end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
         }
 
         /// <inheritdoc />
         public async Task DeleteSavingsAccountForUserAsync(Guid userId, Guid savingsAccountId)
         {
+            _logger.LogInformation($"DeleteSavingsAccountForUserAsync start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -121,6 +131,7 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"DeleteSavingsAccountForUserAsync end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
         }
 
         /// <inheritdoc />
@@ -129,6 +140,7 @@ namespace FinancialPeace.Web.Api.Repositories
             Guid savingsAccountId,
             UpdateSavingsAccountRequest request)
         {
+            _logger.LogInformation($"UpdateSavingsAccountForUserAsync start. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
             using var conn = _sqlConnectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -144,6 +156,7 @@ namespace FinancialPeace.Web.Api.Repositories
                 trans,
                 commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"UpdateSavingsAccountForUserAsync end. UserId: {userId}. SavingsAccountId: {savingsAccountId}");
         }
     }
 }
