@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.SavingsAccounts;
 using FinancialPeace.Web.Api.Models.Responses.SavingsAccounts;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.SavingsAccount
         private struct Stubs
         {
             public ISavingsAccountManager SavingsAccountManager { get; set; }
+            public static ILogger<SavingsAccountController> Logger => Substitute.For<ILogger<SavingsAccountController>>();
         }
 
         private static Stubs GetStubs()
@@ -34,20 +36,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.SavingsAccount
 
         private static SavingsAccountController GetSystemUnderTest(Stubs stubs)
         {
-            return new SavingsAccountController(stubs.SavingsAccountManager);
-        }
-
-        [Test]
-        public void SavingsAccountController_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var controller = new SavingsAccountController(stubs.SavingsAccountManager);
-
-            // Assert
-            Assert.IsNotNull(controller);
+            return new SavingsAccountController(stubs.SavingsAccountManager, Stubs.Logger);
         }
 
         [Test]
@@ -73,7 +62,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.SavingsAccount
             };
 
             var stubs = GetStubs();
-            stubs.SavingsAccountManager.GetSavingsAccountForUser(Arg.Any<Guid>()).Returns(expectedResponse);
+            stubs.SavingsAccountManager.GetSavingsAccountForUserAsync(Arg.Any<Guid>()).Returns(expectedResponse);
             var controller = GetSystemUnderTest(stubs);
 
             // Act

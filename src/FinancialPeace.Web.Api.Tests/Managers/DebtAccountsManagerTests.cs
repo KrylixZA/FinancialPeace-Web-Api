@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Models.Responses.DebtAccounts;
 using FinancialPeace.Web.Api.Repositories;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         private struct Stubs
         {
             public IDebtAccountsRepository DebtAccountsRepository { get; set; }
+            public static ILogger<DebtAccountsManager> Logger => Substitute.For<ILogger<DebtAccountsManager>>();
         }
 
         private static Stubs GetStubs()
@@ -34,20 +36,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
 
         private static DebtAccountsManager GetSystemUnderTest(Stubs stubs)
         {
-            return new DebtAccountsManager(stubs.DebtAccountsRepository);
-        }
-
-        [Test]
-        public void DebtAccountsManager_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var repository = new DebtAccountsManager(stubs.DebtAccountsRepository);
-
-            // Assert
-            Assert.IsNotNull(repository);
+            return new DebtAccountsManager(stubs.DebtAccountsRepository, Stubs.Logger);
         }
 
         [Test]
@@ -75,13 +64,13 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             var stubs = GetStubs();
-            stubs.DebtAccountsRepository.GetDebtAccountsForUser(
+            stubs.DebtAccountsRepository.GetDebtAccountsForUserAsync(
                     Arg.Any<Guid>())
                 .Returns(debtAccounts);
             var manager = GetSystemUnderTest(stubs);
 
             // Act
-            var actualResponse = await manager.GetDebtAccountForUser(userId);
+            var actualResponse = await manager.GetDebtAccountForUserAsync(userId);
 
             // Assert
             actualResponse.Should().BeEquivalentTo(expectedResponse);
@@ -103,7 +92,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.AddDebtAccountForUser(Guid.NewGuid(), request));
+            Assert.DoesNotThrowAsync(async () => await manager.AddDebtAccountForUserAsync(Guid.NewGuid(), request));
         }
 
         [Test]
@@ -119,7 +108,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.AddAmountToDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.AddAmountToDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));
@@ -138,7 +127,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.SubtractAmountFromDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.SubtractAmountFromDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));
@@ -152,7 +141,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             var manager = GetSystemUnderTest(stubs);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.DeleteDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.DeleteDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid()));
         }
@@ -174,7 +163,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await manager.UpdateDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await manager.UpdateDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));

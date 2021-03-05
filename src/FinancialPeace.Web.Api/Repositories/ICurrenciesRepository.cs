@@ -14,12 +14,12 @@ namespace FinancialPeace.Web.Api.Repositories
         /// Gets all currently listed currencies from the database.
         /// </summary>
         /// <returns>An enumeration of currencies.</returns>
-        Task<IEnumerable<Currency>> GetCurrencies();
+        Task<IEnumerable<Currency>> GetCurrenciesAsync();
 
         /// <summary>
         /// Attempts to persist a new currency to the database.
         /// </summary>
         /// <param name="request">The details of the currency to be added.</param>
-        Task AddCurrency(AddCurrencyRequest request);
+        Task AddCurrencyAsync(AddCurrencyRequest request);
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FinancialPeace.Web.Api.Models.Requests.SavingsAccounts;
 using FinancialPeace.Web.Api.Models.Responses.SavingsAccounts;
 using FinancialPeace.Web.Api.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace FinancialPeace.Web.Api.Managers
 {
@@ -10,20 +11,27 @@ namespace FinancialPeace.Web.Api.Managers
     public class SavingsAccountManager : ISavingsAccountManager
     {
         private readonly ISavingsAccountRepository _savingsAccountRepository;
+        private readonly ILogger<SavingsAccountManager> _logger;
 
         /// <summary>
         /// Initializes a new instance of the Savings Account Manager class.
         /// </summary>
         /// <param name="savingsAccountRepository">The savings account repository.</param>
-        public SavingsAccountManager(ISavingsAccountRepository savingsAccountRepository)
+        /// <param name="logger">The logger.</param>
+        public SavingsAccountManager(
+            ISavingsAccountRepository savingsAccountRepository,
+            ILogger<SavingsAccountManager> logger)
         {
             _savingsAccountRepository = savingsAccountRepository;
+            _logger = logger;
         }
 
         /// <inheritdoc />
-        public async Task<GetSavingsAccountForUserResponse> GetSavingsAccountForUser(Guid userId)
+        public async Task<GetSavingsAccountForUserResponse> GetSavingsAccountForUserAsync(Guid userId)
         {
-            var accounts = await _savingsAccountRepository.GetSavingsAccountForUser(userId);
+            _logger.LogInformation($"GetSavingsAccountForUserAsync start. UserId: {userId}");
+            var accounts = await _savingsAccountRepository.GetSavingsAccountForUserAsync(userId);
+            _logger.LogInformation($"GetSavingsAccountForUserAsync end. UserId: {userId}");
             return new GetSavingsAccountForUserResponse
             {
                 SavingsAccounts = accounts,
@@ -32,33 +40,48 @@ namespace FinancialPeace.Web.Api.Managers
         }
 
         /// <inheritdoc />
-        public Task AddSavingsAccountForUser(Guid userId, AddSavingsAccountRequest request)
+        public Task AddSavingsAccountForUserAsync(Guid userId, AddSavingsAccountRequest request)
         {
-            return _savingsAccountRepository.AddSavingsAccountForUser(userId, request);
+            _logger.LogInformation($"AddSavingsAccountForUserAsync start. UserId: {userId}");
+            var responseTask = _savingsAccountRepository.AddSavingsAccountForUserAsync(userId, request);
+            _logger.LogInformation($"AddSavingsAccountForUserAsync end. UserId: {userId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task AddAmountToSavingsAccountForUser(Guid userId, Guid savingsAccountId, AddAmountToSavingsAccountRequest request)
+        public Task AddAmountToSavingsAccountForUserAsync(Guid userId, Guid savingsAccountId, AddAmountToSavingsAccountRequest request)
         {
-            return _savingsAccountRepository.AddAmountToSavingsAccountForUser(userId, savingsAccountId, request);
+            _logger.LogInformation($"AddAmountToSavingsAccountForUserAsync start. UserId: {userId}. AccountId: {savingsAccountId}");
+            var responseTask = _savingsAccountRepository.AddAmountToSavingsAccountForUserAsync(userId, savingsAccountId, request);
+            _logger.LogInformation($"AddAmountToSavingsAccountForUserAsync end. UserId: {userId}. AccountId: {savingsAccountId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task SubtractAmountFromSavingsAccountForUser(Guid userId, Guid savingsAccountId, SubtractAmountFromSavingsAccountRequest request)
+        public Task SubtractAmountFromSavingsAccountForUserAsync(Guid userId, Guid savingsAccountId, SubtractAmountFromSavingsAccountRequest request)
         {
-            return _savingsAccountRepository.SubtractAmountFromSavingsAccountForUser(userId, savingsAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromSavingsAccountForUserAsync start. UserId: {userId}. AccountId: {savingsAccountId}");
+            var responseTask = _savingsAccountRepository.SubtractAmountFromSavingsAccountForUserAsync(userId, savingsAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromSavingsAccountForUserAsync end. UserId: {userId}. AccountId: {savingsAccountId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task DeleteSavingsAccountForUser(Guid userId, Guid savingsAccountId)
+        public Task DeleteSavingsAccountForUserAsync(Guid userId, Guid savingsAccountId)
         {
-            return _savingsAccountRepository.DeleteSavingsAccountForUser(userId, savingsAccountId);
+            _logger.LogInformation($"DeleteSavingsAccountForUserAsync start. UserId: {userId}. AccountId: {savingsAccountId}");
+            var responseTask = _savingsAccountRepository.DeleteSavingsAccountForUserAsync(userId, savingsAccountId);
+            _logger.LogInformation($"DeleteSavingsAccountForUserAsync end. UserId: {userId}. AccountId: {savingsAccountId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task UpdateSavingsAccountForUser(Guid userId, Guid savingsAccountId, UpdateSavingsAccountRequest request)
+        public Task UpdateSavingsAccountForUserAsync(Guid userId, Guid savingsAccountId, UpdateSavingsAccountRequest request)
         {
-            return _savingsAccountRepository.UpdateSavingsAccountForUser(userId, savingsAccountId, request);
+            _logger.LogInformation($"UpdateSavingsAccountForUserAsync start. UserId: {userId}. AccountId: {savingsAccountId}");
+            var responseTask = _savingsAccountRepository.UpdateSavingsAccountForUserAsync(userId, savingsAccountId, request);
+            _logger.LogInformation($"UpdateSavingsAccountForUserAsync end. UserId: {userId}. AccountId: {savingsAccountId}");
+            return responseTask;
         }
     }
 }

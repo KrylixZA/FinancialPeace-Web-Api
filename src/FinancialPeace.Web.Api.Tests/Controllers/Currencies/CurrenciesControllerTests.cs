@@ -9,6 +9,7 @@ using FinancialPeace.Web.Api.Models.Requests.Currencies;
 using FinancialPeace.Web.Api.Models.Responses.Currencies;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -21,6 +22,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Currencies
         private struct Stubs
         {
             public ICurrenciesManager CurrenciesManager { get; set; }
+            public static ILogger<CurrenciesController> Logger => Substitute.For<ILogger<CurrenciesController>>();
         }
 
         private static Stubs GetStubs()
@@ -35,20 +37,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Currencies
 
         private static CurrenciesController GetSystemUnderTest(Stubs stubs)
         {
-            return new CurrenciesController(stubs.CurrenciesManager);
-        }
-
-        [Test]
-        public void CurrenciesController_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var controller = new CurrenciesController(stubs.CurrenciesManager);
-
-            // Assert
-            Assert.IsNotNull(controller);
+            return new CurrenciesController(stubs.CurrenciesManager, Stubs.Logger);
         }
 
         [Test]
@@ -71,7 +60,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Currencies
             };
 
             var stubs = GetStubs();
-            stubs.CurrenciesManager.GetCurrencies().Returns(expectedResponse);
+            stubs.CurrenciesManager.GetCurrenciesAsync().Returns(expectedResponse);
             var controller = GetSystemUnderTest(stubs);
 
             // Act

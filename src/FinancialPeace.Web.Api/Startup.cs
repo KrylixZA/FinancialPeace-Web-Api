@@ -44,6 +44,7 @@ namespace FinancialPeace.Web.Api
             // Setup the API
             services.AddControllers();
             services.AddTokenAuthentication(Configuration);
+            services.AddCors();
             SqlMapper.AddTypeHandler(new MySqlGuidTypeHandler());
             SqlMapper.RemoveTypeMap(typeof(Guid));
             SqlMapper.RemoveTypeMap(typeof(Guid?));

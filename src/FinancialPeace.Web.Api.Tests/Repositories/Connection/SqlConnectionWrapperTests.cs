@@ -1,8 +1,7 @@
-using System;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using FinancialPeace.Web.Api.Repositories.Connection;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -15,6 +14,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories.Connection
         private struct Stubs
         {
             public IDbConnection DbConnection { get; set; }
+            public static ILogger<SqlConnectionWrapper> Logger => Substitute.For<ILogger<SqlConnectionWrapper>>();
         }
 
         private static Stubs GetStubs()
@@ -29,20 +29,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories.Connection
 
         private static SqlConnectionWrapper GetSystemUnderTest(Stubs stubs)
         {
-            return new SqlConnectionWrapper(stubs.DbConnection);
-        }
-
-        [Test]
-        public void SqlConnectionWrapper_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var connectionWrapper = new SqlConnectionWrapper(stubs.DbConnection);
-
-            // Assert
-            Assert.IsNotNull(connectionWrapper);
+            return new SqlConnectionWrapper(stubs.DbConnection, Stubs.Logger);
         }
 
         [TestCase(IsolationLevel.Chaos)]

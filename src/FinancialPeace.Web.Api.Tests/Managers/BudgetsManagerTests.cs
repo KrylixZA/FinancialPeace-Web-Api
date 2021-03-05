@@ -8,6 +8,7 @@ using FinancialPeace.Web.Api.Models.Requests.Budgets;
 using FinancialPeace.Web.Api.Models.Responses.Budgets;
 using FinancialPeace.Web.Api.Repositories;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
         private struct Stubs
         {
             public IBudgetsRepository BudgetsRepository { get; set; }
+            public static ILogger<BudgetsManager> Logger => Substitute.For<ILogger<BudgetsManager>>();
         }
 
         private static Stubs GetStubs()
@@ -34,20 +36,7 @@ namespace FinancialPeace.Web.Api.Tests.Managers
 
         private static BudgetsManager GetSystemUnderTest(Stubs stubs)
         {
-            return new BudgetsManager(stubs.BudgetsRepository);
-        }
-
-        [Test]
-        public void BudgetsManager_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var manager = new BudgetsManager(stubs.BudgetsRepository);
-
-            // Assert
-            Assert.IsNotNull(manager);
+            return new BudgetsManager(stubs.BudgetsRepository, Stubs.Logger);
         }
 
         [Test]

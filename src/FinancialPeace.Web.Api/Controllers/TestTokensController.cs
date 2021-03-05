@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Shared.WebApi.Core.Security;
 
 namespace FinancialPeace.Web.Api.Controllers
@@ -14,14 +15,17 @@ namespace FinancialPeace.Web.Api.Controllers
     public class TestTokensController : ControllerBase
     {
         private readonly IJwtService _jwtService;
+        private readonly ILogger<TestTokensController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the TestTokensController.
         /// </summary>
         /// <param name="jwtService">The JWT service.</param>
-        public TestTokensController(IJwtService jwtService)
+        /// <param name="logger">The logger.</param>
+        public TestTokensController(IJwtService jwtService, ILogger<TestTokensController> logger)
         {
             _jwtService = jwtService;
+            _logger = logger;
         }  
   
         /// <summary>
@@ -30,8 +34,9 @@ namespace FinancialPeace.Web.Api.Controllers
         /// <returns>A random JWT token.</returns>
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult GetRandomToken()  
+        public IActionResult GetRandomTokenAsync()  
         {  
+            _logger.LogInformation("GetRandomTokenAsync start");
             var token = _jwtService.GenerateSecurityToken("fake@email.com", DateTime.Now);  
             return Ok(token);
         }

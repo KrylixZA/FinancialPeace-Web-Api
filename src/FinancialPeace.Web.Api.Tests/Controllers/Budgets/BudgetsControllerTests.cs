@@ -9,6 +9,7 @@ using FinancialPeace.Web.Api.Models.Requests.Budgets;
 using FinancialPeace.Web.Api.Models.Responses.Budgets;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -21,6 +22,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
         private struct Stubs
         {
             public IBudgetsManager BudgetsManager { get; set; }
+            public static ILogger<BudgetsController> Logger => Substitute.For<ILogger<BudgetsController>>();
         }
 
         private static Stubs GetStubs()
@@ -35,20 +37,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
 
         private static BudgetsController GetSystemUnderTest(Stubs stubs)
         {
-            return new BudgetsController(stubs.BudgetsManager);
-        }
-
-        [Test]
-        public void BudgetsController_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var controller = new BudgetsController(stubs.BudgetsManager);
-
-            // Assert
-            Assert.IsNotNull(controller);
+            return new BudgetsController(stubs.BudgetsManager, Stubs.Logger);
         }
 
         [Test]
@@ -79,7 +68,7 @@ namespace FinancialPeace.Web.Api.Tests.Controllers.Budgets
             var controller = GetSystemUnderTest(stubs);
 
             // Act
-            var result = await controller.GetBudgetForUser(userId).ConfigureAwait(false);
+            var result = await controller.GetBudgetForUser(userId);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(result);

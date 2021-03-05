@@ -9,6 +9,7 @@ using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Repositories;
 using FinancialPeace.Web.Api.Repositories.Connection;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -22,6 +23,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
         {
             public ISqlConnectionProvider SqlConnectionProvider { get; set; }
             public ISqlConnectionWrapper SqlConnectionWrapper { get; set; }
+            public static ILogger<DebtAccountsRepository> Logger => Substitute.For<ILogger<DebtAccountsRepository>>();
         }
 
         private static Stubs GetStubs()
@@ -38,20 +40,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
 
         private static DebtAccountsRepository GetSystemUnderTest(Stubs stubs)
         {
-            return new DebtAccountsRepository(stubs.SqlConnectionProvider);
-        }
-
-        [Test]
-        public void DebtAccountsRepository_GivenAllParams_ShouldCreateNewInstance()
-        {
-            // Arrange
-            var stubs = GetStubs();
-
-            // Act
-            var repository = new DebtAccountsRepository(stubs.SqlConnectionProvider);
-
-            // Assert
-            Assert.IsNotNull(repository);
+            return new DebtAccountsRepository(stubs.SqlConnectionProvider, Stubs.Logger);
         }
 
         [Test]
@@ -81,7 +70,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             var repository = GetSystemUnderTest(stubs);
 
             // Act
-            var actualAccounts = await repository.GetDebtAccountsForUser(Guid.NewGuid());
+            var actualAccounts = await repository.GetDebtAccountsForUserAsync(Guid.NewGuid());
 
             // Assert
             actualAccounts.Should().BeEquivalentTo(expectedAccounts);
@@ -103,7 +92,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await repository.AddDebtAccountForUser(Guid.NewGuid(), request));
+            Assert.DoesNotThrowAsync(async () => await repository.AddDebtAccountForUserAsync(Guid.NewGuid(), request));
         }
 
         [Test]
@@ -119,7 +108,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await repository.AddAmountToDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await repository.AddAmountToDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));
@@ -138,7 +127,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await repository.SubtractAmountFromDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await repository.SubtractAmountFromDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));
@@ -152,7 +141,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             var repository = GetSystemUnderTest(stubs);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await repository.DeleteDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await repository.DeleteDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid()));
         }
@@ -174,7 +163,7 @@ namespace FinancialPeace.Web.Api.Tests.Repositories
             };
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await repository.UpdateDebtAccountForUser(
+            Assert.DoesNotThrowAsync(async () => await repository.UpdateDebtAccountForUserAsync(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
                 request));

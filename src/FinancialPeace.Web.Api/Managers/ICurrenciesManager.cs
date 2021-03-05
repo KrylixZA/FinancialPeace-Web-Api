@@ -13,7 +13,7 @@ namespace FinancialPeace.Web.Api.Managers
         /// Gets the currently listed currencies from the database.
         /// </summary>
         /// <returns>A collection of currencies.</returns>
-        Task<GetCurrencyResponse> GetCurrencies();
+        Task<GetCurrencyResponse> GetCurrenciesAsync();
 
         /// <summary>
         /// Attempts to persist a new currency to the database.

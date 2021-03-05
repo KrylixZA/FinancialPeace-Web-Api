@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FinancialPeace.Web.Api.Models.Requests.DebtAccounts;
 using FinancialPeace.Web.Api.Models.Responses.DebtAccounts;
 using FinancialPeace.Web.Api.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace FinancialPeace.Web.Api.Managers
 {
@@ -10,20 +11,27 @@ namespace FinancialPeace.Web.Api.Managers
     public class DebtAccountsManager : IDebtAccountsManager
     {
         private readonly IDebtAccountsRepository _debtAccountsRepository;
+        private readonly ILogger<DebtAccountsManager> _logger;
 
         /// <summary>
         /// Creates a new instance of the Debt Account Manager class.
         /// </summary>
         /// <param name="debtAccountsRepository">The debt accounts repository.</param>
-        public DebtAccountsManager(IDebtAccountsRepository debtAccountsRepository)
+        /// <param name="logger">The logger.</param>
+        public DebtAccountsManager(
+            IDebtAccountsRepository debtAccountsRepository,
+            ILogger<DebtAccountsManager> logger)
         {
             _debtAccountsRepository = debtAccountsRepository;
+            _logger = logger;
         }
 
         /// <inheritdoc />
-        public async Task<GetDebtAccountsForUserResponse> GetDebtAccountForUser(Guid userId)
+        public async Task<GetDebtAccountsForUserResponse> GetDebtAccountForUserAsync(Guid userId)
         {
-            var debtAccounts = await _debtAccountsRepository.GetDebtAccountsForUser(userId);
+            _logger.LogInformation($"GetDebtAccountForUserAsync start. UserId: {userId}");
+            var debtAccounts = await _debtAccountsRepository.GetDebtAccountsForUserAsync(userId);
+            _logger.LogInformation($"GetDebtAccountForUserAsync end. UserId: {userId}");
             return new GetDebtAccountsForUserResponse
             {
                 DebtAccounts = debtAccounts,
@@ -32,35 +40,54 @@ namespace FinancialPeace.Web.Api.Managers
         }
 
         /// <inheritdoc />
-        public Task AddDebtAccountForUser(Guid userId, AddDebtAccountRequest request)
+        public Task AddDebtAccountForUserAsync(Guid userId, AddDebtAccountRequest request)
         {
-            return _debtAccountsRepository.AddDebtAccountForUser(userId, request);
+            _logger.LogInformation($"AddDebtAccountForUser start. UserId: {userId}");
+            var responseTask = _debtAccountsRepository.AddDebtAccountForUserAsync(userId, request);
+            _logger.LogInformation($"AddDebtAccountForUser end. UserId: {userId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task AddAmountToDebtAccountForUser(Guid userId, Guid debtAccountId,
+        public Task AddAmountToDebtAccountForUserAsync(
+            Guid userId, 
+            Guid debtAccountId,
             AddAmountToDebtAccountRequest request)
         {
-            return _debtAccountsRepository.AddAmountToDebtAccountForUser(userId, debtAccountId, request);
+            _logger.LogInformation($"AddAmountToDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            var responseTask = _debtAccountsRepository.AddAmountToDebtAccountForUserAsync(userId, debtAccountId, request);
+            _logger.LogInformation($"AddAmountToDebtAccountForUserAsync end. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task SubtractAmountFromDebtAccountForUser(Guid userId, Guid debtAccountId,
+        public Task SubtractAmountFromDebtAccountForUserAsync(
+            Guid userId, 
+            Guid debtAccountId,
             SubtractAmountFromDebtAccountRequest request)
         {
-            return _debtAccountsRepository.SubtractAmountFromDebtAccountForUser(userId, debtAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            var responseTask = _debtAccountsRepository.SubtractAmountFromDebtAccountForUserAsync(userId, debtAccountId, request);
+            _logger.LogInformation($"SubtractAmountFromDebtAccountForUserAsync end. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task DeleteDebtAccountForUser(Guid userId, Guid debtAccountId)
+        public Task DeleteDebtAccountForUserAsync(Guid userId, Guid debtAccountId)
         {
-            return _debtAccountsRepository.DeleteDebtAccountForUser(userId, debtAccountId);
+            _logger.LogInformation($"DeleteDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            var responseTask = _debtAccountsRepository.DeleteDebtAccountForUserAsync(userId, debtAccountId);
+            _logger.LogInformation($"DeleteDebtAccountForUserAsync end. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            return responseTask;
         }
 
         /// <inheritdoc />
-        public Task UpdateDebtAccountForUser(Guid userId, Guid debtAccountId, UpdateDebtAccountRequest request)
+        public Task UpdateDebtAccountForUserAsync(Guid userId, Guid debtAccountId, UpdateDebtAccountRequest request)
         {
-            return _debtAccountsRepository.UpdateDebtAccountForUser(userId, debtAccountId, request);
+            _logger.LogInformation($"UpdateDebtAccountForUserAsync start. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            var responseTask = _debtAccountsRepository.UpdateDebtAccountForUserAsync(userId, debtAccountId, request);
+            _logger.LogInformation($"UpdateDebtAccountForUserAsync end. UserId: {userId}. DebtAccountId: {debtAccountId}");
+            return responseTask;
         }
     }
 }

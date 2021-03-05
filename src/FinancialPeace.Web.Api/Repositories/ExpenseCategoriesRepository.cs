@@ -6,6 +6,7 @@ using Dapper;
 using FinancialPeace.Web.Api.Models;
 using FinancialPeace.Web.Api.Models.Requests.ExpenseCategories;
 using FinancialPeace.Web.Api.Repositories.Connection;
+using Microsoft.Extensions.Logging;
 
 namespace FinancialPeace.Web.Api.Repositories
 {
@@ -18,40 +19,52 @@ namespace FinancialPeace.Web.Api.Repositories
         private const string DeleteExpenseCategoryForUserProc = "Freedom.pr_DeleteExpenseCategoryForUser";
 
         private readonly ISqlConnectionProvider _connectionProvider;
+        private readonly ILogger<ExpenseCategoriesRepository> _logger;
 
         /// <summary>
         /// Initializes a new instance of the Expense Category Repository class.
         /// </summary>
         /// <param name="connectionProvider">The connection provider.</param>
-        public ExpenseCategoriesRepository(ISqlConnectionProvider connectionProvider)
+        /// <param name="logger">The logger.</param>
+        public ExpenseCategoriesRepository(
+            ISqlConnectionProvider connectionProvider,
+            ILogger<ExpenseCategoriesRepository> logger)
         {
             _connectionProvider = connectionProvider;
+            _logger = logger;
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ExpenseCategory>> GetExpenseCategories()
+        public async Task<IEnumerable<ExpenseCategory>> GetExpenseCategoriesAsync()
         {
+            _logger.LogInformation("GetExpenseCategoriesAsync start");
             using var conn = _connectionProvider.Open();
-            return await conn.QueryAsync<ExpenseCategory>(
+            var response = await conn.QueryAsync<ExpenseCategory>(
                 GetExpenseCategoriesProc,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
+            _logger.LogInformation("GetExpenseCategoriesAsync end");
+            return response;
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ExpenseCategory>> GetExpenseCategoriesForUser(Guid userId)
+        public async Task<IEnumerable<ExpenseCategory>> GetExpenseCategoriesForUserAsync(Guid userId)
         {
+            _logger.LogInformation($"GetExpenseCategoriesForUserAsync start. UserId: {userId}");
             using var conn = _connectionProvider.Open();
             var parameters = new DynamicParameters();
             parameters.Add("$userId", userId);
-            return await conn.QueryAsync<ExpenseCategory>(
+            var response = await conn.QueryAsync<ExpenseCategory>(
                 GetExpenseCategoriesForUserProc,
                 parameters,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
+            _logger.LogInformation($"GetExpenseCategoriesForUserAsync start. UserId: {userId}");
+            return response;
         }
 
         /// <inheritdoc />
-        public async Task AddExpenseCategoryForUser(Guid userId, AddExpenseCategoryRequest request)
+        public async Task AddExpenseCategoryForUserAsync(Guid userId, AddExpenseCategoryRequest request)
         {
+            _logger.LogInformation($"AddExpenseCategoryForUserAsync start. UserId: {userId}");
             using var conn = _connectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -61,13 +74,15 @@ namespace FinancialPeace.Web.Api.Repositories
                 CreateExpenseCategoryForUserProc,
                 parameters,
                 trans,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"AddExpenseCategoryForUserAsync end. UserId: {userId}");
         }
 
         /// <inheritdoc />
-        public async Task DeleteExpenseCategoryForUser(Guid userId, Guid expenseCategoryId)
+        public async Task DeleteExpenseCategoryForUserAsync(Guid userId, Guid expenseCategoryId)
         {
+            _logger.LogInformation($"AddExpenseCategoryForUserAsync start. UserId: {userId}. ExpenseCategoryId: {expenseCategoryId}");
             using var conn = _connectionProvider.Open();
             using var trans = conn.BeginTransaction();
             var parameters = new DynamicParameters();
@@ -77,8 +92,9 @@ namespace FinancialPeace.Web.Api.Repositories
                 DeleteExpenseCategoryForUserProc,
                 parameters,
                 trans,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure);
             trans.Commit();
+            _logger.LogInformation($"AddExpenseCategoryForUserAsync start. UserId: {userId}. ExpenseCategoryId: {expenseCategoryId}");
         }
     }
 }

@@ -7,6 +7,7 @@ using FinancialPeace.Web.Api.Models.Requests.Budgets;
 using FinancialPeace.Web.Api.Models.Responses.Budgets;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Shared.WebApi.Core.Errors;
 
 namespace FinancialPeace.Web.Api.Controllers.Budgets
@@ -19,14 +20,19 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
     public class BudgetsController : ControllerBase
     {
         private readonly IBudgetsManager _budgetsManager;
+        private readonly ILogger<BudgetsController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the Budgets Controller class.
         /// </summary>
         /// <param name="budgetsManager"></param>
-        public BudgetsController(IBudgetsManager budgetsManager)
+        /// <param name="logger">The logger.</param>
+        public BudgetsController(
+            IBudgetsManager budgetsManager,
+            ILogger<BudgetsController> logger)
         {
             _budgetsManager = budgetsManager;
+            _logger = logger;
         }
         
         /// <summary>
@@ -44,7 +50,9 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetBudgetForUser([Required] [FromRoute] Guid userId)
         {
-            var response = await _budgetsManager.GetBudgetForUserAsync(userId).ConfigureAwait(false);
+            _logger.LogInformation($"GetBudgetForUser start. UserId: {userId}");
+            var response = await _budgetsManager.GetBudgetForUserAsync(userId);
+            _logger.LogInformation($"GetBudgetForUser end. UserId: {userId}");
             return Ok(response);
         }
 
@@ -68,7 +76,9 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid userId,
             [Required] [FromBody] CreateExpenseRequest request)
         {
-            await _budgetsManager.CreateExpenseForUserAsync(userId, request).ConfigureAwait(false);
+            _logger.LogInformation($"CreateExpenseForUser start. UserId: {userId}");
+            await _budgetsManager.CreateExpenseForUserAsync(userId, request);
+            _logger.LogInformation($"CreateExpenseForUser end. UserId: {userId}");
             return Accepted();
         }
 
@@ -90,7 +100,9 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid userId,
             [Required] [FromRoute] Guid expenseId)
         {
-            await _budgetsManager.DeleteExpenseForUserAsync(userId, expenseId).ConfigureAwait(false);
+            _logger.LogInformation($"DeleteExpenseForUser start. UserId: {userId}. ExpenseId: {expenseId}");
+            await _budgetsManager.DeleteExpenseForUserAsync(userId, expenseId);
+            _logger.LogInformation($"DeleteExpenseForUser end. UserId: {userId}. ExpenseId: {expenseId}");
             return Ok();
         }
 
@@ -116,7 +128,9 @@ namespace FinancialPeace.Web.Api.Controllers.Budgets
             [Required] [FromRoute] Guid expenseId,
             [Required] [FromBody] UpdateExpenseRequest request)
         {
-            await _budgetsManager.UpdateExpenseForUserAsync(userId, expenseId, request).ConfigureAwait(false);
+            _logger.LogInformation($"UpdateExpenseForUser start. UserId: {userId}. ExpenseId: {expenseId}");
+            await _budgetsManager.UpdateExpenseForUserAsync(userId, expenseId, request);
+            _logger.LogInformation($"UpdateExpenseForUser end. UserId: {userId}. ExpenseId: {expenseId}");
             return Ok();
         }
     }
