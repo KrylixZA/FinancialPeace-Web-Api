@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   financialpeace-database:
-    image: krylixza/financialpeace-database:1.0.0.8
+    image: krylixza/financialpeace-database:latest
     container_name: financialpeace-database
     networks:
       - financialpeace
