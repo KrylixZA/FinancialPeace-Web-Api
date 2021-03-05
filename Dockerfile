@@ -1,14 +1,11 @@
-FROM mcr.microsoft.com/dotnet/sdk:3.1-focal-arm64v8 as build
-ARG BUILD_NUMBER
-
+FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
 WORKDIR /src
 COPY /src .
-RUN dotnet restore
-RUN dotnet publish --no-restore --configuration Release /p:Version=${BUILD_NUMBER} --output /app
+RUN dotnet publish --configuration Release
 
-FROM mcr.microsoft.com/dotnet/aspnet:3.1-focal-arm64v8 as app
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 as app
+WORKDIR /app
+COPY --from=build /src/FinancialPeace.Web.Api/bin/Debug/netcoreapp3.1/publish .
 EXPOSE 5000
 ENV ASPNETCORE_URLS=http://+:5000
-WORKDIR /app
-COPY --from=build /app .
 ENTRYPOINT ["dotnet", "FinancialPeace.Web.Api.dll"]
