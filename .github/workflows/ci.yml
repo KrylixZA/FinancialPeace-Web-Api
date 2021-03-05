@@ -44,13 +44,13 @@ jobs:
 
     - name: Publish API
       run: |
-        dotnet publish ./src/FinancialPeace.Web.Api/FinancialPeace.Web.Api.csproj --configuration Release --output /app
+        dotnet publish ./src/FinancialPeace.Web.Api/FinancialPeace.Web.Api.csproj --configuration Release
 
     - name: Build & push Docker image
       working-directory: .
       run: |
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-        docker build -t krylixza/financialpeace-web-api:${{ steps.define_build_number.outputs.BUILD_NUMBER }} . --build-arg PUBLISH_API_DIR="/app"
+        docker build -t krylixza/financialpeace-web-api:${{ steps.define_build_number.outputs.BUILD_NUMBER }} .
         docker push krylixza/financialpeace-web-api:${{ steps.define_build_number.outputs.BUILD_NUMBER }}
         docker logout
 
