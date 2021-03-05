@@ -2,7 +2,6 @@
 The Financial Peace Web API exposes restful functions to serve the functions necessary for managing your way to fincancial peace!
 
 # Build
-There are many ways to build this repository. To build this application you will need to authenticate with GitHub Packages as the [Shared.WebApi.Core](https://github.com/KrylixZA/Shared-WebApi-Core/packages/554859) package is used. To do this, simply run the following command: `dotnet nuget add source https://nuget.pkg.github.com/krylixza/index.json -n github_krylixza -u <your_github_username> -p <your_github_personal_access_token> --store-password-in-clear-text`
 
 ## dotnet cli
 Run the following command: `dotnet build ./src`
