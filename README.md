@@ -9,5 +9,10 @@ In the repository is a [docker-compose.yml](docker-compose.yml) file. Use this f
 
     docker-compose up
 
+## ARM support
+If you have a device running on an ARM processor, there is both an ARM Docker image and a `docker-compose.arm.yml` to launch the API in an ARM Docker container. To do this, run the following command:
+
+    docker-compose -f "docker-compose.arm.yml" up
+
 # Contribute
 To contribute to this project, please following the [contributing guide](CONTRIBUTING.md).
