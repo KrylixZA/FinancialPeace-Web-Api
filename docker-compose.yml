@@ -10,11 +10,6 @@ services:
   financialpeace-web-api:
     image: krylixza/financialpeace-web-api:latest
     container_name: financialpeace-web-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - BUILD_NUMBER=1.0.0.0
     depends_on: 
       - financialpeace-database
     networks:
