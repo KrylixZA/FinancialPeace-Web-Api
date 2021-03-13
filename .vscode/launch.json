@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/FinancialPeace.Web.Api/bin/Debug/netcoreapp3.1/FinancialPeace.Web.Api.dll",
+            "program": "${workspaceFolder}/src/FinancialPeace.Web.Api/bin/Debug/net5.0/FinancialPeace.Web.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/FinancialPeace.Web.Api",
             "stopAtEntry": false,
