@@ -28,7 +28,7 @@ jobs:
         fetch-depth: 0
 
     - name: SonarCloud
-      uses: highbyte/sonarscan-dotnet@1.0.2
+      uses: highbyte/sonarscan-dotnet@2.0
       with:
         sonarProjectKey: FinancialPeace-Web-Api
         sonarProjectName:  FinancialPeace-Web-Api
