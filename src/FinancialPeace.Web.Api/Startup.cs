@@ -42,9 +42,9 @@ namespace FinancialPeace.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Setup the API
-            services.AddControllers();
-            services.AddTokenAuthentication(Configuration);
             services.AddCors();
+            services.AddControllers();
+            services.AddTokenAuthentication(Configuration); 
             SqlMapper.AddTypeHandler(new MySqlGuidTypeHandler());
             SqlMapper.RemoveTypeMap(typeof(Guid));
             SqlMapper.RemoveTypeMap(typeof(Guid?));
@@ -90,6 +90,11 @@ namespace FinancialPeace.Web.Api
                 app.UseDeveloperExceptionPage();
             }
             
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
             app.UseSwaggerDocs(ApiVersion, ApiTitle);
             app.UseGlobalExceptionHandler();
             app.UseHttpsRedirection();

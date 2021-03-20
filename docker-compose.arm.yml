@@ -6,6 +6,8 @@ services:
     container_name: financialpeace-database
     networks:
       - financialpeace
+    ports:
+      - 3306:3306
 
   financialpeace-web-api:
     image: krylixza/financialpeace-web-api:latest-arm
