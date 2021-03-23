@@ -4,7 +4,7 @@ The Financial Peace Web API exposes restful functions to serve the functions nec
 # Docker
 This application is also built into a [Docker image](Dockerfile) and hosted on [Docker Hub](https://hub.docker.com/r/krylixza/financialpeace-web-api).
 
-## Running the application with the database
+## Running the application
 In the repository is a [docker-compose.yml](docker-compose.yml) file. Use this file to launch both the Web API and the database. To do this, simply clone the repository, open your CLI and run:
 
     docker-compose up
